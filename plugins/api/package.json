@@ -1,0 +1,13 @@
+{
+  "name": "df-api",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "hapi": "2.x.x"
+  },
+  "dependencies": {
+    "jski": "~0.5.x",
+    "bcrypt": "~0.7.x",
+    "gm": "~1.x.x",
+    "mkdirp": "~0.3.x"
+  }
+}
