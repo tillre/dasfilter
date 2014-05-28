@@ -1,0 +1,42 @@
+include partials/head
+include partials/header
+include partials/teaser
+include partials/start
+include partials/more
+include partials/footer
+include partials/body-end
+
+
+doctype html
+html(lang="de")
+  head
+    title Das Filter
+
+    meta(property="og:title", content="Das Filter")
+    meta(property="og:description", content="Medium für Gegenwart")
+    meta(property="og:url", content=urls.full())
+    meta(property="og:type", content="website")
+    meta(property="og:image", content=urls.asset('img/df_logo_3d.jpg'))
+
+    link(href=urls.rss() rel="alternate" type="application/rss+xml" title="Das Filter RSS feed")
+
+    +head
+
+  body
+    +header(classifications, classification, 'startpage')
+
+    main.index-page(class="#{continued ? 'continued' : 'begin'}")
+      each group in groups
+        div(class="index-group #{group.type_}")
+          case group.type_
+            when "oneway": +start-oneway(group)
+            when "twoway": +start-twoway(group)
+            when "threeway": +start-threeway(group)
+            when "oneway-full": +start-oneway-full(group)
+            when "twoway-full": +start-twoway-full(group)
+
+      if nextDate
+        +more(urls.current() + '?date=' + nextDate)
+
+    +footer
+    +body-end

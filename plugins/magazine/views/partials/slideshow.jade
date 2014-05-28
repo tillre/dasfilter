@@ -1,0 +1,24 @@
+include image
+
+
+mixin slideshow(images, thumbType)
+  .slideshow
+    .thumbs
+      each image in images
+        a(class="thumb", href="#")
+          +image(image.image, thumbType)
+
+    if images.length
+      .modal
+        .modal-outer
+          .modal-inner
+            .slide-image
+              each image in images
+                - console.log('image', image);
+                +image(image.image, 'slideshow-full', true)
+            .slide-caption
+              each image in images
+                small!= markdown(image.caption)
+          a(class="close", href="#", title="schließen")
+          a(class="prev", href="#", title="vorheriges Bild")
+          a(class="next", href="#", title="nächstes Bild")

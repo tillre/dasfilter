@@ -1,0 +1,12 @@
+{
+  "name": "df-magazine",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "hapi": "2.x.x"
+  },
+  "dependencies": {
+    "jade": "~1.x.x",
+    "marked": "~0.2.x",
+    "request": "~2.34.0"
+  }
+}

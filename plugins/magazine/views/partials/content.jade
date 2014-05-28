@@ -1,0 +1,85 @@
+include image
+
+
+mixin content-text(data, isTeaser)
+  - var teaserClass = isTeaser ? 'intro-text' : ''
+  div(class="content-entity content-text #{data.display} #{teaserClass}")
+    .content-outer
+      .content-inner
+        .content!= markdown(data.text)
+        if data.caption
+          .caption-outer
+            .caption-inner
+              div!= markdown(data.caption)
+
+
+mixin content-image(data, sectionType)
+  figure(class="content-entity content-image #{data.display}")
+    .content-outer
+      .content-inner
+        +image(data.image, 'content-' + sectionType + '-' + data.display)
+        if data.caption
+          .caption-outer
+            .caption-inner
+              div!= markdown(data.caption)
+
+
+mixin content-embed(data)
+  figure(class="content-entity content-embed #{data.type}")
+    .content-outer
+      .content-inner
+        div(class="embed-source")!= data.embed
+        if data.caption
+          .caption-outer
+            .caption-inner
+              div!= markdown(data.caption)
+
+
+mixin content-gallery(data, sectionType)
+  figure(class="content-entity content-gallery #{data.display}")
+    .content-outer
+      .content-inner
+        +slideshow(data.gallery.images, 'slideshow-' + sectionType + '-' + data.display)
+        if data.caption
+          .caption-outer
+            .caption-inner
+              div!= markdown(data.caption)
+
+
+mixin content-group(group, alignment, sectionType)
+  div(class="group #{alignment}")
+    each entity in group
+      case entity.type_
+        when 'teaser': +content-text(entity, true)
+        when 'text': +content-text(entity)
+        when 'image': +content-image(entity, sectionType)
+        when 'embed': +content-embed(entity)
+        when 'gallery': +content-gallery(entity, sectionType)
+
+
+mixin content-oneway(section)
+  +content-group(section.one, 'top', 'oneway')
+
+
+mixin content-twoway(section)
+  .groups
+    +content-group(section.one.items, section.one.align, 'twoway')
+    +content-group(section.two.items, section.two.align, 'twoway')
+
+mixin content-threeway(section)
+  .groups
+    +content-group(section.one.items, section.one.align, 'threeway')
+    +content-group(section.two.items, section.two.align, 'threeway')
+    +content-group(section.three.items, section.three.align, 'threeway')
+
+
+
+//- main mixin
+
+mixin content(sections)
+      each section, index in sections
+        section(class="content-section #{section.type_}")
+          case section.type_
+            when "oneway": +content-oneway(section)
+            when "twoway": +content-twoway(section)
+            when "threeway": +content-threeway(section)

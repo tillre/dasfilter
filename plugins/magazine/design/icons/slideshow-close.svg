@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <title>slideshow-close</title>
+    <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="slideshow-close" sketch:type="MSArtboardGroup" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="2" fill="#000000">
+            <path d="M41,35.4034694 L30.5929339,24.9979824 L40.9986842,14.5915304 L35.4034694,9 L24.9995614,19.4054871 L14.5938989,9.00131584 L9,14.5918813 L19.4073292,24.9985087 L9.00131584,35.4061011 L14.5918813,41 L25.0001754,30.5909163 L35.4084696,40.9986842 L41,35.4034694 Z" id="x-mark-icon" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

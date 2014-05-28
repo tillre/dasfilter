@@ -1,0 +1,12 @@
+mixin comments
+  .comments-outer
+    .comments-inner
+      #disqus_thread.comments
+
+  script.
+    var disqus_shortname = 'dasfilter';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();

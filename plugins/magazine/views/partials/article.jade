@@ -1,0 +1,103 @@
+include image
+include content
+include slideshow
+include teaser
+
+
+mixin contributors(contributors)
+  each c, index in contributors
+    if index > 0
+      | ,&nbsp
+    if c.field
+      span(class="field") #{c.field}:
+        | &nbsp;
+    span(class="name") #{c.contributor.firstname} #{c.contributor.lastname}
+
+
+mixin article-byline(contributors, date)
+  small(class="byline")
+    span(class="date")= formatDate(date)
+    if contributors.length > 0
+      span(class="contributors")
+        span(class="divider") &nbsp;&ndash;&nbsp;
+        +contributors(contributors)
+
+
+//- main mixin
+
+mixin article(article)
+  article(class="article-wrapper")
+    - var hasAltImage = article.header.altImage && article.header.altImage.id_;
+    - var hasEmbed = article.header.embed && article.header.embed.embed;
+    - var hasGallery = article.header.gallery && article.header.gallery.id_;
+
+    header(class="content-header")
+      .title-outer
+        .title-inner
+          .title
+            h1= article.title
+            h2= article.subtitle
+            span(class="seperator")
+            +article-byline(article.contributors, article.date)
+
+      if hasEmbed
+        .article-media(class="#{article.header.embed.type}")
+          .media-outer
+            .media-inner
+              div(class="embed-source")!= article.header.embed.embed
+      else if hasGallery
+        .article-media
+          .media-outer
+            .media-inner
+              +slideshow(article.header.gallery.images, 'slideshow-header')
+      else if hasAltImage
+        +image(article.header.altImage, 'article-header')
+      else
+        +image(article.header.image, 'article-header')
+
+      if article.header.caption
+        .caption-outer
+          .caption-inner
+            div!= markdown(article.header.caption)
+
+
+    +content(article.sections)
+
+    .article-footer-outer
+      .article-footer-inner
+
+        .article-social-content
+          .article-social-box
+            h4.article-social-title Teilen
+            .article-social-links
+              - var shareUrl = encodeURIComponent(urls.full())
+              - var shareTitle = encodeURIComponent(article.title + ' - ' + article.subtitle)
+              a(class="article-social-link twitter",
+                href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
+                target="_blank",
+                onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
+                title="Twitter")
+              a(class="article-social-link facebook",
+                href="https://facebook.com/sharer.php?u=#{shareUrl}",
+                target="_blank",
+                onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
+                title="Facebook")
+              a(class="article-social-link google-plus",
+                href="https://plus.google.com/share?url=#{shareUrl}",
+                onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
+                target="_blank"
+                title="Google+")
+
+        if false && article.classification.tags.length > 0
+          .article-tags-content
+            h4 Tags:&nbsp;
+            ul
+              each tag in article.classification.tags
+                li= tag.name
+
+      if related.length > 0
+        .article-related-title
+          h4 Weitere Geschichten
+        .article-related-teaser
+          each relatedArticle in related
+            +teaser('teaser-article-related', relatedArticle)

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <title>facebook-color</title>
+    <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="facebook-color" sketch:type="MSArtboardGroup" fill="#3B5999">
+            <path d="M15.9000816,0.102530612 C7.01844898,0.102530612 -0.18155102,7.30383673 -0.18155102,16.1841633 C-0.18155102,25.0657959 7.01844898,32.2644898 15.9000816,32.2644898 C24.7817143,32.2644898 31.9817143,25.0657959 31.9817143,16.1841633 C31.9817143,7.30383673 24.7810612,0.102530612 15.9000816,0.102530612 L15.9000816,0.102530612 Z M20.1560816,16.116898 L17.3714286,16.116898 L17.3714286,26.048 L13.2440816,26.048 L13.2440816,16.116898 L11.2809796,16.116898 L11.2809796,12.6106122 L13.2440816,12.6106122 L13.2440816,10.3386122 C13.2440816,8.7124898 14.016,6.17404082 17.4099592,6.17404082 L20.4662857,6.18579592 L20.4662857,9.5915102 L18.2471837,9.5915102 C17.8847347,9.5915102 17.3720816,9.77240816 17.3720816,10.5456327 L17.3720816,12.6112653 L20.5185306,12.6112653 L20.1560816,16.116898 L20.1560816,16.116898 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

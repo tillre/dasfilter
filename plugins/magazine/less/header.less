@@ -1,0 +1,195 @@
+
+#header {
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: @header-height;
+    .box-sizing(border-box);
+    background-color: @header-bg-color;
+    border-bottom: 1px solid @header-border-color;
+}
+
+
+#header-cloak {
+    position: fixed;
+    z-index: 88;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+
+#nav-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: @header-height;
+
+    .main-nav-inner {
+        text-align: left;
+        overflow: hidden;
+    }
+
+    @media(max-width: @break-m-portrait) {
+        margin-left: 0;
+        margin-right: 0;
+        .main-nav {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    @media (min-width: @break-m-landscape) {
+        .main-nav-outer {
+            .row;    }
+        .main-nav-inner {
+            .column;
+        }
+    }
+
+    @media (min-width: @break-xl) {
+        .main-nav-outer {
+            max-width: @break-xl;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .header-logo {
+        display: block;
+        float: left;
+        padding: 0 16px;
+        background-position: center;
+        width: 33px;
+        height: @header-height;
+        margin-top: -1px;
+        .svg-logo-dark-small;
+
+        .startpage & {
+            width: 206px;
+            .svg-logo-dark;
+        }
+
+        @media (min-width: @break-m-portrait) {
+            width: 206px;
+            .svg-logo-dark;
+        }
+    }
+
+
+    .header-social {
+        display: none;
+
+        @media (min-width: @break-s-landscape) {
+            display: block;
+            float: right;
+            width: @header-height;
+            height: @header-height;
+            background-position: center;
+
+            &.google-plus {
+                .svg-google-plus-dark;
+            }
+            &.facebook {
+                .svg-facebook-dark;
+            }
+            &.twitter {
+                .svg-twitter-dark;
+            }
+        }
+    }
+    .header-cls {
+        display: block;
+        float: left;
+        .font-cls-title;
+        font-size: 18px;
+        padding: 15px 16px 0;
+        text-transform: uppercase;
+        height: @header-height;
+        color: @header-cls-fg-color;
+        text-decoration: none;
+        .box-sizing(border-box);
+        border-left: 1px solid @header-border-color;
+
+        span {
+            border-top: 2px solid @header-cls-fg-color;
+        }
+    }
+
+    .drawer-btn {
+        display: block;
+        position: relative;
+        float: left;
+        width: @header-height;
+        height: @header-height;
+        .svg-menu-white;
+        background-position: center;
+        background-color: @header-menu-bg-color;
+        img {
+            margin: 2px;
+        }
+    }
+}
+
+#nav-drawer {
+    position: fixed;
+    top: @header-height;
+    left: -@drawer-width;
+    bottom: 0;
+    width: @drawer-width;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    background-color: @drawer-bg-color;
+    padding-bottom: @gutter;
+    border-top: 4px solid @drawer-border-color;
+
+    .transition(left 250ms ease-out);
+
+    .drawer-content {
+        color: @drawer-fg-color;
+    }
+    .drawer-list {
+    }
+    ul {
+        list-style-type: none;
+    }
+    h4 {
+        .box-sizing(border-box);
+        .font-list-title;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: @gutter * 0.5 @gutter * 0.5;
+        background-color: black;
+        width: 100%;
+        color: #555;
+        border-bottom: 1px solid #222;
+        margin-bottom: 1px;
+    }
+    a {
+        .font-list-item;
+        display: block;
+        .box-sizing(border-box);
+        padding: @gutter * 0.25 @gutter * 0.5;
+        border-bottom: 1px solid #222;
+        border-right: 1px solid black;
+        border-left: 1px solid black;
+        text-decoration: none;
+        color: @drawer-link-color;
+        &:visited, &:active {
+            color: @drawer-link-color;
+        }
+        &:hover {
+            background-color: #555;
+            border-left: 1px solid @df-color;
+        }
+    }
+}

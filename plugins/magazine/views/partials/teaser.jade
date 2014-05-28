@@ -1,0 +1,33 @@
+include image
+
+
+mixin teaser(teaserType, article, showText)
+
+  - var inCategory = showText
+
+  article(class="teaser #{teaserType}")
+    .teaser-image
+      a(class="teaser-content", href=urls.article(article.classification.category, article))
+        +image(article.header.image, teaserType)
+
+    .teaser-info
+      .teaser-content
+        small(class="byline")
+          if !inCategory
+            - var category = article.classification.category
+            a(class="category", href=urls.classification(category))= category.title
+
+          if article.contributors.length > 0
+            - var contributor = article.contributors[0].contributor
+
+            if (!inCategory)
+              span(class="seperator") &nbsp;&mdash;&nbsp;
+            span(class="contributor")
+              span(class="name") von #{(contributor.firstname + ' ' + contributor.lastname)}
+          span(class="date")= formatDate(article.date)
+
+        a(class="title", href=urls.article(article.classification.category, article))
+          h2= article.title
+          h3= article.subtitle
+          if showText
+            .text!= markdown(article.teaser)

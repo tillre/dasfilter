@@ -1,0 +1,28 @@
+{
+  "name": "df-web-server",
+  "version": "0.0.0",
+  "description": "web server",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:skoni/df-web-server.git"
+  },
+  "author": "Till Reitemeyer",
+  "dependencies": {
+    "kew": "~0.4.x",
+    "hapi": "~5.x.x",
+    "good": "~2.x.x",
+    "grunt": "~0.4.x",
+    "lodash": "~2.4.1",
+    "grunt-contrib-watch": "~0.5.x",
+    "grunt-contrib-less": "~0.8.x",
+    "grunt-contrib-copy": "~0.4.x",
+    "grunt-contrib-clean": "~0.5.0",
+    "df-resources": "git+ssh://git@bitbucket.org:skoni/df-resources.git",
+    "df-api-client": "git+ssh://git@bitbucket.org:skoni/df-api-client.git"
+  }
+}

@@ -1,0 +1,42 @@
+
+.more-outer {
+    .row;
+}
+
+.more-inner {
+    .column;
+    text-align: center;
+    padding-top: @gutter;
+    padding-bottom: @gutter * 2;
+}
+
+.more-button {
+    text-decoration: none;
+    text-transform: uppercase;
+    .font-button;
+    padding: @gutter * 0.5 @gutter * 0.5;
+    color: @fg-color;
+    border-top: 4px solid @df-color;
+
+    &:after {
+        content: '';
+        display: inline-block;
+        margin-left: 5px;
+        margin-top: 1px;
+        width: 11px;
+        height: 16px;
+        .svg-triangle-dark-right;
+        background-size: contain;
+        background-position: center 1px;
+    }
+
+    &:visited, &:active {
+        color: @fg-color;
+    }
+    &:hover {
+        color: @df-color;
+        &:after {
+            .svg-triangle-dark-right-hover;
+        }
+    }
+}

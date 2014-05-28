@@ -1,0 +1,58 @@
+
+mixin image-node(data, size, delayLoad)
+  if (delayLoad)
+    img(data-src=urls.image(data, size), alt="#{data.title}")
+  else
+    img(src=urls.image(data, size), alt="#{data.title}")
+
+
+mixin image(data, type, delayLoad)
+  case type
+    when "teaser-oneway":        +image-node(data, 'x', delayLoad)
+    when "teaser-twoway-first":  +image-node(data, 'l', delayLoad)
+    when "teaser-twoway-second": +image-node(data, 'm', delayLoad)
+    when "teaser-threeway":      +image-node(data, 'm', delayLoad)
+    when "teaser-oneway-full":   +image-node(data, 'x', delayLoad)
+    when "teaser-twoway-full":   +image-node(data, 'l', delayLoad)
+
+    when "teaser-cls": +image-node(data, 'l', delayLoad)
+    when "teaser-cls-aside": +image-node(data, 'm', delayLoad)
+
+    when "article-header": +image-node(data, 'x', delayLoad)
+    when "teaser-article-related": +image-node(data, 'm', delayLoad)
+
+    when "content-oneway-default":      +image-node(data, 'x', delayLoad)
+    when "content-oneway-inside-left":  +image-node(data, 'm', delayLoad)
+    when "content-oneway-inside-right": +image-node(data, 'm', delayLoad)
+    when "content-oneway-full":         +image-node(data, 'x', delayLoad)
+
+    when "content-twoway-default":      +image-node(data, 'm', delayLoad)
+    when "content-twoway-inside-left":  +image-node(data, 's', delayLoad)
+    when "content-twoway-inside-right": +image-node(data, 's', delayLoad)
+    when "content-twoway-full":         +image-node(data, 'm', delayLoad)
+
+    when "content-threeway-default":      +image-node(data, 'm', delayLoad)
+    when "content-threeway-inside-left":  +image-node(data, 's', delayLoad)
+    when "content-threeway-inside-right": +image-node(data, 's', delayLoad)
+    when "content-threeway-full":         +image-node(data, 'm', delayLoad)
+
+    when "slideshow-oneway-default":      +image-node(data, 'tl', delayLoad)
+    when "slideshow-oneway-inside-left":  +image-node(data, 'tl', delayLoad)
+    when "slideshow-oneway-inside-right": +image-node(data, 'tl', delayLoad)
+    when "slideshow-oneway-full":         +image-node(data, 'tx', delayLoad)
+
+    when "slideshow-twoway-default":      +image-node(data, 'tl', delayLoad)
+    when "slideshow-twoway-inside-left":  +image-node(data, 'tm', delayLoad)
+    when "slideshow-twoway-inside-right": +image-node(data, 'tm', delayLoad)
+    when "slideshow-twoway-full":         +image-node(data, 'tl', delayLoad)
+
+    when "slideshow-threeway-default":      +image-node(data, 'tm', delayLoad)
+    when "slideshow-threeway-inside-left":  +image-node(data, 'ts', delayLoad)
+    when "slideshow-threeway-inside-right": +image-node(data, 'ts', delayLoad)
+    when "slideshow-threeway-full":         +image-node(data, 'tm', delayLoad)
+
+    when "slideshow-full": +image-node(data, 'x', delayLoad)
+
+    when "slideshow-header": +image-node(data, 'tx', delayLoad)
+
+    default: +image-node(data)

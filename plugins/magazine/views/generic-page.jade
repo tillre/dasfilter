@@ -1,0 +1,33 @@
+include partials/head
+include partials/header
+include partials/content
+include partials/footer
+include partials/body-end
+
+
+doctype html
+html(lang="de")
+  head
+    if page.subtitle
+      title #{page.title} &ndash; #{page.subtitle} | Das Filter
+    else
+      title #{page.title} | Das Filter
+    +head
+
+  body
+    +header(classifications)
+    main.generic-page
+      article
+        header(class="content-header")
+          .title-outer
+            .title-inner
+              .title
+                h1= page.title
+                if page.subtitle
+                  h2= page.subtitle
+                span(class="seperator")
+
+      div
+        +content(page.sections)
+    +footer
+    +body-end

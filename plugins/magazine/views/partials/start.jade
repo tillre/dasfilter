@@ -1,0 +1,27 @@
+
+mixin start-oneway(group)
+  each article in group.articles
+    +teaser('teaser-oneway', article)
+
+
+mixin start-oneway-full(group)
+  each article in group.articles
+    +teaser('teaser-oneway-full', article)
+
+
+mixin start-twoway(group)
+  each article, index in group.articles
+    if index === 0
+      +teaser('teaser-twoway-first', article)
+    else
+      +teaser('teaser-twoway-second', article)
+
+
+mixin start-twoway-full(group)
+  each article, index in group.articles
+    +teaser('teaser-twoway-full', article)
+
+
+mixin start-threeway(group)
+  each article in group.articles
+    +teaser('teaser-threeway', article)

@@ -1,0 +1,32 @@
+mixin header(classifications, classification, headerClass)
+  header(id="header", class="#{headerClass}")
+    nav(id="nav-bar")
+      .main-nav-outer
+        .main-nav-inner
+          a(class="drawer-btn", href="#nav-drawer", title="Menu")
+          a(class="header-logo", href=urls.start(), title="Startseite")
+
+          if classification
+            a(class="header-cls", href=urls.classification(classification), title=classification.title)
+              span= classification.title
+
+          a(class="header-social google-plus", href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank", title="Das Filter auf Google+")
+          a(class="header-social facebook", href="https://facebook.com/dasfilter", title="Das Filter auf Facebook")
+          a(class="header-social twitter", href="https://twitter.com/dasfilter", title="Das Filter auf Twitter")
+
+    nav(id="nav-drawer")
+      .drawer-content
+        .drawer-list
+          h4 Kategorien
+          ul
+            each cls in classifications.categories
+              li
+                a(href=urls.classification(cls))= cls.title
+        .drawer-list
+          h4 Sammlungen
+          ul
+            each cls in classifications.collections
+              li
+                a(href=urls.classification(cls))= cls.title
+
+  div(id='header-cloak')

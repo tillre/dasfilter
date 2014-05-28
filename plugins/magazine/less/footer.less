@@ -1,0 +1,111 @@
+#footer {
+    background-color: @footer-bg-color;
+    border-top: 1px solid @footer-border-color;
+    color: @footer-fg-color;
+    padding-bottom: @gutter;
+    overflow: hidden;
+
+    h4 {
+        .font-list-title;
+        display: inline-block;
+        text-transform: uppercase;
+        margin-bottom: @gutter * 0.25;
+        padding-top: @gutter * 0.25;
+    }
+    a {
+        .font-list-item;
+        .size-small();
+        text-decoration: none;
+        color: @fg-color;
+        &:visited, &:active {
+            color: @fg-color;
+        }
+        &:hover {
+            color: @df-color;
+        }
+    }
+}
+
+.footer-outer {
+    .row;
+}
+
+.footer-inner {
+    .column;
+    padding-top: @gutter;
+}
+
+.footer-links {
+    overflow: hidden;
+}
+
+.footer-logo {
+    display: none;
+}
+
+.footer-list {
+    ul {
+        list-style-type: none;
+        margin-bottom: @gutter;
+    }
+    li {
+        line-height: @gutter * 1.2;
+    }
+}
+
+.footer-copyright {
+    .font-list-item;
+    .size-small();
+    text-transform: uppercase;
+    display: block;
+    color: @light-fg-color;
+}
+
+
+@media (min-width: @break-s-landscape) {
+
+    .footer-list-group {
+        float: left;
+
+        .footer-list:last-child {
+            border-right: 0;
+        }
+
+        &.right {
+            float: right;
+            .footer-list {
+                border-right: 0;
+                border-left: 1px solid @footer-border-color;
+            }
+            .footer-list:last-child {
+                border-left: 0;
+            }
+        }
+    }
+
+    .footer-list {
+        border: 0;
+        float: left;
+        margin-right: @gutter * 1;
+        padding-right: @gutter;
+        border-right: 1px solid @footer-border-color;
+    }
+}
+
+@media (min-width: @break-m-portrait) {
+    .footer-logo {
+        display: block;
+        float: right;
+        padding-top: @gutter;
+        opacity: 0.2;
+    }
+}
+
+@media (min-width: @break-xl) {
+
+    .footer-outer {
+        max-width: @break-xl;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

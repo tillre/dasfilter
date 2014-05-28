@@ -1,0 +1,93 @@
+
+.teaser {
+    margin-bottom: @gutter * 3;
+
+    .teaser-image {
+        img {
+            display: block;
+            width: 100%;
+        }
+        a, img {
+            color: @fg-color;
+            text-decoration: none;
+        }
+    }
+    .teaser-info {
+        .row;
+        .teaser-content {
+            .column;
+        }
+        h2 {
+            .font-teaser-title;
+        }
+        h3 {
+            .font-teaser-subtitle;
+        }
+        a, h2, h3 {
+            color: @fg-color;
+            text-decoration: none;
+        }
+        .title {
+            margin-bottom: @gutter;
+            display: block;
+        }
+        .byline {
+            margin-top: @gutter * 0.4;
+            color: @light-fg-color;
+            overflow: hidden;
+            display: block;
+
+            .contributor {
+                display: inline-block;
+                .font-teaser-contributor;
+                color: @light-fg-color;
+            }
+            .seperator {
+                .font-teaser-contributor;
+                color: @light-fg-color;
+            }
+            .date {
+                display: none;
+                .font-teaser-date;
+                float: right;
+            }
+            .category {
+                display: inline-block;
+                .font-teaser-category;
+                color: @cls-color;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+        }
+        .text {
+            margin: @gutter * 0.25 0 @gutter * 3;
+            .font-teaser-text;
+            color: @medium-fg-color;
+        }
+    }
+}
+
+@media (min-width: @break-m-landscape) {
+    .teaser {
+        margin-bottom: @gutter * 2.5;
+
+        &.teaser-oneway,
+        &.teaser-oneway-full {
+            h2 {
+                .font-teaser-title-larger;
+            }
+            h3 {
+                .font-teaser-subtitle-larger;
+            }
+        }
+        &.teaser-twoway-second,
+        &.teaser-threeway {
+            h2 {
+                .font-teaser-title-smaller;
+            }
+            h3 {
+                .font-teaser-subtitle-smaller;
+            }
+        }
+    }
+}

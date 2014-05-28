@@ -1,0 +1,31 @@
+doctype xml
+rss(version='2.0', xmlns:media="http://search.yahoo.com/mrss/")
+  channel
+    if classification
+      title Das Filter | #{classification.title}
+      description= classification.title
+    else
+      title Das Filter
+      description Medium für Gegenwart
+    copyright Das Filter Medien UG (haftungsbeschränkt)
+    link= urls.full()
+
+    image
+      title Das Filter
+      url= urls.asset('img/df_logo_3d.jpg')
+      link= urls.full()
+
+    if articles.length > 0
+      pubDate= new Date(articles[0].date).toUTCString()
+
+      each article in articles
+        item
+          title= article.title
+          description
+           | <![CDATA[
+           | !{markdown(article.teaser)}
+           | ]]>
+          link= urls.articleFull(article.classification.category, article)
+          pubDate= new Date(article.date).toUTCString()
+          media:content(type="image/jpeg", url="#{urls.image(article.header.image, 'x')}")
+          category(domain=urls.classificationFull(article.classification.category))= article.classification.category.title

@@ -1,0 +1,107 @@
+
+.cls-aside {
+    background-color: @cls-aside-bg-color;
+}
+
+.cls-aside-group {
+    .row;
+    padding-top: @gutter * 2;
+}
+
+.cls-aside-group-title {
+    .font-aside-title;
+    text-transform: uppercase;
+    padding-top: @gutter * 0.125;
+    padding-bottom: @gutter;
+    border-top: 5px solid @cls-aside-title-color;
+    color: @cls-aside-title-color;
+}
+
+.teaser-cls-aside {
+    margin-bottom: @gutter * 2;
+
+    .teaser-info {
+        .no-row;
+        .teaser-content {
+            .no-column;
+        }
+        .byline {
+            display: none;
+        }
+        .title {
+            margin-top: @gutter * 0.25;
+        }
+        h2 {
+            .font-teaser-aside-title;
+        }
+        h3 {
+            .font-teaser-aside-subtitle;
+        }
+        h2, h3 {
+            display: inline;
+            color: @cls-aside-fg-color;
+        }
+        h2:after {
+            content: ' - ';
+            display: inline;
+        }
+    }
+}
+
+@media(min-width: @break-m-landscape) {
+
+    @main-width: (100% / 3) * 2;
+    @aside-width: (100% / 3);
+
+    .cls-page {
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .cls-main, .cls-aside {
+        display: table-cell;
+        vertical-align: top;
+        padding-bottom: @gutter * 2;
+    }
+
+    .cls-main {
+        width: @main-width;
+    }
+    .cls-main-inner {
+        .row-left(1);
+    }
+
+    .cls-aside {
+        width: @aside-width;
+    }
+    .cls-aside-inner {
+        .row-right(1);
+        padding-left: @gutter * 2;
+        border-left: 1px solid @header-border-color;
+    }
+
+    .cls-aside-group {
+        .no-row;
+    }
+    .cls-aside-group-title {
+        padding-bottom: @gutter * 0.5;
+    }
+
+    .teaser-cls {
+        .teaser-info {
+            .no-row;
+            .teaser-content {
+                .no-column;
+                padding-right: @gutter * 2;
+            }
+            .title {
+                margin-bottom: @gutter * 0.3;
+            }
+        }
+    }
+
+    .teaser-cls-aside {
+        margin-bottom: @gutter;
+    }
+}
