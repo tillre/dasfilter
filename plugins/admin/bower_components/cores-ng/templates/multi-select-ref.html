@@ -1,0 +1,13 @@
+<div>
+  <label class="control-label" ng-show="options.showLabel">{{ label }}:</label>
+
+  <div ng-class="{ 'cr-indent': options.indent }">
+    <ul class="list-unstyled">
+      <li class="checkbox" ng-repeat="row in rows">
+        <label class="control-label">
+          <input type="checkbox" ng-model="row.selected"/> {{ row.name }}
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>

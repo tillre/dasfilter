@@ -1,0 +1,21 @@
+<div ng-switch="numSchemas">
+
+  <div ng-switch-when="1" class="cr-array-top-controls btn-group">
+    <button ng-click="addItem()" class="btn btn-default btn-xs" type="button">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
+  </div>
+
+  <div ng-switch-default class="btn-group">
+    <button class="btn btn-default btn-xs dropdown-toggle"
+            data-toggle="dropdown" href="#">
+      <span class="glyphicon glyphicon-plus"></span><span class="caret"/>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li ng-repeat="schema in schemas">
+        <a ng-click="addItem(schema)">{{ schema.name }}</a>
+      </li>
+    </ul>
+  </div>
+
+</div>

@@ -1,0 +1,13 @@
+.row
+  .col-md-12
+    h3 {{title}}
+
+.row
+  .col-md-12
+    a(class="btn btn-success", href="\#{{path}}/new")
+      span(class="glyphicon glyphicon-plus")
+      span &nbsp;Create
+
+.row
+  .col-md-12
+    div(cr-model-list, type="{{type}}", view="list.view", params="list.params", columns="list.columns", limit="list.limit")

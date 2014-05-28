@@ -1,0 +1,24 @@
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th ng-repeat="title in titles">{{title}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in rows" style="cursor:pointer;" ng-click="select(row.id)">
+        <td ng-repeat="item in row.items" ng-bind-html="item.value"></td>
+      </tr>
+    </tbody>
+  </table>
+  <div ng-show="enablePrev || enableNext">
+    <ul class="pagination">
+      <li class="{{ !isLoading && enablePrev ? '' : 'disabled' }}">
+        <a href="" ng-click="prev()">Prev</a>
+      </li>
+      <li class="{{ !isLoading && enableNext ? '' : 'disabled' }}">
+        <a href="" ng-click="next()">Next</a>
+      </li>
+    </ul>
+  </div>
+</div>

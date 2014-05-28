@@ -1,0 +1,77 @@
+doctype html
+html(lang="de", ng-app="dfAdmin")
+  head
+    title Admin | DF
+
+    meta(charset="utf8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+    link(rel="shortcut icon", href="#{paths.assets}/favicon.ico")
+
+    link(rel="stylesheet", href="#{paths.assets}/css/styles.css")
+    link(rel="stylesheet", href="#{paths.assets}/vendor/bootstrap/dist/css/bootstrap.css")
+    link(rel="stylesheet", href="#{paths.assets}/vendor/cores-ng/css/cores.css")
+    link(rel="stylesheet", href="#{paths.assets}/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css")
+
+    script(type="text/javascript").
+      window.DFA = {
+        app: !{JSON.stringify(clientData)},
+        user: !{JSON.stringify(credentials)}
+      };
+
+  body
+    div(ng-controller="AppCtrl", class="container")
+      div(class="row")
+        div(class="col-md-2")
+          img(class="logo", src="#{paths.assets}/svg/logo.svg")
+
+          ul
+            li(ng-repeat="page in pages", ng-class="{ active : page.isActive }")
+
+              a(ng-if="page.path", href="\#{{ page.path }}") {{ page.title }}
+              span(ng-if="!page.path") {{ page.title }}
+
+              ul(ng-if="page.children")
+                li(ng-repeat="subPage in page.children")
+                  a(href="\#{{ subPage.path }}") {{ subPage.title }}
+
+          ul(class="nav nav-pills nav-stacked")
+            li
+              a(href="/logout") logout
+
+        div(ng-view, class="content col-md-10")
+          p CONTENT
+
+    //- vendor
+
+    script(src="#{paths.assets}/vendor/jquery/dist/jquery.js")
+
+    script(src="#{paths.assets}/vendor/angular/angular.js")
+    script(src="#{paths.assets}/vendor/angular-route/angular-route.js")
+
+    script(src="#{paths.assets}/vendor/bootstrap/dist/js/bootstrap.js")
+
+    script(src="#{paths.assets}/vendor/moment/moment.js")
+    script(src="#{paths.assets}/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js")
+
+    script(src="#{paths.assets}/vendor/markdown/lib/markdown.js")
+
+    script(src="#{paths.assets}/vendor/cores-ng/cores.js")
+
+    //- lib
+
+    script(src="#{paths.assets}/js/app.js")
+
+    script(src="#{paths.assets}/js/magazine.js")
+
+    script(src="#{paths.assets}/js/home.js")
+    script(src="#{paths.assets}/js/users.js")
+    script(src="#{paths.assets}/js/pages.js")
+    script(src="#{paths.assets}/js/contributors.js")
+    script(src="#{paths.assets}/js/categories.js")
+    script(src="#{paths.assets}/js/collections.js")
+    script(src="#{paths.assets}/js/articles.js")
+    script(src="#{paths.assets}/js/galleries.js")
+    script(src="#{paths.assets}/js/images.js")
+    script(src="#{paths.assets}/js/tags.js")
+    script(src="#{paths.assets}/js/stages.js")

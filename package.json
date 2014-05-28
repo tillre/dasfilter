@@ -1,0 +1,28 @@
+{
+  "name": "df-admin-server",
+  "version": "0.0.1",
+  "description": "admin server",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:skoni/df-admin-server.git"
+  },
+  "author": "Till Reitemeyer",
+  "dependencies": {
+    "kew": "~0.4.x",
+    "hapi": "~5.x.x",
+    "hapi-auth-cookie": "~1.x.x",
+    "good": "~2.x.x",
+    "grunt": "~0.4.x",
+    "lodash": "~2.4.1",
+    "grunt-contrib-watch": "~0.5.x",
+    "grunt-contrib-less": "~0.8.x",
+    "grunt-contrib-copy": "~0.4.x",
+    "grunt-contrib-clean": "~0.5.0",
+    "df-api-client": "git+ssh://git@bitbucket.org:skoni/df-api-client.git"
+  }
+}

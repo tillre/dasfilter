@@ -1,0 +1,11 @@
+<div>
+  <form name="modelForm"></form>
+  <div ng-show="debug">
+    <h4>Model</h4>
+    <pre>{{ model | json }}</pre>
+    <h4>Validation:</h3>
+    <ul>
+      <li ng-repeat="(valid, name) in errors">{{ name }} {{ valid }}</li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{
+  "name": "cores-ng",
+  "ignore": [
+    "**/.*",
+    "lib",
+    "test",
+    "README.md",
+    "Gruntfile.js",
+    "package.json",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "jquery": "~2.x.x",
+    "angular": "~1.2.x",
+    "bootstrap": "~3.x.x",
+    "eonasdan-bootstrap-datetimepicker": "2.1.30",
+    "markdown": "~0.5.0"
+  },
+  "homepage": "https://github.com/skoni/cores-ng",
+  "_release": "427f9b143a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "427f9b143a52c3f12433c42248d470ded6604d05"
+  },
+  "_source": "https://github.com/skoni/cores-ng.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/skoni/cores-ng.git"
+}

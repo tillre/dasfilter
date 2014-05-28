@@ -1,0 +1,21 @@
+{
+  "name": "cores-ng",
+  "version": "0.7.1",
+  "ignore": [
+    "**/.*",
+    "lib",
+    "test",
+    "README.md",
+    "Gruntfile.js",
+    "package.json",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "jquery": "~2.x.x",
+    "angular": "~1.2.x",
+    "bootstrap": "~3.x.x",
+    "eonasdan-bootstrap-datetimepicker": "2.1.30",
+    "markdown": "~0.5.0"
+  }
+}

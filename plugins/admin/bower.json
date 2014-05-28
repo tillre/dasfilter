@@ -1,0 +1,8 @@
+{
+  "name": "admin",
+  "version": "0.0.1",
+  "dependencies": {
+    "cores-ng": "https://github.com/skoni/cores-ng.git",
+    "angular-route": "~1.2.x"
+  }
+}

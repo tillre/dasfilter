@@ -1,0 +1,38 @@
+<div>
+  <label class="control-label" ng-show="options.showLabel">{{ label }}:</label>
+
+  <div ng-class="{ 'cr-indent': options.indent }">
+
+    <div cr-array-controls index="0" schemas="schemas"></div>
+
+    <ul class="list-unstyled">
+      <li ng-repeat="item in model" class="cr-item-group">
+
+        <div class="cr-item-wrapper" ng-class="{ 'has-label': showSchemaName }">
+          <div class="cr-item-controls btn-group">
+            <button class="btn btn-default btn-xs" ng-click="moveUp($index)" type="button">
+              <span class="glyphicon glyphicon-arrow-up"></span>
+            </button>
+            <button class="btn btn-default btn-xs" ng-click="moveDown($index)" type="button">
+              <span class="glyphicon glyphicon-arrow-down"></span>
+            </button>
+            <button class="btn btn-danger btn-xs" ng-click="remove($index)" type="button">
+              <span class="glyphicon glyphicon-minus"></span>
+            </button>
+          </div>
+
+          <label class="cr-item-label">{{ item.type_ }}</label>
+
+          <div cr-array-item
+               model="item"
+               get-schema="getSchema(item.type_)"
+               path="{{ path }}.{{ $index }}">
+          </div>
+        </div>
+
+        <div cr-array-controls index="$index + 1" schemas="schemas"></div>
+
+      </li>
+    </ul>
+  </div>
+</div>
