@@ -1,0 +1,20 @@
+{
+  "name": "df-resources",
+  "version": "0.0.0",
+  "description": "resource definitions",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:skoni/df-resources.git"
+  },
+  "author": "Till Reitemeyer",
+  "dependencies": {
+    "kew": "~0.4.x",
+    "jski": "~0.6.1",
+    "walk-fs": "0.0.2"
+  }
+}
