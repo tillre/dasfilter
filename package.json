@@ -1,0 +1,19 @@
+{
+  "name": "df-api-client",
+  "version": "0.0.0",
+  "description": "api client",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:skoni/df-api-client.git"
+  },
+  "author": "Till Reitemeyer",
+  "dependencies": {
+    "kew": "~0.4.x",
+    "request": "~2.36.0"
+  }
+}
