@@ -1,3 +1,6 @@
+var Path = require('path');
+
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
