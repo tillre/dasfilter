@@ -12,8 +12,6 @@ function articleBelongsToClassification(doc, clsId, clsType) {
 function prepareArticle(app, doc) {
 
   var cs = app.resources._Content.schema;
-  console.log('cs', cs);
-  //console.log('resources', app.resources);
   var oneway = cs.contentOnewaySection();
 
   // integrate the teaser text object
