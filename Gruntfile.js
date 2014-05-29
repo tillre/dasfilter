@@ -66,11 +66,11 @@ module.exports = function(grunt) {
     // packages
 
     npm: {
-      admin: './plugins/magazine'
+      web: './plugins/magazine'
     },
 
     bower: {
-      admin: './plugins/magazine'
+      web: './plugins/magazine'
     }
   });
 
