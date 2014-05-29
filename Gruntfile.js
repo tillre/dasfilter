@@ -1,3 +1,6 @@
+var Path = require('path');
+
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
@@ -6,7 +9,7 @@ module.exports = function(grunt) {
     // packages
 
     npm: {
-      admin: './plugins/admin'
+      api: './plugins/api'
     }
   });
 
@@ -16,15 +19,15 @@ module.exports = function(grunt) {
 
 
   // install and build
-  grunt.registerTask('install', ['npm']);
+  grunt.registerTask('install', ['npm', 'build']);
 
 
   grunt.registerMultiTask('npm', 'install packages', function() {
     var done = this.async();
     var cwd = Path.resolve(this.data);
-
     runCmd('npm', ['install'], cwd, done);
   });
+
 
   // helpers
   function runCmd(cmd, args, cwd, done) {
