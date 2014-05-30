@@ -5,12 +5,7 @@
   var config = {
     title: 'Stages',
     type: 'ClassificationStage',
-    path: '/stages',
-    list: {
-      headers: [
-        { path: 'title' }
-      ]
-    }
+    path: '/stages'
   };
 
 
@@ -19,10 +14,34 @@
     $location
   ) {
 
+    $scope.startList = {
+      type: 'StartStage',
+      view: 'all',
+      columns: [
+        { title: 'Start Stage', path: 'title' }
+      ]
+    };
+    $scope.categoriesList = {
+      type: 'ClassificationStage',
+      view: 'categories',
+      columns: [
+        { title: 'Category Stages', path: 'title' }
+      ]
+    };
+    $scope.collectionsList = {
+      type: 'ClassificationStage',
+      view: 'collections',
+      columns: [
+        { title: 'Collection Stages', path: 'title' }
+      ]
+    };
+
     angular.extend($scope, angular.copy(config));
+
     $scope.$on('cr:list:select', function(e, id) {
+      console.log('e', e);
       e.stopPropagation();
-      $location.path(config.path + '/' + id);
+      $location.path(config.path + '/' + e.targetScope.type + '/' + id);
     });
   });
 
@@ -37,6 +56,7 @@
     $scope.modelOptions = {
       disableDelete: true
     };
+    $scope.type = $routeParams.type;
     $scope.id = $routeParams.id;
   });
 

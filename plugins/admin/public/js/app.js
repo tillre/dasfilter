@@ -117,9 +117,10 @@
       { path: '/articles/published', template: '/resource-list', controller: 'ArticlesCtrl' },
       { path: '/articles/drafts', template: '/resource-list', controller: 'ArticlesCtrl' },
       { path: '/articles/new', template: '/resource', controller: 'ArticleCtrl' },
-      { path: '/articles/:id', template: '/resource', controller: 'ArticleCtrl' }
+      { path: '/articles/:id', template: '/resource', controller: 'ArticleCtrl' },
 
-
+      { path: '/stages', template: '/stages-list', controller: 'StagesCtrl' },
+      { path: '/stages/:type/:id', template: '/resource', controller: 'StageCtrl' }
     ]
           .concat(createRoutes('/users', 'UsersCtrl', 'UserCtrl'))
           .concat(createRoutes('/pages', 'PagesCtrl', 'PageCtrl'))
@@ -129,9 +130,6 @@
           .concat(createRoutes('/tags', 'TagsCtrl', 'TagCtrl'))
           .concat(createRoutes('/galleries', 'GalleriesCtrl', 'GalleryCtrl'))
           .concat(createRoutes('/images', 'ImagesCtrl', 'ImageCtrl'))
-          .concat(createRoutes('/stages', 'StagesCtrl', 'StageCtrl',
-                               { listTemplate: '/stages-list' }))
-
 
       .map(function(route) {
         if (route.template) {
