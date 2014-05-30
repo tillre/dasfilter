@@ -7,7 +7,6 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     // packages
-
     npm: {
       api: './plugins/api'
     }
