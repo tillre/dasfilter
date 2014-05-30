@@ -51,9 +51,9 @@ module.exports.register = function(plugin, options, next) {
     }));
 
   }).then(function() {
+    return syncStages = SyncStages(plugin, cores, resDefs);
 
-    syncStages = SyncStages(plugin, cores, resDefs);
-
+  }).then(function() {
     // create api
     coresHapi.createApi({
       auth: 'api-simple',
