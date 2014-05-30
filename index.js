@@ -64,9 +64,32 @@ module.exports = function(apiUrl, apiUser, apiPass) {
 
 
   //
-  // Get a stage by classification id
+  // Get the start stage
   //
-  function getStage(clsId) {
+  function getStartStage() {
+    var defer = Q.defer();
+    var req = Request.get(apiUrl + '/startstages', {
+      auth: { user: apiUser, pass: apiPass },
+      qs: { include_docs: true }
+    }, function(err, response, body) {
+      err = checkError(err, req, response, body);
+      if (err) {
+        return defer.reject(err);
+      }
+      var result = JSON.parse(body);
+      if (result.length === 0) {
+        return defer.reject('No start stage found');
+      }
+      defer.resolve(result.rows[0].doc);
+    });
+    return defer.promise;
+  }
+
+
+  //
+  // Get a classification stage by id
+  //
+  function getClsStage(clsId) {
     var defer = Q.defer();
     var req = Request.get(apiUrl + '/classificationstages/_views/by_classification', {
       auth: { user: apiUser, pass: apiPass },
@@ -216,9 +239,9 @@ module.exports = function(apiUrl, apiUser, apiPass) {
 
 
   //
-  // Get all teasers for a given category, 'all' is possible as clsKey
+  // Get all teasers for a given category or '*' for all categories
   //
-  function getTeasers(clsKey, startDate, limit) {
+  function getTeasers(view, qs) {
 
     // the view emits the article itself plus dependent resources
     // these will be put together again from the resulting rows
@@ -227,22 +250,27 @@ module.exports = function(apiUrl, apiUser, apiPass) {
     var ROW_IMAGE = 1;
     var ROW_CATEGORY = 2;
     var ROW_CONTRIBUTOR = 3;
+    var NUM_PARTS = 4;
 
-    var SORT_KEY_INDEX = 3;
-
-    // limit times the resources per article
-    limit *= 4;
+    // extend the limit times each resource part
+    if (qs.limit) {
+      qs.limit *= NUM_PARTS;
+    }
+    if (qs.keys) {
+      // create seperate keys times each resource part
+      var modKeys = [];
+      for (var i = 0; i < qs.keys.length; ++i) {
+        for (var j = NUM_PARTS; j > 0; --j) {
+          modKeys.push([qs.keys[i], j - 1]);
+        }
+      }
+      qs.keys = JSON.stringify(modKeys);
+    }
 
     var defer = Q.defer();
-    var req = Request.get(apiUrl + '/articles/_views/teaser_by_state_cls_date', {
+    var req = Request.get(apiUrl + '/articles/_views/' + view, {
       auth: { user: apiUser, pass: apiPass },
-      qs: {
-        include_docs: true,
-        descending: true,
-		    limit: limit,
-		    endkey: ['published', clsKey],
-		    startkey: ['published', clsKey, startDate]
-      }
+      qs: qs
     }, function(err, response, body) {
       err = checkError(err, req, response, body);
       if (err) {
@@ -250,11 +278,15 @@ module.exports = function(apiUrl, apiUser, apiPass) {
       }
       var result = JSON.parse(body);
       var docs = [];
+      if (result.rows.length === 0) {
+        return defer.resolve(docs);
+      }
+
       var image, category, contributor;
+      var sortIndex = result.rows[0].key.length - 1;
 
       result.rows.forEach(function(row) {
-
-        switch(row.key[SORT_KEY_INDEX]) {
+        switch(row.key[sortIndex]) {
         case ROW_CONTRIBUTOR: contributor = row.value ? row.doc : null; break;
         case ROW_CATEGORY:    category = row.doc; break;
         case ROW_IMAGE:       image = row.doc; break;
@@ -271,20 +303,38 @@ module.exports = function(apiUrl, apiUser, apiPass) {
       });
       defer.resolve(docs);
     });
-
     return defer.promise;
   }
 
+  function getTeasersByIds(keys) {
+    return getTeasers('teaser_by_id', {
+      include_docs: true,
+      keys: keys
+    });
+  }
+
+  function getTeasersByClsAndDate(clsKey, startDate, limit) {
+    return getTeasers('teaser_by_state_cls_date', {
+        include_docs: true,
+        descending: true,
+		    limit: limit,
+		    endkey: ['published', clsKey],
+		    startkey: ['published', clsKey, startDate]
+    });
+  }
 
 
   return {
     getConfig: getConfig,
     validateAccount: validateAccount,
 
-    getStage: getStage,
+    getStartStage: getStartStage,
+    getClsStage: getClsStage,
     getArticleBySlug: getArticleBySlug,
     getPageBySlug: getPageBySlug,
     getClassifications: getClassifications,
-    getTeasers: getTeasers
+    getTeasers: getTeasers,
+    getTeasersByIds: getTeasersByIds,
+    getTeasersByClsAndDate: getTeasersByClsAndDate
   };
 };
