@@ -313,7 +313,7 @@ module.exports = function(apiUrl, apiUser, apiPass) {
     });
   }
 
-  function getTeasersByClsAndDate(clsKey, startDate, limit) {
+  function getTeasersByClsDate(clsKey, startDate, limit) {
     return getTeasers('teaser_by_state_cls_date', {
         include_docs: true,
         descending: true,
@@ -335,6 +335,6 @@ module.exports = function(apiUrl, apiUser, apiPass) {
     getClassifications: getClassifications,
     getTeasers: getTeasers,
     getTeasersByIds: getTeasersByIds,
-    getTeasersByClsAndDate: getTeasersByClsAndDate
+    getTeasersByClsDate: getTeasersByClsDate
   };
 };
