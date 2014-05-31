@@ -12,7 +12,7 @@ module.exports = function clsRssHandler(app) {
         throw err;
       }
 
-      app.api.getTeasers(
+      app.api.getTeasersByClsDate(
         cls._id,
         new Date().toISOString(),
         20

@@ -1,27 +1,21 @@
 
 mixin start-oneway(group)
-  each article in group.articles
-    +teaser('teaser-oneway', article)
-
-
-mixin start-oneway-full(group)
-  each article in group.articles
-    +teaser('teaser-oneway-full', article)
+  if group.display === 'default'
+    +teaser('teaser-oneway', group.article)
+  else if group.display === 'full'
+    +teaser('twaser-oneway-full', group.article)
 
 
 mixin start-twoway(group)
-  each article, index in group.articles
-    if index === 0
-      +teaser('teaser-twoway-first', article)
-    else
-      +teaser('teaser-twoway-second', article)
-
-
-mixin start-twoway-full(group)
-  each article, index in group.articles
-    +teaser('teaser-twoway-full', article)
+  if group.display === 'default'
+    +teaser('teaser-twoway-first', group.articles.one)
+    +teaser('teaser-twoway-second', group.articles.two)
+  else if group.display === 'full'
+    +teaser('teaser-twoway-full', group.articles.one)
+    +teaser('teaser-twoway-full', group.articles.two)
 
 
 mixin start-threeway(group)
-  each article in group.articles
-    +teaser('teaser-threeway', article)
+  +teaser('teaser-threeway', group.articles.one)
+  +teaser('teaser-threeway', group.articles.two)
+  +teaser('teaser-threeway', group.articles.three)

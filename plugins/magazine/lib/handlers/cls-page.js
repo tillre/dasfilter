@@ -20,10 +20,10 @@ module.exports = function clsHandler(app) {
 
       var stage = null;
 
-      return app.api.getStage(cls._id).then(function(s) {
+      return app.api.getClsStage(cls._id).then(function(s) {
         stage = s;
 
-        return app.api.getTeasers(
+        return app.api.getTeasersByClsDate(
           cls._id,
           startDate || new Date().toISOString(),
           NUM_ARTICLES + 1

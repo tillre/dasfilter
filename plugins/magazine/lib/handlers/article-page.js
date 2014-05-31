@@ -48,7 +48,7 @@ module.exports = function(app) {
 
       return app.api.getArticleBySlug(request.params.article).then(function(doc) {
         // get related teaser
-        return app.api.getTeasers(
+        return app.api.getTeasersByClsDate(
           doc.classification.category._id,
           doc.date,
           3

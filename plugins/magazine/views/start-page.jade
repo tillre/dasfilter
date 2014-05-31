@@ -27,13 +27,11 @@ html(lang="de")
 
     main.index-page(class="#{continued ? 'continued' : 'begin'}")
       each group in groups
-        div(class="index-group #{group.type_}")
+        div(class="index-group #{group.type_}-#{group.display}")
           case group.type_
             when "oneway": +start-oneway(group)
             when "twoway": +start-twoway(group)
             when "threeway": +start-threeway(group)
-            when "oneway-full": +start-oneway-full(group)
-            when "twoway-full": +start-twoway-full(group)
 
       if nextDate
         +more(urls.current() + '?date=' + nextDate)
