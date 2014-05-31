@@ -2,7 +2,7 @@ var Util = require('util');
 var Hapi = require('hapi');
 var manifest = require('./lib/manifest.js');
 
-console.log(Util.inspect(manifest));
+console.log(Util.inspect(manifest, { depth: 100 }));
 
 var composer = new Hapi.Composer(manifest);
 
