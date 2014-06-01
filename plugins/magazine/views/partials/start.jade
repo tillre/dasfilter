@@ -1,6 +1,6 @@
 
 mixin start-teaser(type, article, showText)
-  if article._id
+  if article && article._id
     +teaser(type, article, showText)
 
 
