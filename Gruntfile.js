@@ -82,7 +82,7 @@ module.exports = function(grunt) {
 
 
   // create build
-  grunt.registerTask('build', ['clean', 'less', 'copy']);
+  grunt.registerTask('build', ['clean', 'svg2less', 'less', 'copy']);
 
 
   // install and build
@@ -103,6 +103,17 @@ module.exports = function(grunt) {
 
     runCmd(Path.join(__dirname, './node_modules/bower/bin/bower'), ['update'], cwd, done);
   });
+
+
+  grunt.registerMultiTask('svg2less', 'create css file with inline svgs', function() {
+    var DirectoryEncoder = require('directory-encoder');
+    var de = new DirectoryEncoder(
+      Path.resolve(__dirname, this.data.src),
+      Path.resolve(__dirname, this.data.dest),
+      { prefix: this.data.prefix || '.svg-' });
+    de.encode();
+  });
+
 
   // helpers
 
