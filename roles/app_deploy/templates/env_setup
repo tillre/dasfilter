@@ -1,0 +1,3 @@
+{% for key, value in app_env_vars.iteritems() %}
+export {{ key }}={{ value }}
+{% endfor %}

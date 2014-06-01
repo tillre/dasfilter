@@ -1,0 +1,14 @@
+
+- name: Install required packages
+  sudo: yes
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items: app_packages
+  when: app_packages is defined
+
+- name: Clone app repository
+  git: repo={{ app_repo }} dest={{ deploy_home }}/app update=no accept_hostkey=yes
+
+- name: Open app ports
+  sudo: yes
+  shell: ufw allow {{ item }}
+  with_items: app_open_ports

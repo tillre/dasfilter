@@ -1,0 +1,18 @@
+
+- name: Add nodejs package repo
+  sudo: yes
+  apt_repository: repo='ppa:chris-lea/node.js' state=present
+
+- name: Install nodejs
+  sudo: yes
+  apt: pkg=nodejs state=latest update_cache=yes
+
+# install global node packages
+
+- name: Install forever
+  sudo: yes
+  shell: npm install forever -g
+
+- name: Install grunt-cli
+  sudo: yes
+  shell: npm install grunt-cli -g

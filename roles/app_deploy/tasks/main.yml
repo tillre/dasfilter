@@ -1,0 +1,34 @@
+
+# code & packages
+
+- name: Update repo
+  git: repo={{ app_repo }} dest={{ deploy_home }}/app accept_hostkey=yes
+
+- name: Install base npm packages
+  shell: cd {{ deploy_home }}/app; npm install
+
+- name: Install remaining packages and build
+  shell: cd {{ deploy_home}}/app; grunt install
+
+# env vars
+
+- name: Copy env setup
+  template: src=env_setup dest={{ deploy_home }}
+
+- name: Source env setup on login
+  lineinfile: dest={{ deploy_home }}/.profile line="source env_setup"
+
+# forever
+
+- name: Check if app is running
+  shell: forever list
+  register: forever_list
+  changed_when: false
+
+- name: Restart app
+  shell: cd {{ deploy_home }}/app; source {{ deploy_home }}/env_setup && forever restart index.js executable=/bin/bash
+  when: forever_list.stdout.find('index.js') != -1
+
+- name: Start app
+  shell: cd {{ deploy_home }}/app; source {{ deploy_home }}/env_setup && forever start index.js executable=/bin/bash
+  when: forever_list.stdout.find('index.js') == -1

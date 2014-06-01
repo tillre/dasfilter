@@ -1,0 +1,5 @@
+- hosts: proxy
+  user: deploy
+
+  roles:
+    - proxy

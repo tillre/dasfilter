@@ -1,0 +1,12 @@
+- hosts: admin
+  remote_user: deploy
+  vars:
+    app_repo: git@bitbucket.org:skoni/df-admin-server.git
+    app_dir: "{{ deploy_home }}/app"
+    app_open_ports:
+      - 8070
+
+  roles:
+    # - debug
+    - nodejs
+    - app_provision
