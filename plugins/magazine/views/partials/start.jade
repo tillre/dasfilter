@@ -1,21 +1,26 @@
 
+mixin start-teaser(type, article, showText)
+  if article._id
+    +teaser(type, article, showText)
+
+
 mixin start-oneway(group)
   if group.display === 'default'
-    +teaser('teaser-oneway', group.article)
+    +start-teaser('teaser-oneway', group.article)
   else if group.display === 'full'
-    +teaser('twaser-oneway-full', group.article)
+    +start-teaser('twaser-oneway-full', group.article)
 
 
 mixin start-twoway(group)
   if group.display === 'default'
-    +teaser('teaser-twoway-first', group.articles.one)
-    +teaser('teaser-twoway-second', group.articles.two)
+    +start-teaser('teaser-twoway-first', group.articles.one)
+    +start-teaser('teaser-twoway-second', group.articles.two)
   else if group.display === 'full'
-    +teaser('teaser-twoway-full', group.articles.one)
-    +teaser('teaser-twoway-full', group.articles.two)
+    +start-teaser('teaser-twoway-full', group.articles.one)
+    +start-teaser('teaser-twoway-full', group.articles.two)
 
 
 mixin start-threeway(group)
-  +teaser('teaser-threeway', group.articles.one)
-  +teaser('teaser-threeway', group.articles.two)
-  +teaser('teaser-threeway', group.articles.three)
+  +start-teaser('teaser-threeway', group.articles.one)
+  +start-teaser('teaser-threeway', group.articles.two)
+  +start-teaser('teaser-threeway', group.articles.three)
