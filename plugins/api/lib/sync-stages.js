@@ -10,7 +10,7 @@ module.exports = function(plugin, cores, resDefs) {
     var classes = [];
 
     // create start page stage when missing
-    cores.resources.StartStage.view('all').then(function(result) {
+    return cores.resources.StartStage.view('all').then(function(result) {
       if (result.rows.length > 0) {
         return null;
       }

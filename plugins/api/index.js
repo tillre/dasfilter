@@ -51,9 +51,7 @@ module.exports.register = function(plugin, options, next) {
     }));
 
   }).then(function() {
-    return syncStages = SyncStages(plugin, cores, resDefs);
 
-  }).then(function() {
     // create api
     coresHapi.createApi({
       auth: 'api-simple',
@@ -68,6 +66,9 @@ module.exports.register = function(plugin, options, next) {
         }
       }
     });
+
+    // fn to create a stage for every category
+    syncStages = SyncStages(plugin, cores, resDefs);
 
     // load api handlers
 

@@ -21,6 +21,7 @@
     "cores-hapi": "~0.9.x",
     "grunt": "~0.4.x",
     "lodash": "~2.4.1",
-    "df-resources": "git+ssh://git@bitbucket.org:skoni/df-resources.git"
+    "df-resources": "git+ssh://git@bitbucket.org:skoni/df-resources.git",
+    "longjohn": "~0.2.4"
   }
 }

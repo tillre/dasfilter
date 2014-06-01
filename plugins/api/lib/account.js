@@ -39,7 +39,7 @@ module.exports = function(userRes) {
   //
   function validate(username, password, callback) {
     return userRes.view('usernames', { key: username, include_docs: true }).then(function(result) {
-      console.log('view result', result);
+
       if (result.rows.length === 0) throw new Error('Unkown user');
 
       var user = result.rows[0].doc;
