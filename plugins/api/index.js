@@ -1,3 +1,4 @@
+var Hapi = require('hapi');
 var Path = require('path');
 var Q = require('kew');
 var _ = require('lodash');
