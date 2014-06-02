@@ -1,6 +1,6 @@
-proxy_admin_url: http://admin.staging.dasfilter.net
-proxy_web_url: http://www.staging.dasfilter.net
-proxy_static_url: http://static.staging.dasfilter.net
+proxy_admin_url: http://admin.staging.dasfilter.com
+proxy_web_url: http://www.staging.dasfilter.com
+proxy_static_url: http://static.staging.dasfilter.com
 
-domain: staging.dasfilter.net
+domain: staging.dasfilter.com
 domain_redirects: ""

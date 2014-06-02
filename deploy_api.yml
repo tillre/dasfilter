@@ -20,6 +20,7 @@
 
       DF_API_KEY: "{{ api_key }}"
       DF_COOKIE_PASS: "{{ cookie_pass }}"
-      
+
   roles:
+    - debug
     - app_deploy

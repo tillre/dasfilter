@@ -25,10 +25,9 @@
   register: forever_list
   changed_when: false
 
-- name: Restart app
-  shell: cd {{ deploy_home }}/app; source {{ deploy_home }}/env_setup && forever restart index.js executable=/bin/bash
+- name: Stop app
+  shell: forever stop index.js
   when: forever_list.stdout.find('index.js') != -1
 
 - name: Start app
   shell: cd {{ deploy_home }}/app; source {{ deploy_home }}/env_setup && forever start index.js executable=/bin/bash
-  when: forever_list.stdout.find('index.js') == -1
