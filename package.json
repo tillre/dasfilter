@@ -17,7 +17,6 @@
     "hapi": "~5.x.x",
     "hapi-auth-basic": "~1.x.x",
     "good": "~2.x.x",
-    "cores": "~0.8.x",
     "cores-hapi": "~0.9.x",
     "grunt": "~0.4.x",
     "lodash": "~2.4.1",
