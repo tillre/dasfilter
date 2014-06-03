@@ -95,7 +95,6 @@ module.exports = function(apiUrl, apiUser, apiPass) {
       auth: { user: apiUser, pass: apiPass },
       qs: {
         include_docs: true,
-        include_refs: true,
         key: clsId
       }
     }, function(err, response, body) {
@@ -103,34 +102,12 @@ module.exports = function(apiUrl, apiUser, apiPass) {
       if (err) {
         return defer.reject(err);
       }
-      var payload = JSON.parse(body);
-      var stage = payload.rows[0].doc;
-
-      // get articles for auto lists
-      var promises = stage.aside.filter(function(item) {
-        return item.type_ === 'newest-of-category' || item.type_ === 'newest-of-collection';
-
-      }).map(function(item) {
-
-        item.articles = [];
-
-        getTeasers(
-          item.classification.id_,
-          new Date().toISOString(),
-          item.numArticles
-
-        ).then(function(docs) {
-          item.articles = docs;
-        });
-      });
-
-      Q.all(promises).then(function() {
-        defer.resolve(stage);
-      }, function(err) {
-        defer.reject(err);
-      });
+      var result = JSON.parse(body);
+      if (result.length === 0) {
+        return defer.reject('No cls stage found for id: ' + clsId);
+      }
+      defer.resolve(result.rows[0].doc);
     });
-
     return defer.promise;
   }
 
