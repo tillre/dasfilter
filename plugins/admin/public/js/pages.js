@@ -5,21 +5,21 @@
   var config = {
     title: 'Pages',
     type: 'Page',
-    path: '/pages',
-    list: {
-      headers: [
-        { path: 'title' },
-        { path: 'slug' }
-      ]
-    }
+    path: '/pages'
   };
 
   module.controller('PagesCtrl', function(
     $scope,
-    $location
+    $location,
+    crResources,
+    crPagination
   ) {
 
     angular.extend($scope, angular.copy(config));
+    $scope.list = {
+      columns: [{ path: 'title' }, { path: 'slug'}],
+      paginator: crPagination.createViewPaginator(crResources.get(config.type), 'all')
+    };
     $scope.$on('cr:list:select', function(e, id) {
       e.stopPropagation();
       $location.path(config.path + '/' + id);

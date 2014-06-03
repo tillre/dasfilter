@@ -5,22 +5,15 @@
   var config = {
     title: 'Categories',
     type: 'Category',
-    path: '/categories',
-    list: {
-      headers: [
-        { path: 'title' },
-        { path: 'slug' }
-      ],
-      options: {
-        buttons: [{ event: 'show:category', icon: 'eye-open' }]
-      }
-    }
+    path: '/categories'
   };
 
 
   module.controller('CategoriesCtrl', function(
     $scope,
-    $location
+    $location,
+    crResources,
+    crPagination
   ) {
 
     $scope.$on('show:category', function(e, id) {
@@ -29,6 +22,10 @@
     });
 
     angular.extend($scope, angular.copy(config));
+    $scope.list = {
+      columns: [{ path: 'title' }, { path: 'slug'}],
+      paginator: crPagination.createViewPaginator(crResources.get(config.type), 'all')
+    };
     $scope.$on('cr:list:select', function(e, id) {
       e.stopPropagation();
       $location.path(config.path + '/' + id);

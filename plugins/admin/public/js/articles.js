@@ -39,8 +39,10 @@
     $scope,
     $location,
     crResources,
+    crPagination,
     dfMagazine
   ) {
+
 
     // type can be published or draft atm
     var type = $location.path().split('/').pop();
@@ -72,15 +74,19 @@
           }
         }
       ],
-      limit: 10,
-      view: 'by_state_date',
-      params: {
-        descending: true,
-        startkey: [viewType, {}],
-        endkey: [viewType],
-        include_refs: true
-      }
+      paginator: crPagination.createViewPaginator(
+        crResources.get(config.type),
+        'by_state_date',
+        {
+          descending: true,
+          startkey: [viewType, {}],
+          endkey: [viewType],
+          include_refs: true
+        }
+      )
     };
+
+    $scope.showSearch = true;
 
     $scope.title = 'Articles: ' + type;
     $scope.type = 'Article';

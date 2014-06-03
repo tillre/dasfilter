@@ -5,22 +5,15 @@
   var config = {
     title: 'Collections',
     type: 'Collection',
-    path: '/collections',
-    list: {
-      headers: [
-        { path: 'title' },
-        { path: 'slug' }
-      ],
-      options: {
-        buttons: [{ event: 'show:category', icon: 'eye-open' }]
-      }
-    }
+    path: '/collections'
   };
 
 
   module.controller('CollectionsCtrl', function(
     $scope,
     $location,
+    crResources,
+    crPagination,
     dfMagazine
   ) {
 
@@ -30,6 +23,10 @@
     });
 
     angular.extend($scope, angular.copy(config));
+    $scope.list = {
+      columns: [{ path: 'title' }, { path: 'slug'}],
+      paginator: crPagination.createViewPaginator(crResources.get(config.type), 'all')
+    };
     $scope.$on('cr:list:select', function(e, id) {
       e.stopPropagation();
       $location.path(config.path + '/' + id);

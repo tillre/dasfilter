@@ -50,7 +50,10 @@ module.exports = function(grunt) {
       assets: {
         files: ['./plugins/**/public/**/*.*',
                 './plugins/**/*.less'],
-        tasks: ['build']
+        tasks: ['build', 'serve'],
+        options: {
+          interrupt: true
+        }
       }
     },
 
@@ -75,10 +78,14 @@ module.exports = function(grunt) {
   // create build
   grunt.registerTask('build', ['clean', 'less', 'copy']);
 
-
   // install and build
   grunt.registerTask('install', ['npm', 'bower', 'build']);
 
+  grunt.registerTask('serve', 'start server', function() {
+    var done = this.async();
+    require('./index.js');
+    // never call done, interrupt manually
+  });
 
   grunt.registerMultiTask('npm', 'install packages', function() {
     var done = this.async();
@@ -86,7 +93,6 @@ module.exports = function(grunt) {
 
     runCmd('npm', ['install'], cwd, done);
   });
-
 
   grunt.registerMultiTask('bower', 'install components', function() {
     var done = this.async();

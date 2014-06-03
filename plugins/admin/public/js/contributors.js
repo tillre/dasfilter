@@ -5,18 +5,22 @@
   var config = {
     title: 'Contributors',
     type: 'Contributor',
-    path: '/contributors',
-    list: {
-      headers: [{ path: 'lastname' }, { path: 'firstname' }]
-    }
+    path: '/contributors'
   };
 
   module.controller('ContributorsCtrl', function(
     $scope,
-    $location
+    $location,
+    crResources,
+    crPagination
   ) {
 
     angular.extend($scope, angular.copy(config));
+    $scope.list = {
+      columns: [{ path: 'lastname' }, { path: 'firstname' }],
+      paginator: crPagination.createViewPaginator(crResources.get(config.type), 'all')
+    };
+
     $scope.$on('cr:list:select', function(e, id) {
       e.stopPropagation();
       $location.path(config.path + '/' + id);

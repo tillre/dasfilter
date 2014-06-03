@@ -34,7 +34,6 @@ module.exports = function(app, viewContext) {
           reply('You are being redirected...').redirect(app.paths.admin);
 
         }).fail(function(err) {
-          console.log('fail', err);
           reply.view(
             'login',
             _.merge({ message: 'Invalid username or password' }, viewContext)

@@ -5,22 +5,25 @@
   var config = {
     title: 'Tags',
     type: 'Tag',
-    path: '/tags',
-    list: {
-      headers: [
-        { path: 'name' },
-        { path: 'slug' }
-      ]
-    }
+    path: '/tags'
   };
 
 
   module.controller('TagsCtrl', function(
     $scope,
-    $location
+    $location,
+    crResources,
+    crPagination
   ) {
 
     angular.extend($scope, angular.copy(config));
+
+    $scope.list = {
+      columns: [{ path: 'name' }, { path: 'slug'}],
+      paginator: crPagination.createViewPaginator(crResources.get(config.type), 'all')
+    };
+    $scope.showSearch = true;
+
     $scope.$on('cr:list:select', function(e, id) {
       e.stopPropagation();
       $location.path(config.path + '/' + id);

@@ -3,10 +3,10 @@
     h3 {{ title }}
 
   .col-md-12
-    div(cr-model-list, type="{{ startList.type }}", view="startList.view", columns="startList.columns", limit="startList.limit")
+    div(cr-model-list, columns="startList.columns", paginator="startList.paginator")
 
   .col-md-12
-    div(cr-model-list, type="{{ categoriesList.type }}", view="categoriesList.view", columns="categoriesList.columns", limit="categoriesList.limit")
+    div(cr-model-list, columns="categoriesList.columns", paginator="categoriesList.paginator")
 
   .col-md-12
-    div(cr-model-list, type="{{ collectionsList.type }}", view="collectionsList.view", columns="collectionsList.columns", limit="collectionsList.limit")
+    div(cr-model-list, columns="collectionsList.columns", paginator="collectionsList.paginator")

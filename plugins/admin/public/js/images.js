@@ -12,6 +12,8 @@
   module.controller('ImagesCtrl', function(
     $scope,
     $location,
+    crResources,
+    crPagination,
     dfApp
   ) {
 
@@ -28,11 +30,12 @@
         { path: 'title' },
         { path: 'family' }
       ],
-      view: 'all',
-      params: {
-        descending: true
-      }
+      paginator: crPagination.createViewPaginator(
+        crResources.get(config.type), 'all', { descending: true }
+      )
     };
+
+    $scope.showSearch = true;
 
     angular.extend($scope, angular.copy(config));
 

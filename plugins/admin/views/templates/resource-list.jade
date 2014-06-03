@@ -10,4 +10,7 @@
 
 .row
   .col-md-12
-    div(cr-model-list, type="{{type}}", view="list.view", params="list.params", columns="list.columns", limit="list.limit")
+    br
+    div(cr-search-box, ng-if="showSearch" type="type", paginator="list.paginator")
+  .col-md-12
+    div(cr-model-list, columns="list.columns", paginator="list.paginator")
