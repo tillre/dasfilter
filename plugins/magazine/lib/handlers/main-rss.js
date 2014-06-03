@@ -3,7 +3,7 @@ module.exports = function mainRssHandler(app) {
 
   return function(request, reply) {
 
-    contet.api.getTeasersByClsDate(
+    app.api.getTeasersByClsDate(
       '*',
       new Date().toISOString(),
       25
