@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         files: ['./plugins/**/public/**/*.*',
                 './plugins/**/*.less',
                 './plugins/magazine/design/icons/**/*.svg'],
-        tasks: ['build']
+        tasks: ['build', 'serve']
       }
     },
 
@@ -88,6 +88,11 @@ module.exports = function(grunt) {
   // install and build
   grunt.registerTask('install', ['npm', 'bower', 'build']);
 
+  grunt.registerTask('serve', 'start server', function() {
+    var done = this.async();
+    require('./index.js');
+    // never call done, interrupt manually
+  });
 
   grunt.registerMultiTask('npm', 'install packages', function() {
     var done = this.async();
@@ -96,14 +101,12 @@ module.exports = function(grunt) {
     runCmd('npm', ['install'], cwd, done);
   });
 
-
   grunt.registerMultiTask('bower', 'install components', function() {
     var done = this.async();
     var cwd = Path.resolve(this.data);
 
     runCmd(Path.join(__dirname, './node_modules/bower/bin/bower'), ['update'], cwd, done);
   });
-
 
   grunt.registerMultiTask('svg2less', 'create css file with inline svgs', function() {
     var DirectoryEncoder = require('directory-encoder');
@@ -113,7 +116,6 @@ module.exports = function(grunt) {
       { prefix: this.data.prefix || '.svg-' });
     de.encode();
   });
-
 
   // helpers
 
