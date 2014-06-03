@@ -4,7 +4,7 @@
     app_repo: git@bitbucket.org:skoni/df-api-server.git
     app_dir: "{{ deploy_home }}/app"
     app_env_vars:
-      NODE_ENV: 'staging'
+      NODE_ENV: "{{ node_env }}"
 
       DF_API_PORT: 8060
       DF_STATIC_PORT: 8050

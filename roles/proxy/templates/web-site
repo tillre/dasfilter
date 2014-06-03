@@ -9,15 +9,15 @@ upstream web {
 }
 
 server {
-  # redirect to www subdomain
+  # redirect to domain
   listen 80;
-  server_name {{ domain }} {{ domain_redirects }};
-  return 301 http://www.{{ domain }}$request_uri;
+  server_name www.{{ domain }} {{ domain_redirects }};
+  return 301 http://{{ domain }}$request_uri;
 }
 
 server {
   listen 80 default_server;
-  server_name www.{{ domain }};
+  server_name {{ domain }};
 
   location / {
     proxy_redirect off;

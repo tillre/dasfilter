@@ -1,5 +1,7 @@
+node_env: 'production'
+
+proxy_web_url: http://dasfilter.com
 proxy_admin_url: http://admin.dasfilter.com
-proxy_web_url: http://www.dasfilter.com
 proxy_static_url: http://static.dasfilter.com
 
 domain: dasfilter.com
