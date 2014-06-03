@@ -13,18 +13,12 @@ mixin cls-aside-article-collection(c)
       +teaser('teaser-cls-aside', article)
 
 
-mixin cls-aside-image-teaser(t)
-  .cls-aside-group
-    h2(class="cls-aside-group-title")= t.title
-
-
 mixin cls-aside(aside)
   each item in aside
     case item.type_
-      when "article-collection": +cls-aside-article-collection(item.collection)
+      when "articles": +cls-aside-article-collection(item)
       when "newest-of-category": +cls-aside-article-collection(item)
       when "newest-of-collection": +cls-aside-article-collection(item)
-      when "image-teaser": +cls-aside-image-teaser(item.teaser)
 
 
 doctype html

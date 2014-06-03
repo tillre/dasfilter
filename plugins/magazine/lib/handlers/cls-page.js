@@ -1,6 +1,53 @@
+var Util = require('util');
+var _ = require('lodash');
 var Q = require('kew');
 
 var NUM_ARTICLES = 12;
+
+
+function prepareStage(app, id) {
+
+  return app.api.getClsStage(id).then(function(stage) {
+
+    // load auto and manual articles
+    var promises = [];
+    var refs = {};
+
+    // load auto articles and collect manual article refs
+    stage.aside.forEach(function(item) {
+      if (item.type_ === 'newest-of-category' || item.type_ === 'newest-of-collection') {
+        promises.push(app.api.getTeasersByClsDate(
+          item.classification.id_,
+          new Date().toISOString(),
+          item.numArticles
+
+        ).then(function(docs) {
+          item.articles = docs;
+        }));
+      }
+      else if (item.type_ === 'articles') {
+        item.articles.forEach(function(a) {
+          refs[a.id_] = a;
+        });
+      }
+    });
+
+    // load manual articles and merge them into the stage refs
+    var ids = Object.keys(refs);
+    promises.push(
+      app.api.getTeasersByIds(ids).then(function(docs) {
+        docs.forEach(function(doc) {
+          _.merge(refs[doc._id], doc);
+        });
+      })
+    );
+
+    // handle all created promises
+    return Q.all(promises).then(function() {
+      return stage;
+    });
+  });
+}
 
 
 module.exports = function clsHandler(app) {
@@ -20,7 +67,7 @@ module.exports = function clsHandler(app) {
 
       var stage = null;
 
-      return app.api.getClsStage(cls._id).then(function(s) {
+      return prepareStage(app, cls._id).then(function(s) {
         stage = s;
 
         return app.api.getTeasersByClsDate(
@@ -30,6 +77,7 @@ module.exports = function clsHandler(app) {
         );
 
       }).then(function(docs) {
+
         var nextDate = '';
         if (docs.length > NUM_ARTICLES) {
           nextDate = docs[docs.length - 2].date;
