@@ -22,5 +22,5 @@
       DF_COOKIE_PASS: "{{ cookie_pass }}"
 
   roles:
-    - debug
+    # - debug
     - app_deploy
