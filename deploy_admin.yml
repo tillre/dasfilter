@@ -4,6 +4,7 @@
     app_repo: git@bitbucket.org:skoni/df-admin-server.git
     app_dir: "{{ deploy_home }}/app"
     app_env_vars:
+      NODE_ENV: "{{ node_env }}"
       DF_API_URL: "http://{{ groups['api'][0] }}:8060"
       DF_API_KEY: "{{ api_key }}"
 
