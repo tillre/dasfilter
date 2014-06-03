@@ -68,7 +68,7 @@ function init(plugin, config, api, resources, next) {
       assets: config.urls.web + '/static/assets',
       magazine: config.urls.web
   };
-
+  plugin.log(['magazine'], 'paths: ' + JSON.stringify(urls));
 
   var app = {
     debug: config.debug,
