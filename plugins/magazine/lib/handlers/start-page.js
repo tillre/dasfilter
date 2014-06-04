@@ -76,6 +76,9 @@ function prepareStage(app) {
         ++di;
       }
 
+      if (layout.presetIds.length === 0) {
+        return stage;
+      }
       // get docs for preset teasers
       return app.api.getTeasersByIds(layout.presetIds);
 
