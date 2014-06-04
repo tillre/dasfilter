@@ -1,29 +1,60 @@
 
-.cls-aside {
-    background-color: @cls-aside-bg-color;
+.cls-main {
+    .teaser-cls {
+        .teaser-info {
+            .byline {
+                padding-top: @gutter * 0.25;
+            }
+            .title-text {
+                padding: @gutter * 0.25 0 @gutter * 0.5;
+                h2, h3 {
+                    display: inline;
+                }
+                h3:before {
+                    content: ' • ';
+                    display: inline;
+                }
+            }
+            .text {
+                padding: @gutter * 0.5 0;
+                border-top: 1px solid @extra-light-fg-color;
+                border-bottom: 3px solid @fg-color;
+                .box-sizing(border-box);
+            }
+            .title-text {
+                padding-top: 0;
+            }
+        }
+    }
 }
 
 .cls-aside-group {
-    .row;
-    padding-top: @gutter * 2;
+    overflow: hidden;
+    padding: 0 @gutter;
 }
 
 .cls-aside-group-title {
     .font-aside-title;
     text-transform: uppercase;
-    padding-top: @gutter * 0.125;
-    padding-bottom: @gutter;
-    border-top: 5px solid @cls-aside-title-color;
-    color: @cls-aside-title-color;
+    margin-bottom: @gutter;
+    border-top: 5px solid @fg-color;
+    border-bottom: 1px solid @light-fg-color;
+    padding: @gutter * 0.25 @gutter;
+    text-align: center;
 }
 
 .teaser-cls-aside {
     margin-bottom: @gutter * 2;
+    width: 50%;
+    float: left;
+    .box-sizing(border-box);
+    padding: 0 @gutter * 0.5;
 
     .teaser-info {
         .no-row;
         .teaser-content {
             .no-column;
+            margin: 0;
         }
         .byline {
             display: none;
@@ -31,20 +62,21 @@
         .title {
             margin-top: @gutter * 0.25;
         }
-        h2 {
-            .font-teaser-aside-title;
-        }
-        h3 {
-            .font-teaser-aside-subtitle;
-        }
         h2, h3 {
             display: inline;
             color: @cls-aside-fg-color;
+            .size-normal();
         }
-        h2:after {
-            content: ' - ';
+        h3:before {
+            content: ' • ';
             display: inline;
         }
+    }
+}
+
+@media(min-width: @break-m-portrait) {
+    .teaser-cls-aside {
+        padding: 0 @gutter;
     }
 }
 
@@ -74,6 +106,7 @@
 
     .cls-aside {
         width: @aside-width;
+        background-color: @cls-aside-bg-color;
     }
     .cls-aside-inner {
         .row-right(1);
@@ -83,9 +116,10 @@
 
     .cls-aside-group {
         .no-row;
+        padding-top: @gutter * 2;
     }
     .cls-aside-group-title {
-        padding-bottom: @gutter * 0.5;
+        padding-bottom: @gutter * 0.25;
     }
 
     .teaser-cls {
@@ -102,6 +136,87 @@
     }
 
     .teaser-cls-aside {
+        width: auto;
+        float: none;
         margin-bottom: @gutter;
+        padding: 0;
+
+        .teaser-info {
+            .no-row;
+            .teaser-content {
+                .no-column;
+            }
+        }
+    }
+}
+
+
+
+@media (min-width: @break-m-portrait) {
+
+    .cls-main {
+        .teaser-cls {
+            .teaser-info {
+                position: relative;
+                .byline {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    .transform(translate(0, -100%));
+                    background-color: @fg-color;
+                    overflow: hidden;
+                    padding-top: 0;
+
+                    .label {
+                        position: static;
+                        .transform(translate(0, 0));
+                        float: left;
+                    }
+                    .contributor {
+                        color: @bg-color;
+                        padding: 3px 8px;
+                        float: left;
+                    }
+                }
+                .title-text {
+                    padding-top: @gutter * 0.5;
+                }
+            }
+        }
+        .teaser-cls:not(:first-child) {
+            overflow: hidden;
+
+            .teaser-image {
+                float: left;
+                width: 40%;
+                .box-sizing(border-box);
+            }
+            .teaser-info {
+                float: right;
+                width: 60%;
+                .box-sizing(border-box);
+                padding-left: @gutter;
+
+                .byline {
+                    .transform(translate(-100%, 0));
+                    .contributor {
+                        float: none;
+                    }
+                }
+                .title {
+                    overflow: hidden;
+                }
+                .title-text {
+                    padding-top: 0;
+
+                    h2 {
+                        .font-teaser-title-smaller;
+                    }
+                    h3 {
+                        .font-teaser-subtitle-smaller;
+                    }
+                }
+            }
+        }
     }
 }

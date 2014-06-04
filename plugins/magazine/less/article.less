@@ -92,7 +92,7 @@
     h4 {
         .font-aside-title;
         text-transform: uppercase;
-        color: @medium-fg-color;
+        color: @fg-color;
         padding-top: @gutter * 0.125;
         margin-bottom: @gutter * 0.5;
         border-top: 3px solid @extra-light-fg-color;
@@ -126,8 +126,8 @@
         h2, h3 {
             display: inline;
         }
-        h2:after {
-            content: ' - ';
+        h3:before {
+            content: ' • ';
             display: inline;
         }
     }
@@ -141,6 +141,15 @@
     }
     .media-inner {
         .column;
+    }
+
+    .article-image {
+        .media-outer {
+            .no-row;
+        }
+        .media-inner {
+            .no-column;
+        }
     }
 
     .article-related-teaser {
@@ -158,6 +167,16 @@
     }
 }
 
+@media (min-width: @break-m-landscape) {
+    .article-image {
+        .media-outer {
+            .row;
+        }
+        .media-inner {
+            .column;
+        }
+    }
+}
 
 @media (min-width: @break-xl) {
 

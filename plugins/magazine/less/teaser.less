@@ -1,6 +1,7 @@
 
 .teaser {
     margin-bottom: @gutter * 3;
+    @label-margin: 8px;
 
     .teaser-image {
         img {
@@ -16,6 +17,8 @@
         .row;
         .teaser-content {
             .column;
+            margin-left: @label-margin;
+            margin-right: @label-margin;
         }
         h2 {
             .font-teaser-title;
@@ -32,11 +35,30 @@
             display: block;
         }
         .byline {
-            margin-top: @gutter * 0.4;
+            position: relative;
             color: @light-fg-color;
-            overflow: hidden;
             display: block;
 
+            .label {
+                position: absolute;
+                left: -@label-margin;
+                top: 0;
+                .transform(translate(0, -100%));
+                color: white;
+                background-color: @label-color;
+                padding: 3px @label-margin;
+                .font-teaser-label;
+                letter-spacing: 0.025em;
+                text-transform: uppercase;
+            }
+            .category {
+                margin-top: @gutter * 0.4;
+                display: inline-block;
+                .font-teaser-category;
+                color: @cls-color;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
             .contributor {
                 display: inline-block;
                 .font-teaser-contributor;
@@ -51,23 +73,15 @@
                 .font-teaser-date;
                 float: right;
             }
-            .category {
-                display: inline-block;
-                .font-teaser-category;
-                color: @cls-color;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
         }
         .text {
-            margin: @gutter * 0.25 0 @gutter * 3;
             .font-teaser-text;
-            color: @medium-fg-color;
+            color: @fg-color;
         }
     }
 }
 
-@media (min-width: @break-m-landscape) {
+@media (min-width: @break-m-portrait) {
     .teaser {
         margin-bottom: @gutter * 2.5;
 
@@ -88,6 +102,14 @@
             h3 {
                 .font-teaser-subtitle-smaller;
             }
+                h2, h3 {
+                    display: inline;
+                }
+                h3:before {
+                    content: ' • ';
+                    display: inline;
+                }
+
         }
     }
 }

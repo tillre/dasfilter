@@ -13,6 +13,8 @@ mixin teaser(teaserType, article, showText)
     .teaser-info
       .teaser-content
         small(class="byline")
+          if (article.classification.label)
+            h4(class="label")= article.classification.label
           if !inCategory
             - var category = article.classification.category
             a(class="category", href=urls.classification(category))= category.title
@@ -27,7 +29,8 @@ mixin teaser(teaserType, article, showText)
           span(class="date")= formatDate(article.date)
 
         a(class="title", href=urls.article(article.classification.category, article))
-          h2= article.title
-          h3= article.subtitle
+          .title-text
+            h2= article.title
+            h3= article.subtitle
           if showText
             .text!= markdown(article.teaser)

@@ -27,14 +27,14 @@
         }
         .seperator {
             display: block;
-            margin: @gutter * 0.25 0;
+            margin: @gutter * 0.125 0;
             line-height: 0;
             &:before {
                 content: '';
                 display: inline-block;
                 width: @gutter * 4;
                 height: 0;
-                border-bottom: 2px solid @extra-light-fg-color;
+                border-bottom: 2px solid @fg-color;
             }
         }
     }
@@ -251,9 +251,15 @@
 
 @media (min-width: @break-m-portrait) {
 
-    @oneway-width: 60%;
+    @oneway-width: 70%;
     @twoway-width: 50%;
     @threeway-width: 100% / 3;
+
+    // .content-header {
+    //     .title {
+    //         text-align: center;
+    //     }
+    // }
 
     .content-section {
 
@@ -263,13 +269,6 @@
                     width: @oneway-width;
                     margin-left: auto;
                     margin-right: auto;
-                }
-                &.intro-text {
-                    .content-inner {
-                        width: 100%;
-                        padding-right: @gutter * 3;
-                        padding-left: @gutter * 3;
-                    }
                 }
             }
             .content-gallery.default {
@@ -307,7 +306,6 @@
                 display: table;
                 width: 100%;
             }
-
             .group {
                 width: @twoway-width;
                 display: table-cell;
@@ -336,6 +334,46 @@
         }
         &.threeway .group {
             width: @threeway-width;
+        }
+    }
+}
+
+@media (min-width: @break-m-landscape) {
+    @oneway-width: 60%;
+
+    .content-section {
+
+        &.oneway {
+            .content-text {
+                .content-inner {
+                    width: @oneway-width;
+                }
+            }
+            .content-gallery.default {
+                .content-inner {
+                    width: @oneway-width;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: @break-l) {
+    @oneway-width: 60%;
+
+    .content-section {
+
+        &.oneway {
+            .content-text {
+                .content-inner {
+                    width: @oneway-width;
+                }
+            }
+            .content-gallery.default {
+                .content-inner {
+                    width: @oneway-width;
+                }
+            }
         }
     }
 }

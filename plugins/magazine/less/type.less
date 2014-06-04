@@ -26,10 +26,13 @@
         .set-font-size(32; @l);
     }
     @media (min-width: @break-m-portrait) {
-        .set-font-size(36; @l);
+        .set-font-size(32; @l);
+    }
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(34; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(42; @l);
+        .set-font-size(36; @l);
     }
 }
 .size-article-subtitle(@l:1) {
@@ -38,10 +41,13 @@
         .set-font-size(31; @l);
     }
     @media (min-width: @break-m-portrait) {
-        .set-font-size(34; @l);
+        .set-font-size(31; @l);
+    }
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(33; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(40; @l);
+        .set-font-size(35; @l);
     }
 }
 
@@ -50,64 +56,74 @@
 //
 .size-teaser-title() {
     @l: 0.85;
-    .set-font-size(25; @l);
-    @media (min-width: @break-s-landscape) {
-        .set-font-size(27; @l);
-    }
     @media (min-width: @break-m-portrait) {
-        .set-font-size(30; @l);
+        .set-font-size(24; @l);
     }
-    @media (min-width: @break-l) {
-        .set-font-size(34; @l);
-    }
-}
-.size-teaser-subtitle {
-    @l: 0.85;
-    .set-font-size(24; @l);
-    @media (min-width: @break-s-landscape) {
-        .set-font-size(26; @l);
-    }
-    @media (min-width: @break-m-portrait) {
-        .set-font-size(29; @l);
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(28; @l);
     }
     @media (min-width: @break-l) {
         .set-font-size(32; @l);
     }
 }
-.size-teaser-title-smaller() {
+.size-teaser-subtitle {
     @l: 0.85;
+    @media (min-width: @break-m-portrait) {
+        .set-font-size(23; @l);
+    }
     @media (min-width: @break-m-landscape) {
         .set-font-size(27; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(30; @l);
+        .set-font-size(31; @l);
+    }
+}
+.size-teaser-title-smaller() {
+    @l: 0.85;
+    @media (min-width: @break-m-portrait) {
+        .set-font-size(21; @l);
+    }
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(24; @l);
+    }
+    @media (min-width: @break-l) {
+        .set-font-size(27; @l);
     }
 }
 .size-teaser-subtitle-smaller {
     @l: 0.85;
+    @media (min-width: @break-m-portrait) {
+        .set-font-size(20; @l);
+    }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(26; @l);
+        .set-font-size(23; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(29; @l);
+        .set-font-size(26; @l);
     }
 }
 .size-teaser-title-larger() {
     @l: 0.85;
+    @media (min-width: @break-m-portrait) {
+        .set-font-size(28; @l);
+    }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(36; @l);
+        .set-font-size(32; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(42; @l);
+        .set-font-size(36; @l);
     }
 }
 .size-teaser-subtitle-larger {
     @l: 0.85;
+    @media (min-width: @break-m-portrait) {
+        .set-font-size(27; @l);
+    }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(34; @l);
+        .set-font-size(31; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(40; @l);
+        .set-font-size(35; @l);
     }
 }
 
@@ -120,10 +136,10 @@
         .set-font-size(22);
     }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(24);
+        .set-font-size(22);
     }
     @media (min-width: @break-l) {
-        .set-font-size(26);
+        .set-font-size(22);
     }
 }
 .size-normal {
@@ -134,11 +150,15 @@
     @media (min-width: @break-m-portrait) {
         .set-font-size(19);
     }
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(19.5);
+    }
     @media (min-width: @break-l) {
         .set-font-size(20);
     }
 }
 .size-small {
+    letter-spacing: 0.01em;
     .set-font-size(16);
     @media (min-width: @break-s-landscape) {
         .set-font-size(16);
@@ -166,7 +186,7 @@ h2 {
     .type1-light;
 }
 h3 {
-    .size-normal;
+    .size-article-subtitle;
     .type1-light;
 }
 h4, h5, h6 {
@@ -222,6 +242,10 @@ small {
 .font-teaser-subtitle-larger {
     .type1-light;
     .size-teaser-subtitle-larger();
+}
+.font-teaser-label {
+    .type2-regular;
+    .size-small();
 }
 .font-aside-title {
     .type2-bold;

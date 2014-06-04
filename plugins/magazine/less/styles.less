@@ -7,8 +7,8 @@
 // breakpoints
 @break-s-landscape: 28em;
 @break-m-portrait: 45em;
-@break-m-landscape: 57em;
-@break-l: 75em;
+@break-m-landscape: 60em;
+@break-l: 81em;
 @break-xl: 100em;
 
 @max-page-width: 86em;
@@ -28,13 +28,13 @@
         margin-left: @gutter * (1 + @n);
     }
     @media(min-width: @break-m-portrait) {
-        margin-left: @gutter * (1.5 + @n);
+        margin-left: @gutter * (0 + @n);
     }
     @media(min-width: @break-m-landscape) {
         margin-left: @gutter * (2 + @n);
     }
     @media(min-width: @break-l) {
-        margin-left: @gutter * (3 + @n);
+        margin-left: @gutter * (4 + @n);
     }
     @media(min-width: @break-xl) {
         margin-left: 0;
@@ -48,13 +48,13 @@
         margin-right: @gutter * (1 + @n);
     }
     @media(min-width: @break-m-portrait) {
-        margin-right: @gutter * (1.5 + @n);
+        margin-right: @gutter * (0 + @n);
     }
     @media(min-width: @break-m-landscape) {
         margin-right: @gutter * (2 + @n);
     }
     @media(min-width: @break-l) {
-        margin-right: @gutter * (3 + @n);
+        margin-right: @gutter * (4 + @n);
     }
     @media(min-width: @break-xl) {
         margin-right: 0;
@@ -99,6 +99,7 @@
 @extra-extra-light-fg-color: #e7e7e7;
 @link-color: #BD2FB7;
 @hr-color: #ddd;
+@label-color: #C9BC7B;
 
 @header-bg-color: #e7e7e7;
 @header-border-color: #d0d0d0;

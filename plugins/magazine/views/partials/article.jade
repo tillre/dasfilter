@@ -45,15 +45,20 @@ mixin article(article)
           .media-outer
             .media-inner
               div(class="embed-source")!= article.header.embed.embed
+
       else if hasGallery
         .article-media
           .media-outer
             .media-inner
               +slideshow(article.header.gallery.images, 'slideshow-header')
-      else if hasAltImage
-        +image(article.header.altImage, 'article-header')
       else
-        +image(article.header.image, 'article-header')
+        .article-media(class="article-image")
+          .media-outer
+            .media-inner
+              if hasAltImage
+                +image(article.header.altImage, 'article-header')
+              else
+                +image(article.header.image, 'article-header')
 
       if article.header.caption
         .caption-outer
