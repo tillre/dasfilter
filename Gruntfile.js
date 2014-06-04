@@ -58,8 +58,12 @@ module.exports = function(grunt) {
       assets: {
         files: ['./plugins/**/public/**/*.*',
                 './plugins/**/*.less',
+                '!./plugins/**/svg.generated.less',
                 './plugins/magazine/design/icons/**/*.svg'],
-        tasks: ['build', 'serve']
+        tasks: ['build', 'serve'],
+        options: {
+          interrupt: true
+        }
       }
     },
 
