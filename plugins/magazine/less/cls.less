@@ -179,6 +179,12 @@
                     }
                 }
                 .title-text {
+                    h2, h3 {
+                        display: block;
+                    }
+                    h3:before {
+                        content: '';
+                    }
                     padding-top: @gutter * 0.5;
                 }
             }
@@ -208,7 +214,13 @@
                 }
                 .title-text {
                     padding-top: 0;
-
+                    h2, h3 {
+                        display: inline;
+                    }
+                    h3:before {
+                        content: ' • ';
+                        display: inline;
+                    }
                     h2 {
                         .font-teaser-title-smaller;
                     }
