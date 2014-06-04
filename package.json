@@ -1,6 +1,6 @@
 {
   "name": "df-resources",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "resource definitions",
   "main": "index.js",
   "private": true,
@@ -15,6 +15,7 @@
   "dependencies": {
     "kew": "~0.4.x",
     "jski": "~0.6.1",
-    "walk-fs": "0.0.2"
+    "walk-fs": "0.0.2",
+    "cores": "~0.8.x"
   }
 }
