@@ -39,15 +39,15 @@ html(lang="de")
   body
     +header(classifications, classification)
 
-    main
-      .index-page(class="cls-page")
+    main.index-page.cls-page
+      .cls-wrapper
         .cls-main
           .cls-main-inner
             each article in articles
               +teaser('teaser-cls', article, true)
             if nextDate
               +more(urls.current() + '?date=' + nextDate)
-        aside(class="cls-aside")
+        aside.cls-aside
           .cls-aside-inner
             if stage
               +cls-aside(stage.aside)

@@ -1,0 +1,32 @@
+
+mixin start-teaser(type, article, showText)
+  if article && article._id
+    +teaser(type, article, showText)
+
+
+mixin start-oneway(group)
+  if group.display === 'full'
+    +start-teaser('teaser-oneway-full', group.article)
+  else
+    +start-teaser('teaser-oneway', group.article)
+    
+mixin start-twoway(group)
+  if group.display === 'full'
+    +start-teaser('teaser-twoway-full', group.articles.one)
+    +start-teaser('teaser-twoway-full', group.articles.two)
+  else
+    +start-teaser('teaser-twoway-first', group.articles.one)
+    +start-teaser('teaser-twoway-second', group.articles.two)
+
+
+mixin start-threeway(group)
+  if group.display === 'full'
+    +start-teaser('teaser-threeway-full', group.articles.one)
+    +start-teaser('teaser-threeway-full', group.articles.two)
+    +start-teaser('teaser-threeway-full', group.articles.three)
+  else
+    +start-teaser('teaser-threeway', group.articles.one)
+    +start-teaser('teaser-threeway', group.articles.two)
+    +start-teaser('teaser-threeway', group.articles.three)
+
+    

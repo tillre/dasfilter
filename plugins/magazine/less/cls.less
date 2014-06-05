@@ -85,7 +85,7 @@
     @main-width: (100% / 3) * 2;
     @aside-width: (100% / 3);
 
-    .cls-page {
+    .cls-wrapper {
         display: table;
         table-layout: fixed;
         width: 100%;
@@ -232,5 +232,12 @@
                 }
             }
         }
+    }
+}
+
+
+@media (min-width: @break-xl) {
+    .cls-wrapper {
+        .column;
     }
 }

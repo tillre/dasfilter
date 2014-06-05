@@ -22,7 +22,7 @@
 @gutter: @line / @em;
 
 .row-left(@n) {
-    margin-left: @gutter * (0.25 + @n);
+    margin-left: @gutter * @n;
 
     @media(min-width: @break-s-landscape) {
         margin-left: @gutter * (1 + @n);
@@ -42,7 +42,7 @@
 }
 
 .row-right(@n) {
-    margin-right: @gutter * (0.25 + @n);
+    margin-right: @gutter * @n;
 
     @media(min-width: @break-s-landscape) {
         margin-right: @gutter * (1 + @n);
@@ -153,3 +153,11 @@ a {
 @import "index.less";
 @import "cls.less";
 @import "article.less";
+
+@media (min-width: @break-xl) {
+    main {
+        max-width: @max-page-width;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
