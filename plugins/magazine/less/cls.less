@@ -41,14 +41,6 @@
         .byline {
             display: none;
         }
-        h2, h3 {
-            color: @cls-aside-fg-color;
-            .size-normal();
-            display: inline;
-        }
-        h3:before {
-            content: ' • ';
-        }
     }
 }
 
@@ -76,18 +68,21 @@
             .teaser-content {
                 .no-column;
             }
+            .label-wrapper {
+                margin-left: -@gutter;
+            }
             .label {
-
+                .transform(translate(-100%, 0));
             }
             .title {
                 overflow: hidden;
                 border-top: 3px solid @fg-color;
             }
             .title-text {
-                h2 {
+                .header-1 {
                     .font-teaser-title-smaller;
                 }
-                h3 {
+                .header-2 {
                     .font-teaser-subtitle-smaller;
                 }
             }
@@ -176,6 +171,10 @@
             .no-row;
             .teaser-content {
                 .no-column;
+
+                .title {
+                    .size-small();
+                }
             }
         }
     }

@@ -37,5 +37,4 @@ mixin teaser(teaserType, article, showText)
           span(class="date")= formatDate(article.date)
 
         if showText
-          a(class="text", href=urls.article(article.classification.category, article))
-            .text!= markdown(article.teaser)
+          .text!= markdown(article.teaser)
