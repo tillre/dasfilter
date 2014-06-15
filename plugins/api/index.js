@@ -12,8 +12,7 @@ module.exports.register = function(plugin, options, next) {
 
   plugin.log(['api'], 'register');
 
-  // basic auth - only check password
-  // TODO: do not trust username, generate api key for each user
+  // basic auth - only checks apikey
   plugin.auth.strategy('api-simple', 'basic', {
     validateFunc: function(username, password, callback) {
       var valid = password === options.config.apiKey;
