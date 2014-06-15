@@ -20,7 +20,7 @@
   // generic resolve to always init resources on route change
   var resourcesInitialized = false;
   var resolve = {
-    resources: function(crResources, dfApp) {
+    main: function(crResources, dfApp) {
       if (resourcesInitialized) return null;
       return crResources.init({ url: dfApp.apiUrl }).then(function(resources) {
         resourcesInitialized = true;

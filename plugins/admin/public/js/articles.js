@@ -103,8 +103,22 @@
     $scope,
     $location,
     $routeParams,
+    crResources,
+    crTagCompletion,
     dfMagazine
   ) {
+
+    // update tags completion
+    crResources.get('Article').view('by_tag', { group: true }).then(
+      function success(tags) {
+        tags.rows.forEach(function(tag) {
+          crTagCompletion.addItem(tag.value, tag.key);
+        });
+      },
+      function error(err) {
+        console.log(err);
+      }
+    );
 
     angular.extend($scope, angular.copy(config));
 
