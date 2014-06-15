@@ -10,7 +10,7 @@ function checkError(err, req, res, body) {
     return null;
   }
   var payload = typeof body === 'string' ? JSON.parse(body) : body;
-  var cErr = new Error(payload.reason || 'couch returned ' + res.statusCode);
+  var cErr = new Error(payload.reason || 'couchdb ' + res.statusCode + ' - ' + payload.error);
   cErr.statusCode = res.statusCode,
   cErr.request = req;
   cErr.response = res;
@@ -268,6 +268,7 @@ module.exports = function(apiUrl, apiUser, apiPass) {
         case ROW_CATEGORY:    category = row.doc; break;
         case ROW_IMAGE:       image = row.doc; break;
         case ROW_ARTICLE:
+          // this has to be the last for all parts of an article
           if (contributor) {
             row.doc.contributors[0].contributor = contributor;
           }
@@ -300,6 +301,15 @@ module.exports = function(apiUrl, apiUser, apiPass) {
     });
   }
 
+  function getTeasersByTag(tagSlug, startDate, limit) {
+    return getTeasers('teaser_by_state_tag_date', {
+      include_docs: true,
+      descending: true,
+      limit: limit,
+      endkey: ['published', tagSlug],
+      startkey: ['published', tagSlug, startDate]
+    });
+  }
 
   return {
     getConfig: getConfig,
@@ -312,6 +322,7 @@ module.exports = function(apiUrl, apiUser, apiPass) {
     getClassifications: getClassifications,
     getTeasers: getTeasers,
     getTeasersByIds: getTeasersByIds,
-    getTeasersByClsDate: getTeasersByClsDate
+    getTeasersByClsDate: getTeasersByClsDate,
+    getTeasersByTag: getTeasersByTag
   };
 };
