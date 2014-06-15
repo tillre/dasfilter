@@ -9,14 +9,17 @@ mixin start-oneway(group)
     +start-teaser('teaser-oneway-full', group.article)
   else
     +start-teaser('teaser-oneway', group.article)
-    
+
 mixin start-twoway(group)
   if group.display === 'full'
     +start-teaser('teaser-twoway-full', group.articles.one)
     +start-teaser('teaser-twoway-full', group.articles.two)
+  else if group.display === 'uneven'
+    +start-teaser('teaser-twoway-full', group.articles.one)
+    +start-teaser('teaser-threeway', group.articles.two)
   else
-    +start-teaser('teaser-twoway-first', group.articles.one)
-    +start-teaser('teaser-twoway-second', group.articles.two)
+    +start-teaser('teaser-twoway', group.articles.one)
+    +start-teaser('teaser-twoway', group.articles.two)
 
 
 mixin start-threeway(group)
@@ -28,5 +31,3 @@ mixin start-threeway(group)
     +start-teaser('teaser-threeway', group.articles.one)
     +start-teaser('teaser-threeway', group.articles.two)
     +start-teaser('teaser-threeway', group.articles.three)
-
-    

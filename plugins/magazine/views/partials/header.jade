@@ -1,4 +1,4 @@
-mixin header(classifications, classification, headerClass)
+mixin header(classifications, cls, tag, headerClass)
   header(id="header", class="#{headerClass}")
     nav(id="nav-bar")
       .main-nav-outer
@@ -6,9 +6,12 @@ mixin header(classifications, classification, headerClass)
           a(class="drawer-btn", href="#nav-drawer", title="Menu")
           a(class="header-logo", href=urls.start(), title="Startseite")
 
-          if classification
-            a(class="header-cls", href=urls.classification(classification), title=classification.title)
-              span= classification.title
+          if cls
+            a(class="header-cls", href=urls.classification(cls), title=cls.title)
+              span= cls.title
+          if tag
+            a(class="header-cls", href=urls.tag(tag), title=tag.name)
+              span= tag.name
 
           a(class="header-social google-plus", href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank", title="Das Filter auf Google+")
           a(class="header-social facebook", href="https://facebook.com/dasfilter", title="Das Filter auf Facebook")

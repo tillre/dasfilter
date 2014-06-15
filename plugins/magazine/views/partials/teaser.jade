@@ -12,25 +12,30 @@ mixin teaser(teaserType, article, showText)
 
     .teaser-info
       .teaser-content
-        small(class="byline")
-          if (article.classification.label)
+        if (article.classification.label)
+          .label-wrapper
             h4(class="label")= article.classification.label
-          if !inCategory
-            - var category = article.classification.category
-            a(class="category", href=urls.classification(category))= category.title
-
-          if article.contributors.length > 0
-            - var contributor = article.contributors[0].contributor
-
-            if (!inCategory)
-              span(class="seperator") &nbsp;&mdash;&nbsp;
-            span(class="contributor")
-              span(class="name") von #{(contributor.firstname + ' ' + contributor.lastname)}
-          span(class="date")= formatDate(article.date)
 
         a(class="title", href=urls.article(article.classification.category, article))
           .title-text
-            h2= article.title
-            h3= article.subtitle
-          if showText
+            h1
+              span(class="header-1")= article.title
+              span(class="header-2")= article.subtitle
+
+        small(class="byline")
+          if !inCategory
+            - var category = article.classification.category
+            span(class="category") in&nbsp;
+              a(href=urls.classification(category))= category.title
+
+          if article.contributors.length > 0
+            - var contributor = article.contributors[0].contributor
+            if !inCategory
+              span(class="seperator") &nbsp;
+            span(class="contributor") von&nbsp;
+              span(class="name") #{(contributor.firstname + ' ' + contributor.lastname)}
+          span(class="date")= formatDate(article.date)
+
+        if showText
+          a(class="text", href=urls.article(article.classification.category, article))
             .text!= markdown(article.teaser)

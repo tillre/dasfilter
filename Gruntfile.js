@@ -55,8 +55,9 @@ module.exports = function(grunt) {
     // watch assets and build on changes
 
     watch: {
-      assets: {
-        files: ['./plugins/**/public/**/*.*',
+      all: {
+        files: ['./plugins/**/*.js',
+                './plugins/**/public/**/*.*',
                 './plugins/**/*.less',
                 '!./plugins/**/svg.generated.less',
                 './plugins/magazine/design/icons/**/*.svg'],

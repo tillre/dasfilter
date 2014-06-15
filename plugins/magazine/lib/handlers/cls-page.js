@@ -1,4 +1,3 @@
-var Util = require('util');
 var _ = require('lodash');
 var Q = require('kew');
 

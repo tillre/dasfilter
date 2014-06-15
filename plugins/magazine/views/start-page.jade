@@ -24,7 +24,7 @@ html(lang="de")
     +head
 
   body
-    +header(classifications, classification, 'startpage')
+    +header(classifications, classification, null, 'startpage')
 
     main.index-page(class="#{continued ? 'continued' : 'begin'}")
       each group in groups

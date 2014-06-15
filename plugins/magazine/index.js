@@ -17,6 +17,9 @@ function createUrlHelper(urls, request) {
     classification: function(cls) {
       return '/' + cls.slug;
     },
+    tag: function(tag) {
+      return '/tags/' + tag.name;
+    },
     article: function(cls, article) {
       return '/' + cls.slug + '/' + article.slug;
     },
@@ -106,6 +109,7 @@ function init(plugin, config, api, resources, next) {
   // routes
   var startHandler = require('./lib/handlers/start-page.js')(app);
   var clsHandler = require('./lib/handlers/cls-page.js')(app);
+  var tagHandler = require('./lib/handlers/tag-page.js')(app);
   var articleHandler = require('./lib/handlers/article-page.js')(app);
   var pageHandler = require('./lib/handlers/generic-page.js')(app);
 
@@ -161,6 +165,20 @@ function init(plugin, config, api, resources, next) {
       path: '/s/{page}/',
       handler: function(request, reply) {
         reply('You are being redirected...').redirect('/s/' + request.params.page);
+      }
+    },
+
+    // tags
+    {
+      method: 'GET',
+      path: '/tags/{tag}',
+      handler: tagHandler
+    },
+    {
+      method: 'GET',
+      path: '/tags/{tag}/',
+      handler: function(request, reply) {
+        reply('You are being redirected...').redirect('/tags/' + request.params.tag);
       }
     },
 

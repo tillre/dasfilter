@@ -35,8 +35,9 @@ mixin article(article)
       .title-outer
         .title-inner
           .title
-            h1= article.title
-            h2= article.subtitle
+            h1
+              span(class="header-1")= article.title
+              span(class="header-2")= article.subtitle
             span(class="seperator")
             +article-byline(article.contributors, article.date)
 
@@ -72,33 +73,31 @@ mixin article(article)
       .article-footer-inner
 
         .article-social-content
-          .article-social-box
-            h4.article-social-title Teilen
-            .article-social-links
-              - var shareUrl = encodeURIComponent(urls.full())
-              - var shareTitle = encodeURIComponent(article.title + ' - ' + article.subtitle)
-              a(class="article-social-link twitter",
-                href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
-                target="_blank",
-                onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
-                title="Twitter")
-              a(class="article-social-link facebook",
-                href="https://facebook.com/sharer.php?u=#{shareUrl}",
-                target="_blank",
-                onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
-                title="Facebook")
-              a(class="article-social-link google-plus",
-                href="https://plus.google.com/share?url=#{shareUrl}",
-                onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
-                target="_blank"
-                title="Google+")
+          .article-social-links
+            - var shareUrl = encodeURIComponent(urls.full())
+            - var shareTitle = encodeURIComponent(article.title + ' - ' + article.subtitle)
+            a(class="article-social-link twitter",
+              href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
+              target="_blank",
+              onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
+              title="Twitter")
+            a(class="article-social-link facebook",
+              href="https://facebook.com/sharer.php?u=#{shareUrl}",
+              target="_blank",
+              onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
+              title="Facebook")
+            a(class="article-social-link google-plus",
+              href="https://plus.google.com/share?url=#{shareUrl}",
+              onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
+              target="_blank"
+              title="Google+")
 
-        if false && article.classification.tags.length > 0
+        if article.classification.tags.length > 0
           .article-tags-content
-            h4 Tags:&nbsp;
             ul
               each tag in article.classification.tags
-                li= tag.name
+                li
+                  a(href=urls.tag(tag))= tag.name
 
       if related.length > 0
         .article-related-title

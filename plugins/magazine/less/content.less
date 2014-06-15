@@ -20,10 +20,15 @@
         padding-bottom: @gutter;
 
         h1 {
-            .font-article-title;
-        }
-        h2 {
-            .font-article-subtitle;
+            .size-normal;
+            .header-1 {
+                display: block;
+                .font-article-title;
+            }
+            .header-2 {
+                display: block;
+                .font-article-subtitle;
+            }
         }
         .seperator {
             display: block;
@@ -34,7 +39,7 @@
                 display: inline-block;
                 width: @gutter * 4;
                 height: 0;
-                border-bottom: 2px solid @fg-color;
+                border-bottom: 1px solid @extra-light-fg-color;
             }
         }
     }

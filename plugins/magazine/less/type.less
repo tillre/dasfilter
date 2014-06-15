@@ -5,9 +5,9 @@
 .type1-bold { font-family:"FS Lola Web Bold", 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size-adjust:0.49; font-weight:bold; font-style:normal; }
 
 // BLISS
-.type2-regular { font-family:"Bliss Light", 'Gill Sans', Calibri, 'Helvetica Neue', Arial, sans-serif; font-size-adjust:0.47; font-weight:200; font-style:normal; }
-.type2-regular-i { font-family:"Bliss Light Italic", 'Gill Sans', Calibri, 'Helvetica Neue', Arial, sans-serif; font-size-adjust:0.47; font-weight:200; font-style:italic; }
-.type2-bold { font-family:"Bliss Bold", 'Gill Sans', Calibri, 'Helvetica Neue', Arial, sans-serif; font-size-adjust:0.47; font-weight:bold; font-style:normal; }
+.type2-regular { font-family:"Bliss Light", 'Helvetica Neue', Arial, sans-serif; font-size-adjust:0.47; font-weight:200; font-style:normal; }
+.type2-regular-i { font-family:"Bliss Light Italic", 'Helvetica Neue', Arial, sans-serif; font-size-adjust:0.47; font-weight:200; font-style:italic; }
+.type2-bold { font-family:"Bliss Bold", 'Helvetica Neue', Arial, sans-serif; font-size-adjust:0.47; font-weight:bold; font-style:normal; }
 
 //
 // sizes
@@ -57,73 +57,73 @@
 .size-teaser-title() {
     @l: 0.85;
     @media (min-width: @break-m-portrait) {
-        .set-font-size(24; @l);
+        .set-font-size(22; @l);
     }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(28; @l);
+        .set-font-size(26; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(32; @l);
+        .set-font-size(28; @l);
     }
 }
 .size-teaser-subtitle {
     @l: 0.85;
     @media (min-width: @break-m-portrait) {
-        .set-font-size(23; @l);
+        .set-font-size(21; @l);
     }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(27; @l);
+        .set-font-size(25; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(31; @l);
+        .set-font-size(27; @l);
     }
 }
 .size-teaser-title-smaller() {
     @l: 0.85;
     @media (min-width: @break-m-portrait) {
-        .set-font-size(21; @l);
+        .set-font-size(19; @l);
     }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(24; @l);
+        .set-font-size(21; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(27; @l);
+        .set-font-size(24; @l);
     }
 }
 .size-teaser-subtitle-smaller {
     @l: 0.85;
     @media (min-width: @break-m-portrait) {
-        .set-font-size(20; @l);
+        .set-font-size(18; @l);
     }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(23; @l);
+        .set-font-size(20; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(26; @l);
+        .set-font-size(23; @l);
     }
 }
 .size-teaser-title-larger() {
     @l: 0.85;
     @media (min-width: @break-m-portrait) {
-        .set-font-size(28; @l);
+        .set-font-size(24; @l);
     }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(32; @l);
+        .set-font-size(28; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(36; @l);
+        .set-font-size(32; @l);
     }
 }
 .size-teaser-subtitle-larger {
     @l: 0.85;
     @media (min-width: @break-m-portrait) {
-        .set-font-size(27; @l);
+        .set-font-size(23; @l);
     }
     @media (min-width: @break-m-landscape) {
-        .set-font-size(31; @l);
+        .set-font-size(27; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(35; @l);
+        .set-font-size(31; @l);
     }
 }
 
@@ -159,12 +159,15 @@
 }
 .size-small {
     letter-spacing: 0.01em;
-    .set-font-size(16);
+    .set-font-size(15);
     @media (min-width: @break-s-landscape) {
-        .set-font-size(16);
+        .set-font-size(15);
     }
     @media (min-width: @break-m-portrait) {
-        .set-font-size(16);
+        .set-font-size(14);
+    }
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(15);
     }
     @media (min-width: @break-l) {
         .set-font-size(16);
@@ -251,14 +254,6 @@ small {
     .type2-bold;
     .size-medium;
 }
-.font-teaser-aside-title {
-    .type1-bold;
-    .set-font-size(22);
-}
-.font-teaser-aside-subtitle {
-    .type1-light;
-    .set-font-size(22);
-}
 .font-teaser-text {
     .type2-regular;
 
@@ -271,11 +266,11 @@ small {
 }
 .font-article-title {
     .type1-bold;
-    .size-article-title(0.9);
+    .size-article-title();
 }
 .font-article-subtitle {
     .type1-light;
-    .size-article-subtitle(0.9);
+    .size-article-subtitle();
 }
 .font-cls-article-text,
 .font-article-text {
