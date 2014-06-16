@@ -1,40 +1,65 @@
 include image
 
 
-mixin teaser(teaserType, article, showText)
-
-  - var inCategory = showText
-
+mixin teaser-startpage(teaserType, article)
   article(class="teaser #{teaserType}")
-    .teaser-image
-      a(class="teaser-content", href=urls.article(article.classification.category, article))
-        +image(article.header.image, teaserType)
+    .teaser-inner
+      .teaser-image
+        a(class="teaser-content", href=urls.article(article.classification.category, article))
+          +image(article.header.image, teaserType)
 
-    .teaser-info
-      .teaser-content
-        if (article.classification.label)
-          .label-wrapper
-            h4(class="label")= article.classification.label
+      .teaser-title
+        .teaser-content
+          if (article.classification.label)
+            .label-wrapper
+              h4(class="label")= article.classification.label
 
-        a(class="title", href=urls.article(article.classification.category, article))
-          .title-text
-            h1
-              span(class="header-1")= article.title
-              span(class="header-2")= article.subtitle
+          a(class="title", href=urls.article(article.classification.category, article))
+            .title-text
+              h1
+                span(class="header-1")= article.title
+                span(class="header-2")= article.subtitle
 
-        small(class="byline")
-          if !inCategory
+      .teaser-byline
+        .teaser-content
+          small(class="byline")
             - var category = article.classification.category
-            span(class="category") in&nbsp;
+            span(class="category")
               a(href=urls.classification(category))= category.title
 
-          if article.contributors.length > 0
-            - var contributor = article.contributors[0].contributor
-            if !inCategory
-              span(class="seperator") &nbsp;
-            span(class="contributor") von&nbsp;
-              span(class="name") #{(contributor.firstname + ' ' + contributor.lastname)}
-          span(class="date")= formatDate(article.date)
+            if article.contributors.length > 0
+              - var contributor = article.contributors[0].contributor
+              span(class="seperator") &nbsp;&mdash;&nbsp;
+              span(class="contributor") von&nbsp;
+                span(class="name") #{(contributor.firstname + ' ' + contributor.lastname)}
+            span(class="date")= formatDate(article.date)
 
-        if showText
-          .text!= markdown(article.teaser)
+
+mixin teaser-clspage(teaserType, article, showText)
+  article(class="teaser #{teaserType}")
+    .teaser-inner
+      .teaser-image
+        a(class="teaser-content", href=urls.article(article.classification.category, article))
+          +image(article.header.image, teaserType)
+
+      .teaser-info
+        .teaser-content
+          if (article.classification.label)
+            .label-wrapper
+              h4(class="label")= article.classification.label
+
+          a(class="title", href=urls.article(article.classification.category, article))
+            .title-text
+              h1
+                span(class="header-1")= article.title
+                span(class="header-2")= article.subtitle
+
+          small(class="byline")
+            if article.contributors.length > 0
+              - var contributor = article.contributors[0].contributor
+              span(class="contributor") von&nbsp;
+                span(class="name") #{(contributor.firstname + ' ' + contributor.lastname)}
+            span(class="date")= formatDate(article.date)
+
+          if showText
+            .text!= markdown(article.teaser)

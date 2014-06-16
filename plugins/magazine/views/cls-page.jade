@@ -10,7 +10,7 @@ mixin cls-aside-article-collection(c)
   .cls-aside-group
     h2(class="cls-aside-group-title")= c.title
     each article in c.articles
-      +teaser('teaser-cls-aside', article)
+      +teaser-clspage('teaser-cls-aside', article)
 
 
 mixin cls-aside(aside)
@@ -51,7 +51,7 @@ html(lang="de")
         .cls-main
           .cls-main-inner
             each article in articles
-              +teaser('teaser-cls', article, true)
+              +teaser-clspage('teaser-cls', article, true)
             if nextDate
               +more(urls.current() + '?date=' + nextDate)
         aside.cls-aside

@@ -1,6 +1,4 @@
 
-@teaser-border-color: #ddd;
-
 .index-page {
     overflow: hidden;
 }
@@ -12,7 +10,7 @@
     }
 
     .index-group {
-        margin-bottom: @gutter * 2;
+        margin-bottom: @gutter * 3;
     }
 
     .teaser {
@@ -69,7 +67,7 @@
                 display: table-cell;
                 vertical-align: top;
             }
-            .teaser-info {
+            .teaser-title, .teaser-byline {
                 .no-row;
                 .teaser-content {
                     .no-column;
@@ -92,20 +90,46 @@
         &.twoway-full {
             position: relative;
             display: table;
+            height: 100%;
 
             .teaser {
                 display: table-cell;
                 vertical-align: top;
                 width: 50%;
             }
+            .teaser-inner {
+                display: table;
+                height: 100%;
+                position: relative;
+            }
+            .teaser-title, .teaser-byline {
+                display: table-row;
+                word-break: break-word;
+            }
+            .teaser-title {
+                height: 100%;
+                vertical-align: top;
+            }
+            .teaser-byline {
+                height: 100%;
+                vertical-align: bottom;
+            }
             .teaser:nth-child(1) {
-                .teaser-info {
-                    margin-right: @gutter * 0.5;
+                .teaser-title, .teaser-byline {
+                    .teaser-content {
+                        .row-left;
+                         margin-right: @gutter;
+                        padding-right: 0;
+                    }
                 }
             }
             .teaser:nth-child(2) {
-                .teaser-info {
-                    margin-left: @gutter * 0.5;
+                .teaser-title, .teaser-byline {
+                    .teaser-content {
+                        .row-right;
+                        margin-left: @gutter;
+                        padding-left: 0;
+                    }
                 }
             }
         }
@@ -114,48 +138,81 @@
         &.threeway-default {
             .row;
             display: table;
+            height: 100%;
 
             .teaser {
                 .column;
+                display: table-cell;
                 vertical-align: top;
                 width: 100% / 3;
-                display: table-cell;
+                height: 100%;
             }
-            .teaser-info {
+            .teaser-inner {
+                display: table;
+                height: 100%;
+                position: relative;
+            }
+            .teaser-title, .teaser-byline {
                 .no-row;
+                display: table-row;
                 word-break: break-word;
                 .teaser-content {
                     .no-column;
                 }
             }
+            .teaser-title {
+                height: 100%;
+                vertical-align: top;
+            }
+            .teaser-byline {
+                height: 100%;
+                vertical-align: bottom;
+            }
         }
         &.threeway-full {
             position: relative;
             display: table;
+            height: 100%;
 
             .teaser {
                 display: table-cell;
                 vertical-align: top;
                 width: 100% / 3;
             }
-            .teaser-info {
+            .teaser-inner {
+                display: table;
+                height: 100%;
+                position: relative;
+            }
+            .teaser-title, .teaser-byline {
+                .no-row;
+                display: table-row;
                 word-break: break-word;
                 .teaser-content {
+                    .no-column;
                 }
             }
+            .teaser-title {
+                height: 100%;
+                vertical-align: top;
+            }
+            .teaser-byline {
+                height: 100%;
+                vertical-align: bottom;
+            }
             .teaser:nth-child(1) {
-                .teaser-info {
+                .teaser-title, .teaser-byline {
                     margin-right: 0;
                 }
             }
             .teaser:nth-child(2) {
-                .teaser-info {
+                .teaser-title, .teaser-byline {
                     margin-left: 0;
                     margin-right: 0;
                 }
             }
             .teaser:nth-child(3) {
-                .teaser-info {
+                .teaser-title, .teaser-byline {
                     margin-left: 0;
                 }
             }

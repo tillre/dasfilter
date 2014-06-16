@@ -1,6 +1,6 @@
 
 .teaser {
-    margin-bottom: @gutter * 3;
+    margin-bottom: @gutter * 2;
 
     .teaser-image {
         .teaser-content {
@@ -15,11 +15,17 @@
             text-decoration: none;
         }
     }
-    .teaser-info {
+    .teaser-info,
+    .teaser-title,
+    .teaser-byline,
+    .teaser-text {
         .row;
         .teaser-content {
             .column;
         }
+    }
+    .teaser-info,
+    .teaser-title {
         h1 {
             .size-normal;
             .header-1 {
@@ -37,8 +43,8 @@
         }
         .title {
             padding: @gutter * 0.5 0;
+            margin: 0 8px;
             display: block;
-            text-align: center;
         }
         .label-wrapper {
             position: relative;
@@ -49,12 +55,15 @@
             top: 0;
             .transform(translate(0, -100%));
         }
+    }
+    .teaser-info,
+    .teaser-byline {
         .byline {
-            border-top: 1px solid @extra-light-fg-color;
-            padding: @gutter * 0.25 0;
+            border-bottom: 1px solid @extra-light-fg-color;
+            border-top: 1px solid @fg-color;
+            padding: @gutter * 0.25 8px;
             color: @light-fg-color;
             display: block;
-            text-align: center;
             line-height: 1em;
 
             .category {
@@ -62,8 +71,8 @@
                 .font-teaser-category;
                 color: @light-fg-color;
                 a {
-                    color: @light-fg-color;
-                    &:visited, &:active, &:hover { color: @light-fg-color; }
+                    color: @df-color;
+                    &:visited, &:active, &:hover { color: @df-color; }
                     text-transform: uppercase;
                     text-decoration: none;
                 }
@@ -71,7 +80,7 @@
             .contributor {
                 display: inline-block;
                 .font-teaser-contributor;
-                color: @light-fg-color;
+                color: @medium-fg-color;
             }
             .seperator {
                 .font-teaser-contributor;
@@ -83,7 +92,11 @@
                 float: right;
             }
         }
+    }
+    .teaser-info,
+    .teaser-text {
         .text {
+            margin: 0 8px;
             .font-teaser-text;
             color: @fg-color;
         }
@@ -93,11 +106,9 @@
 
 @media (min-width: @break-m-portrait) {
     .teaser {
-        margin-bottom: @gutter * 2.5;
-
         &.teaser-oneway,
         &.teaser-oneway-full {
-            .teaser-info {
+            .teaser-title {
                 .header-1 {
                     .font-teaser-title-larger;
                 }
@@ -111,7 +122,7 @@
         &.teaser-cls-aside,
         &.teaser-threeway,
         &.teaser-threeway-full {
-            .teaser-info {
+            .teaser-info, .teaser-title {
                 .header-1 {
                     .font-teaser-title-smaller;
                 }

@@ -21,7 +21,7 @@
 // grid
 @gutter: @line / @em;
 
-.row-left(@n) {
+.row-left(@n:0) {
     margin-left: @gutter * @n;
 
     @media(min-width: @break-s-landscape) {
@@ -41,7 +41,7 @@
     }
 }
 
-.row-right(@n) {
+.row-right(@n:0) {
     margin-right: @gutter * @n;
 
     @media(min-width: @break-s-landscape) {
@@ -161,7 +161,6 @@ a {
     .font-teaser-label;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-
 }
 
 .related-title {
