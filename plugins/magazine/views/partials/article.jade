@@ -71,50 +71,48 @@ mixin article(article)
 
     .article-footer-outer
       .article-footer-inner
-        .article-footer-items
-          if article.classification.collections.length > 0
-            .article-cls
-              .article-cls-inner
-                h4 In:
-                ul
-                  each item in article.classification.collections
-                    li
-                      a(href=urls.classification(item))= item.title
+        .article-footer-items-outer
+          .article-footer-items-inner.article-social-items
 
+            h4.items-title Teilen:
+            - var shareUrl = encodeURIComponent(urls.full())
+            - var shareTitle = encodeURIComponent(article.title + ' - ' + article.subtitle)
+            ul
+              li
+                a(class="article-social-link twitter",
+                  href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
+                  target="_blank",
+                  onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
+                  title="Twitter")
+              li
+                a(class="article-social-link facebook",
+                  href="https://facebook.com/sharer.php?u=#{shareUrl}",
+                  target="_blank",
+                  onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
+                  title="Facebook")
+              li
+                a(class="article-social-link google-plus",
+                  href="https://plus.google.com/share?url=#{shareUrl}",
+                  onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
+                target="_blank"
+              title="Google+")
 
-          if article.classification.tags.length > 0
-            .article-cls
-              .article-cls-inner
-                h4 Tags:
-                ul
-                  each item in article.classification.tags
-                    li
-                      a(href=urls.tag(item))= item.name
-
-          .article-social
-            .article-social-links
-              h4 Teilen:
-              - var shareUrl = encodeURIComponent(urls.full())
-              - var shareTitle = encodeURIComponent(article.title + ' - ' + article.subtitle)
+          .article-footer-items-inner.article-cls-items
+            if article.classification.collections.length > 0
+              h4.items-title In:
               ul
-                li
-                  a(class="article-social-link twitter",
-                    href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
-                    target="_blank",
-                    onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
-                    title="Twitter")
-                li
-                  a(class="article-social-link facebook",
-                    href="https://facebook.com/sharer.php?u=#{shareUrl}",
-                    target="_blank",
-                    onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
-                    title="Facebook")
-                li
-                  a(class="article-social-link google-plus",
-                    href="https://plus.google.com/share?url=#{shareUrl}",
-                    onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
-                  target="_blank"
-                  title="Google+")
+                each item in article.classification.collections
+                  li
+                    a(href=urls.classification(item))= item.title
+
+
+            if article.classification.tags.length > 0
+              h4.items-title Tags:
+              ul
+                each item in article.classification.tags
+                  li
+                    a(href=urls.tag(item))= item.name
+
 
     if related.length > 0
       .article-related-outer
