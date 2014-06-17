@@ -18,7 +18,7 @@ function createUrlHelper(urls, request) {
       return '/' + cls.slug;
     },
     tag: function(tag) {
-      return '/tags/' + tag.name;
+      return '/tags/' + tag.slug;
     },
     article: function(cls, article) {
       return '/' + cls.slug + '/' + article.slug;
