@@ -71,37 +71,55 @@ mixin article(article)
 
     .article-footer-outer
       .article-footer-inner
+        .article-footer-items
+          if article.classification.collections.length > 0
+            .article-cls
+              .article-cls-inner
+                h4 In:
+                ul
+                  each item in article.classification.collections
+                    li
+                      a(href=urls.classification(item))= item.title
 
-        .article-social-content
-          .article-social-links
-            - var shareUrl = encodeURIComponent(urls.full())
-            - var shareTitle = encodeURIComponent(article.title + ' - ' + article.subtitle)
-            a(class="article-social-link twitter",
-              href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
-              target="_blank",
-              onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
-              title="Twitter")
-            a(class="article-social-link facebook",
-              href="https://facebook.com/sharer.php?u=#{shareUrl}",
-              target="_blank",
-              onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
-              title="Facebook")
-            a(class="article-social-link google-plus",
-              href="https://plus.google.com/share?url=#{shareUrl}",
-              onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
-              target="_blank"
-              title="Google+")
 
-        if article.classification.tags.length > 0
-          .article-tags-content
-            ul
-              each tag in article.classification.tags
+          if article.classification.tags.length > 0
+            .article-cls
+              .article-cls-inner
+                h4 Tags:
+                ul
+                  each item in article.classification.tags
+                    li
+                      a(href=urls.tag(item))= item.name
+
+          .article-social
+            .article-social-links
+              h4 Teilen:
+              - var shareUrl = encodeURIComponent(urls.full())
+              - var shareTitle = encodeURIComponent(article.title + ' - ' + article.subtitle)
+              ul
                 li
-                  a(href=urls.tag(tag))= tag.name
+                  a(class="article-social-link twitter",
+                    href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
+                    target="_blank",
+                    onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
+                    title="Twitter")
+                li
+                  a(class="article-social-link facebook",
+                    href="https://facebook.com/sharer.php?u=#{shareUrl}",
+                    target="_blank",
+                    onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
+                    title="Facebook")
+                li
+                  a(class="article-social-link google-plus",
+                    href="https://plus.google.com/share?url=#{shareUrl}",
+                    onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
+                  target="_blank"
+                  title="Google+")
 
-      if related.length > 0
-        .article-related-title
-          h4 Weitere Geschichten
-        .article-related-teaser
+    if related.length > 0
+      .article-related-outer
+        .article-related-inner
+          .article-related-title
+            h4 Weitere Geschichten
           each relatedArticle in related
             +teaser-clspage('teaser-article-related', relatedArticle)
