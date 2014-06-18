@@ -1,4 +1,5 @@
 var Path = require('path');
+var Cores = require('cores');
 var Walk = require('walk-fs');
 var Q = require('kew');
 var J = require('jski')();
@@ -31,6 +32,7 @@ function load(context) {
   Walk(dir, { recursive: true }, function(path, stats) {
     if (stats.isFile()) {
       var parts = path.match(re);
+
       if (parts) {
         var name = parts[1].toLowerCase();
         var type = parts[2].toLowerCase();
@@ -44,7 +46,6 @@ function load(context) {
 
         // convert pure json schemas to jski schemas
         if (type === 'schema' && !def.__jski__) {
-          console.log('create validator from def', def.__jski__);
           def = J.createValidator(def);
         }
         resources[cname] = resources[cname] || {};
@@ -59,4 +60,25 @@ function load(context) {
   return defer.promise;
 };
 
-module.exports = load;
+
+module.exports = function(db, context, sync) {
+
+  var cores = Cores(db);
+
+  return load(context).then(function(definitions) {
+
+    var promises = Object.keys(definitions).filter(function(key) {
+      // ignore resource definitions with leading underscores
+      return key.charAt(0) !== '_';
+    }).map(function(key) {
+      return cores.create(key, definitions[key], sync);
+    });
+
+    return Q.all(promises).then(function() {
+      return {
+        definitions: definitions,
+        cores: cores
+      };
+    });
+  });
+};
