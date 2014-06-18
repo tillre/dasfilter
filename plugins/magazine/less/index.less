@@ -104,6 +104,24 @@
             .teaser {
                 width: 50%;
             }
+            .teaser:nth-child(1) {
+                .teaser-title, .teaser-byline {
+                    .teaser-content {
+                        .row-left;
+                         margin-right: @gutter;
+                        padding-right: 0;
+                    }
+                }
+            }
+            .teaser:nth-child(2) {
+                .teaser-title, .teaser-byline {
+                    .teaser-content {
+                        .row-right;
+                        margin-left: @gutter;
+                        padding-left: 0;
+                    }
+                }
+            }
         }
 
         &.threeway-default {
