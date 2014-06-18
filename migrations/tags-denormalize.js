@@ -43,16 +43,21 @@ Load().then(function(d) {
   console.log('replace tag refs in articles with actual tag data');
   return articleRes.map('all', { include_docs: true }, function(doc) {
     var docTags = doc.classification.tags;
+    var newTags = [];
     if (!docTags) {
       return doc;
     }
+    var i = 0;
     for(var i = 0; i < docTags.length; ++i) {
       var t = tagsMap[docTags[i].id_];
       if (!t) {
         console.log('no Tag found for id', docTags[i].id_ ,'in', doc.title, doc.subtitle);
       }
-      docTags[i] = { name: t.name, slug: t.slug };
+      else {
+        newTags.push({ name: t.name, slug: t.slug });
+      }
     }
+    doc.classification.tags = newTags;
     return doc;
   });
 
