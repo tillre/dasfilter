@@ -17,7 +17,7 @@
     "hapi": "~5.x.x",
     "hapi-auth-basic": "~1.x.x",
     "good": "~2.x.x",
-    "cores-hapi": "~0.9.x",
+    "cores-hapi": "~0.10.x",
     "grunt": "~0.4.x",
     "lodash": "~2.4.1",
     "df-resources": "git+ssh://git@bitbucket.org:skoni/df-resources.git",

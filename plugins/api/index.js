@@ -36,55 +36,54 @@ module.exports.register = function(plugin, options, next) {
   // load resources and create api
   var coresHapi = plugin.plugins['cores-hapi'];
   var cores = coresHapi.cores;
-  var resDefs;
+  // var resDefs;
   var syncStages;
 
   // create resources
-  Resources({ imagesUrl: options.config.urls.static + '/images' }).then(function(rd) {
-    resDefs = rd;
-    return Q.all(_.map(resDefs, function(value, key) {
-      if (key.charAt(0) !== '_') {
-        plugin.log('[api]', 'creating resource: ' + key);
-        return cores.create(key, value, options.config.debug);
+  // Resources({ imagesUrl: options.config.urls.static + '/images' }).then(function(rd) {
+  //   resDefs = rd;
+  //   return Q.all(_.map(resDefs, function(value, key) {
+  //     if (key.charAt(0) !== '_') {
+  //       plugin.log('[api]', 'creating resource: ' + key);
+  //       return cores.create(key, value, options.config.debug);
+  //     }
+  //     return null;
+  //   }));
+
+  // }).then(function() {
+
+  // create api
+  coresHapi.createApi({
+    auth: 'api-simple',
+    selection: plugin.select('api'),
+    permissons: {
+      getRole: function(request) {
+        return request.auth.credentials.role;
+      },
+      roles: {
+        admin: true,
+        editor: true
       }
-      return null;
-    }));
+    }
+  });
 
-  }).then(function() {
+  // fn to create a stage for every category
+  // syncStages = SyncStages(plugin, cores, resDefs);
+  syncStages = SyncStages(plugin, cores);
 
-    // create api
-    coresHapi.createApi({
-      auth: 'api-simple',
-      selection: plugin.select('api'),
-      permissons: {
-        getRole: function(request) {
-          return request.auth.credentials.role;
-        },
-        roles: {
-          admin: true,
-          editor: true
-        }
-      }
-    });
+  // load api handlers
 
-    // fn to create a stage for every category
-    syncStages = SyncStages(plugin, cores, resDefs);
+  require('./lib/resource-handlers/user-handler.js')(coresHapi);
+  require('./lib/resource-handlers/image-handler.js')(coresHapi, options.config.imagesDir);
+  require('./lib/resource-handlers/gallery-handler.js')(coresHapi);
+  require('./lib/resource-handlers/article-handler.js')(coresHapi);
+  require('./lib/resource-handlers/category-handler.js')(coresHapi, syncStages);
+  require('./lib/resource-handlers/collection-handler.js')(coresHapi, syncStages);
+  require('./lib/resource-handlers/tags-handler.js')(coresHapi);
+  require('./lib/resource-handlers/generic-handlers.js')(coresHapi);
 
-    // load api handlers
-
-    require('./lib/resource-handlers/user-handler.js')(coresHapi);
-    require('./lib/resource-handlers/image-handler.js')(coresHapi, options.config.imagesDir);
-    require('./lib/resource-handlers/gallery-handler.js')(coresHapi);
-    require('./lib/resource-handlers/article-handler.js')(coresHapi);
-    require('./lib/resource-handlers/category-handler.js')(coresHapi, syncStages);
-    require('./lib/resource-handlers/collection-handler.js')(coresHapi, syncStages);
-    require('./lib/resource-handlers/tags-handler.js')(coresHapi);
-    require('./lib/resource-handlers/generic-handlers.js')(coresHapi);
-
-    // create image upload dir
-    return File.mkdirRec(options.config.imagesDir);
-
-  }).then(function() {
+  // create image upload dir
+  File.mkdirRec(options.config.imagesDir).then(function() {
 
     var account = Account(cores.resources.User);
 
