@@ -48,21 +48,19 @@
 	  }
 
     .index-group {
-        &.oneway-default {
-            .row;
-            .teaser {
-                .column;
+        &.oneway-default,
+        &.oneway-full {
+            .teaser-inner {
+                position: relative;
             }
             .teaser-title, .teaser-byline {
-                .no-row;
-                .teaser-content {
-                    .no-column;
-                }
+                position: absolute;
+            }
+            .teaser-title {
+                bottom: 0;
+                background-color: white;
             }
         }
-        &.oneway-full {
-        }
-
 
         &.twoway-default {
             .nway-base;
