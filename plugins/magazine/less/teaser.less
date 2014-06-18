@@ -1,8 +1,10 @@
 
 .teaser {
     margin-bottom: @gutter * 2;
-
     .teaser-image {
+        border-top: 1px solid @extra-extra-light-fg-color;
+        border-bottom: 1px solid @extra-extra-light-fg-color;
+
         .teaser-content {
             display: block;
         }
@@ -43,7 +45,7 @@
         }
         .title {
             padding: @gutter * 0.5 0;
-            margin: 0 8px;
+            margin: 0 @label-padding;
             display: block;
         }
         .label-wrapper {
@@ -60,8 +62,7 @@
     .teaser-byline {
         .byline {
             border-bottom: 1px solid @extra-light-fg-color;
-            border-top: 1px solid @fg-color;
-            padding: @gutter * 0.25 8px;
+            padding: 0 @label-padding @gutter * 0.25;
             color: @light-fg-color;
             display: block;
             line-height: 1em;
@@ -96,7 +97,7 @@
     .teaser-info,
     .teaser-text {
         .text {
-            margin: 0 8px;
+            margin: 0 @label-padding;
             .font-teaser-text;
             color: @fg-color;
         }
