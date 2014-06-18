@@ -1,3 +1,5 @@
+var Util = require('util');
+
 
 function articleBelongsToClassification(doc, clsId, clsType) {
   if (clsType === 'Category') {
@@ -11,7 +13,7 @@ function articleBelongsToClassification(doc, clsId, clsType) {
 
 function prepareArticle(app, doc) {
 
-  var cs = app.resources._Content.schema;
+  var cs = app.definitions._Content.schema;
   var oneway = cs.contentOnewaySection();
 
   // integrate the teaser text object
@@ -37,18 +39,19 @@ module.exports = function(app) {
 
   return function articleHandler(request, reply) {
 
-    app.api.getClassifications().then(function(classes) {
+    app.models.classifications.getAll().then(function(classes) {
+      var cls = classes.allBySlug[request.params.classification];
 
-      var cls = classes.bySlug(request.params.classification);
       if (!cls) {
         var err = new Error('Category or Collection not found: ' + request.params.classification);
         err.code = 404;
         throw err;
       }
 
-      return app.api.getArticleBySlug(request.params.article).then(function(doc) {
+      return app.models.articles.bySlug(request.params.article).then(function(doc) {
+
         // get related teaser
-        return app.api.getTeasersByClsDate(
+        return app.models.teasers.byClsDate(
           doc.classification.category._id,
           doc.date,
           3

@@ -6,63 +6,20 @@ Marked.setOptions({
 });
 var Resources = require('df-resources');
 var Api = require('df-api-client');
+var Models = require('./lib/models/models.js');
+var Handlers = require('./lib/handlers/handlers.js');
+var CreateUrlHelper = require('./lib/url-helper.js');
 
 
+function init(plugin, config, api, definitions, resources, next) {
 
-function createUrlHelper(urls, request) {
-  var helper = {
-    start: function() {
-      return '/';
+  plugin.views({
+    path: 'views',
+    engines: {
+      'jade': { module: require('jade') }
     },
-    classification: function(cls) {
-      return '/' + cls.slug;
-    },
-    tag: function(tag) {
-      return '/tags/' + tag.slug;
-    },
-    article: function(cls, article) {
-      return '/' + cls.slug + '/' + article.slug;
-    },
-    image: function(image, size) {
-      if (!image.file) return '';
-      var imgUrl = image.file.url;
-      if (image.file) {
-        if (image.file.sizes[size]) {
-          imgUrl = image.file.sizes[size];
-        }
-        else if (image.file.sizes.x) {
-          imgUrl = image.file.sizes.x;
-        }
-        return urls.images + '/' + imgUrl;
-      }
-    },
-    asset: function(item) {
-      return urls.assets + '/' + item;
-    }
-  };
-  if (request) {
-    helper.current = function() {
-      return request.path;
-    };
-    helper.full = function() {
-      return urls.magazine + request.path;
-    };
-    helper.articleFull = function(cls, article) {
-      return urls.magazine + '/' + cls.slug + '/' + article.slug;
-    };
-    helper.classificationFull = function(cls) {
-      return urls.magazine + '/' + cls.slug;
-    };
-    helper.rss = function(cls) {
-      return urls.magazine + '/rss' + (cls ? '/' + cls.slug : '');
-    };
-  }
-  return helper;
-}
-
-
-
-function init(plugin, config, api, resources, next) {
+    isCached: !app.debug
+  });
 
   var selection = plugin.select('web');
   var urls = {
@@ -75,9 +32,11 @@ function init(plugin, config, api, resources, next) {
 
   var app = {
     debug: config.debug,
-    urls: createUrlHelper(urls),
+    urls: CreateUrlHelper(urls),
     api: api,
+    definitions: definitions,
     resources: resources,
+    models: Models(resources),
 
     replyView: function(request, reply, viewName, context, options) {
       return reply.view(viewName, _.merge(context, {
@@ -90,31 +49,12 @@ function init(plugin, config, api, resources, next) {
           var yy = date.getFullYear();
           return dd + '.' + MM + '.' + yy;
         },
-        urls: createUrlHelper(urls, request)
+        urls: CreateUrlHelper(urls, request)
       }), options);
     }
   };
 
-
-  // configure views
-  plugin.views({
-    path: 'views',
-    engines: {
-      'jade': { module: require('jade') }
-    },
-    isCached: !app.debug
-  });
-
-
-  // routes
-  var startHandler = require('./lib/handlers/start-page.js')(app);
-  var clsHandler = require('./lib/handlers/cls-page.js')(app);
-  var tagHandler = require('./lib/handlers/tag-page.js')(app);
-  var articleHandler = require('./lib/handlers/article-page.js')(app);
-  var pageHandler = require('./lib/handlers/generic-page.js')(app);
-
-  var mainRssHandler = require('./lib/handlers/main-rss.js')(app);
-  var clsRssHandler = require('./lib/handlers/cls-rss.js')(app);
+  var handlers = Handlers(app);
 
   selection.route([
 
@@ -122,14 +62,14 @@ function init(plugin, config, api, resources, next) {
     {
       method: 'GET',
       path: '/',
-      handler: startHandler
+      handler: handlers.start
     },
 
     // category or collection page
     {
       method: 'GET',
       path: '/{classification}',
-      handler: clsHandler
+      handler: handlers.cls
     },
     {
       method: 'GET',
@@ -144,7 +84,7 @@ function init(plugin, config, api, resources, next) {
     {
       method: 'GET',
       path: '/{classification}/{article}',
-      handler: articleHandler
+      handler: handlers.article
     },
     {
       method: 'GET',
@@ -158,7 +98,7 @@ function init(plugin, config, api, resources, next) {
     {
       method: 'GET',
       path: '/s/{page}',
-      handler: pageHandler
+      handler: handlers.page
     },
     {
       method: 'GET',
@@ -172,7 +112,7 @@ function init(plugin, config, api, resources, next) {
     {
       method: 'GET',
       path: '/tags/{tag}',
-      handler: tagHandler
+      handler: handlers.tag
     },
     {
       method: 'GET',
@@ -186,13 +126,13 @@ function init(plugin, config, api, resources, next) {
     {
       method: 'GET',
       path: '/rss',
-      handler: mainRssHandler
+      handler: handlers.mainRss //mainRssHandler
     },
     // cls rss
     {
       method: 'GET',
       path: '/rss/{classification}',
-      handler: clsRssHandler
+      handler: handlers.clsRss //clsRssHandler
     },
 
     // static
@@ -233,7 +173,12 @@ function init(plugin, config, api, resources, next) {
 
       plugin.log(['magazine'], 'error when ' + request.method + ' ' + request.path);
       plugin.log(['magazine'], 'redirect to error page:' + errorSlug + ', code: ' + errorCode);
-      return reply('You are being redirected').redirect('/s/' + errorSlug);
+
+      var path = '/s/' + errorSlug;
+      // prevent loops
+      if (request.path !== path) {
+        return reply('You are being redirected').redirect(path);
+      }
     }
 
     return reply();
@@ -260,10 +205,10 @@ module.exports.register = function(plugin, options, next) {
 
   api.getConfig().then(function(c) {
     config = c;
-    return Resources();
+    return Resources(config.db);
 
-  }).then(function(resDefs) {
-    init(plugin, config, api, resDefs, next);
+  }).then(function(res) {
+    init(plugin, config, api, res.definitions, res.cores.resources, next);
 
   }).fail(function(err) {
     console.log(err);

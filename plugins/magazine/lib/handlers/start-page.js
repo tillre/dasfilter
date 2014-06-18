@@ -49,12 +49,12 @@ function parseLayout(layout) {
 //
 function prepareStage(app) {
 
-  return app.api.getStartStage().then(function(stage) {
+  return app.models.stages.getStartStage().then(function(stage) {
 
     var layout = parseLayout(stage.layout);
 
     // get docs for the chronological teasers set
-    return app.api.getTeasersByClsDate(
+    return app.models.teasers.byClsDate(
       '*',
       new Date().toISOString(),
       layout.chronoRefs.length + layout.presetIds.length
@@ -80,7 +80,7 @@ function prepareStage(app) {
         return stage;
       }
       // get docs for preset teasers
-      return app.api.getTeasersByIds(layout.presetIds);
+      return app.models.teasers.byIds(layout.presetIds);
 
     }).then(function(docs) {
       // merge docs into preset stage refs
@@ -100,7 +100,7 @@ module.exports = function startHandler(app) {
     var startDate = request.query.date;
     var continued = !!startDate;
 
-    app.api.getClassifications().then(function(cls) {
+    app.models.classifications.getAll().then(function(cls) {
       return prepareStage(app).then(function(stage) {
         app.replyView(request, reply, 'start-page', {
           classifications: cls,

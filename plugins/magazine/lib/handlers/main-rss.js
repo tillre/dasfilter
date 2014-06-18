@@ -3,7 +3,7 @@ module.exports = function mainRssHandler(app) {
 
   return function(request, reply) {
 
-    app.api.getTeasersByClsDate(
+    app.models.teasers.byClsDate(
       '*',
       new Date().toISOString(),
       25

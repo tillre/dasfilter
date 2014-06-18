@@ -6,7 +6,7 @@ var NUM_ARTICLES = 12;
 
 function prepareStage(app, id) {
 
-  return app.api.getClsStage(id).then(function(stage) {
+  return app.models.stages.getClsStage(id).then(function(stage) {
 
     // load auto and manual articles
     var promises = [];
@@ -15,7 +15,7 @@ function prepareStage(app, id) {
     // load auto articles and collect manual article refs
     stage.aside.forEach(function(item) {
       if (item.type_ === 'newest-of-category' || item.type_ === 'newest-of-collection') {
-        promises.push(app.api.getTeasersByClsDate(
+        promises.push(app.models.teasers.byClsDate(
           item.classification.id_,
           new Date().toISOString(),
           item.numArticles
@@ -34,7 +34,7 @@ function prepareStage(app, id) {
     // load manual articles and merge them into the stage refs
     var ids = Object.keys(refs);
     promises.push(
-      app.api.getTeasersByIds(ids).then(function(docs) {
+      app.models.teasers.byIds(ids).then(function(docs) {
         docs.forEach(function(doc) {
           _.merge(refs[doc._id], doc);
         });
@@ -55,9 +55,9 @@ module.exports = function clsHandler(app) {
     // optional start date for pagination
     var startDate = request.query.date;
 
-    app.api.getClassifications().then(function(classes) {
+    app.models.classifications.getAll().then(function(classes) {
 
-      var cls = classes.bySlug(request.params.classification);
+      var cls = classes.allBySlug[request.params.classification];
       if (!cls) {
         var err = new Error('Category or Collection not found: ' + request.params.classification);
         err.code = 404;
@@ -69,7 +69,7 @@ module.exports = function clsHandler(app) {
       return prepareStage(app, cls._id).then(function(s) {
         stage = s;
 
-        return app.api.getTeasersByClsDate(
+        return app.models.teasers.byClsDate(
           cls._id,
           startDate || new Date().toISOString(),
           NUM_ARTICLES + 1

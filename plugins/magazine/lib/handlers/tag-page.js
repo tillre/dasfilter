@@ -9,10 +9,10 @@ module.exports = function tagHandler(app) {
     // optional start date for pagination
     var startDate = request.query.date;
 
-    app.api.getClassifications().then(function(cs) {
+    app.models.classifications.getAll().then(function(cs) {
       classes = cs;
 
-      return app.api.getTeasersByTag(
+      return app.models.teasers.byTag(
         request.params.tag,
         startDate || new Date().toISOString(),
         NUM_ARTICLES + 1

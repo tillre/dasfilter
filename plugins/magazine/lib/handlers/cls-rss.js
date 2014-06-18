@@ -3,16 +3,16 @@ module.exports = function clsRssHandler(app) {
 
   return function(request, reply) {
 
-    app.api.getClassifications().then(function(classes) {
+    app.models.classifications.getAll().then(function(classes) {
 
-      var cls = classes.bySlug(request.params.classification);
+      var cls = classes.allBySlug[request.params.classification];
       if (!cls) {
         var err = new Error('Category or Collection not found: ' + request.params.classification);
         err.code = 404;
         throw err;
       }
 
-      app.api.getTeasersByClsDate(
+      app.models.teasers.byClsDate(
         cls._id,
         new Date().toISOString(),
         20
