@@ -1,6 +1,6 @@
 var Util = require('util');
 var Hapi = require('hapi');
-var manifest = require('./lib/manifest.js');
+var manifest = require('./manifest.js');
 
 if (process.env.NODE_ENV !== 'production') {
   console.log('enable longer stack traces');
