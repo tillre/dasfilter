@@ -5,6 +5,12 @@
     app_dir: "{{ deploy_home }}/app"
     app_env_vars:
       NODE_ENV: "{{ node_env }}"
+
+      DF_DB_URL: http://localhost:5984/df
+
+      DF_WEB_URL: "{{ proxy_web_url }}"
+      DF_STATIC_URL: "{{ proxy_static_url }}"
+
       DF_API_URL: "http://{{ groups['api'][0] }}:8060"
       DF_API_KEY: "{{ api_key }}"
 

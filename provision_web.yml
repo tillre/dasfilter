@@ -1,6 +1,8 @@
 - hosts: web
   remote_user: deploy
   vars:
+    couchdb_version: 1.6.0
+
     app_repo: git@bitbucket.org:skoni/df-web-server.git
     app_dir: "{{ deploy_home }}/app"
     app_open_ports:
@@ -9,4 +11,12 @@
   roles:
     # - debug
     - nodejs
+    - couchdb
     - app_provision
+
+  tasks:
+    - name: Create DB replication
+      shell: >
+        curl -X POST http://localhost:5984/_replicate
+        -H 'Content-Type: application/json'
+        -d '{"source":"{{ db_url }}","target":"df","create_target":true,"continuous":true}'

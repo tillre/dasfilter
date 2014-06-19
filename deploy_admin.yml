@@ -5,8 +5,14 @@
     app_dir: "{{ deploy_home }}/app"
     app_env_vars:
       NODE_ENV: "{{ node_env }}"
+
+      DF_WEB_URL: "{{ proxy_web_url }}"
+      DF_ADMIN_URL: "{{ proxy_admin_url }}"
+      DF_STATIC_URL: "{{ proxy_static_url }}"
       DF_API_URL: "http://{{ groups['api'][0] }}:8060"
+
       DF_API_KEY: "{{ api_key }}"
+      DF_COOKIE_PASS: "{{ cookie_pass }}"
 
   roles:
     - app_deploy

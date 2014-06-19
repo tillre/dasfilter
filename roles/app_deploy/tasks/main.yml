@@ -4,10 +4,10 @@
 - name: Update repo
   git: repo={{ app_repo }} dest={{ deploy_home }}/app accept_hostkey=yes
 
-- name: Install base npm packages
+- name: Update base npm packages
   shell: cd {{ deploy_home }}/app; npm install
 
-- name: Install remaining packages and build
+- name: Update remaining packages and build
   shell: cd {{ deploy_home}}/app; grunt install
 
 # env vars
