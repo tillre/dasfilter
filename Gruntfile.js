@@ -88,11 +88,11 @@ module.exports = function(grunt) {
     // never call done, interrupt manually
   });
 
-  grunt.registerMultiTask('npm', 'install packages', function() {
+  grunt.registerMultiTask('npm', 'update packages', function() {
     var done = this.async();
     var cwd = Path.resolve(this.data);
 
-    runCmd('npm', ['install'], cwd, done);
+    runCmd('npm', ['update'], cwd, done);
   });
 
   grunt.registerMultiTask('bower', 'install components', function() {
