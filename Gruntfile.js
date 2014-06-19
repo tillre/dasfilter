@@ -21,10 +21,10 @@ module.exports = function(grunt) {
   grunt.registerTask('install', ['npm', 'build']);
 
 
-  grunt.registerMultiTask('npm', 'install packages', function() {
+  grunt.registerMultiTask('npm', 'update packages', function() {
     var done = this.async();
     var cwd = Path.resolve(this.data);
-    runCmd('npm', ['install'], cwd, done);
+    runCmd('npm', ['update'], cwd, done);
   });
 
 
