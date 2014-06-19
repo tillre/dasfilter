@@ -1,21 +1,24 @@
 var Util = require('util');
 var Hapi = require('hapi');
 var Resources = require('df-resources');
-var Config = require('./lib/config.js');
 
+var debug = process.env.NODE_ENV !== 'production';
 
-if (process.env.NODE_ENV !== 'production') {
+if (debug) {
   console.log('enable longer stack traces');
   require('longjohn');
 }
 
 
-var context = { imagesUrl: Config.urls.static + '/images' };
-var sync = Config.debug;
+var dbUrl = process.env.DF_DB_URL || 'http://localhost:5984/df';
+var staticUrl = process.env.DF_STATIC_URL || 'http://0.0.0.0:8060';
+var context = { imagesUrl: staticUrl + '/images' };
+var sync = debug;
 
-Resources(Config.db, context, sync).then(function(res) {
 
-  var manifest = require('./lib/manifest.js')(Config, res.cores);
+Resources(dbUrl, context, sync).then(function(res) {
+
+  var manifest = require('./manifest.js')(res.cores);
 
   console.log(Util.inspect(manifest, { depth: 5 }));
 

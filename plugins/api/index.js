@@ -15,20 +15,8 @@ module.exports.register = function(plugin, options, next) {
   // basic auth - only checks apikey
   plugin.auth.strategy('api-simple', 'basic', {
     validateFunc: function(username, password, callback) {
-      var valid = password === options.config.apiKey;
+      var valid = password === options.apiKey;
       callback(null, valid, { username: username });
-    }
-  });
-
-  // config route
-  plugin.route({
-    method: 'GET',
-    path: '/_config',
-    config: {
-      auth: 'api-simple',
-      handler: function(request, reply) {
-        reply(options.config);
-      }
     }
   });
 
@@ -38,19 +26,6 @@ module.exports.register = function(plugin, options, next) {
   var cores = coresHapi.cores;
   // var resDefs;
   var syncStages;
-
-  // create resources
-  // Resources({ imagesUrl: options.config.urls.static + '/images' }).then(function(rd) {
-  //   resDefs = rd;
-  //   return Q.all(_.map(resDefs, function(value, key) {
-  //     if (key.charAt(0) !== '_') {
-  //       plugin.log('[api]', 'creating resource: ' + key);
-  //       return cores.create(key, value, options.config.debug);
-  //     }
-  //     return null;
-  //   }));
-
-  // }).then(function() {
 
   // create api
   coresHapi.createApi({
@@ -68,13 +43,11 @@ module.exports.register = function(plugin, options, next) {
   });
 
   // fn to create a stage for every category
-  // syncStages = SyncStages(plugin, cores, resDefs);
   syncStages = SyncStages(plugin, cores);
 
   // load api handlers
-
   require('./lib/resource-handlers/user-handler.js')(coresHapi);
-  require('./lib/resource-handlers/image-handler.js')(coresHapi, options.config.imagesDir);
+  require('./lib/resource-handlers/image-handler.js')(coresHapi, options.imagesDir);
   require('./lib/resource-handlers/gallery-handler.js')(coresHapi);
   require('./lib/resource-handlers/article-handler.js')(coresHapi);
   require('./lib/resource-handlers/category-handler.js')(coresHapi, syncStages);
@@ -83,7 +56,7 @@ module.exports.register = function(plugin, options, next) {
   require('./lib/resource-handlers/generic-handlers.js')(coresHapi);
 
   // create image upload dir
-  File.mkdirRec(options.config.imagesDir).then(function() {
+  File.mkdirRec(options.imagesDir).then(function() {
 
     var account = Account(cores.resources.User);
 
