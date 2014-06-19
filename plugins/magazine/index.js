@@ -11,27 +11,27 @@ var Handlers = require('./lib/handlers/handlers.js');
 var CreateUrlHelper = require('./lib/url-helper.js');
 
 
-function init(plugin, config, api, definitions, resources, next) {
+function init(plugin, options, api, definitions, resources, next) {
 
   plugin.views({
     path: 'views',
     engines: {
       'jade': { module: require('jade') }
     },
-    isCached: !config.debug
+    isCached: !options.debug
   });
 
   var selection = plugin.select('web');
   var urls = {
       // these are served from different hosts/ports
-      images: config.urls.static + '/images',
-      assets: config.urls.web + '/static/assets',
-      magazine: config.urls.web
+      images: options.urls.static + '/images',
+      assets: options.urls.web + '/static/assets',
+      magazine: options.urls.web
   };
   plugin.log(['magazine'], 'paths: ' + JSON.stringify(urls));
 
   var app = {
-    debug: config.debug,
+    debug: options.debug,
     urls: CreateUrlHelper(urls),
     api: api,
     definitions: definitions,
@@ -126,26 +126,26 @@ function init(plugin, config, api, definitions, resources, next) {
     {
       method: 'GET',
       path: '/rss',
-      handler: handlers.mainRss //mainRssHandler
+      handler: handlers.mainRss
     },
     // cls rss
     {
       method: 'GET',
       path: '/rss/{classification}',
-      handler: handlers.clsRss //clsRssHandler
+      handler: handlers.clsRss
     },
 
     // static
     {
       method: 'GET',
       path: '/favicon.ico',
-      handler: { file: Path.join(Path.resolve(config.assetsDir), 'favicon.ico') }
+      handler: { file: Path.join(Path.resolve(options.assetsDir), 'favicon.ico') }
     },
     {
       method: 'GET',
       path: '/static/assets/{path*}',
       handler: {
-        directory: { path: [Path.resolve(config.assetsDir)], listing: true }
+        directory: { path: [Path.resolve(options.assetsDir)], listing: true }
       }
     }
   ]);
@@ -201,14 +201,9 @@ module.exports.register = function(plugin, options, next) {
   plugin.log(['magazine'], 'register');
 
   var api = Api(options.apiUrl, 'admin', options.apiKey);
-  var config;
 
-  api.getConfig().then(function(c) {
-    config = c;
-    return Resources(config.db);
-
-  }).then(function(res) {
-    init(plugin, config, api, res.definitions, res.cores.resources, next);
+  Resources('http://localhost:5984/df').then(function(res) {
+    init(plugin, options, api, res.definitions, res.cores.resources, next);
 
   }).fail(function(err) {
     console.log(err);
