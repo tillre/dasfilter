@@ -18,7 +18,7 @@ function init(plugin, config, api, definitions, resources, next) {
     engines: {
       'jade': { module: require('jade') }
     },
-    isCached: !app.debug
+    isCached: !config.debug
   });
 
   var selection = plugin.select('web');
