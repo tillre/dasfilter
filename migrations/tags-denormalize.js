@@ -13,14 +13,15 @@ var db = {
 if (!db.url) {
   throw new Error('no db url, set env var DF_DB_URL');
 }
-var cores = Cores(db);
-var defs, tagRes, articleRes;
+// var cores = Cores(db);
+var cores, defs, tagRes, articleRes;
 var tagsMap = {};
 
 
 console.log('loading resource definitions');
-Load().then(function(d) {
-  defs = d;
+Load(db).then(function(res) {
+  cores = res.cores;
+  defs = res.definitions;
   console.log('creating Tag resource');
   return cores.create('Tag', defs.Tag);
 
