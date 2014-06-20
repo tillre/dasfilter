@@ -21,27 +21,6 @@ function checkError(err, req, res, body) {
 module.exports = function(apiUrl, apiUser, apiPass) {
 
   //
-  // get base configuration
-  //
-  function getConfig() {
-    var defer = Q.defer();
-    var req = Request({
-      url: apiUrl + '/_config',
-      method: 'GET',
-      auth: { user: apiUser, pass: apiPass }
-
-    }, function(err, response, body) {
-      err = checkError(err, req, response, body);
-      if (err) {
-        return defer.reject(err);
-      }
-      defer.resolve(JSON.parse(body));
-    });
-    return defer.promise;
-  }
-
-
-  //
   // validate user account
   //
   function validateAccount(username, password) {
