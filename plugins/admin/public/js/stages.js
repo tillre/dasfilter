@@ -58,7 +58,9 @@
   module.controller('StageCtrl', function(
     $scope,
     $location,
-    $routeParams
+    $routeParams,
+    crResources,
+    crTagCompletion
   ) {
 
     angular.extend($scope, angular.copy(config));
@@ -67,6 +69,20 @@
     };
     $scope.type = $routeParams.type;
     $scope.id = $routeParams.id;
+
+    if ($scope.type === 'StartStage') {
+      // update tags completion
+      crResources.get('Article').view('by_tag', { group: true }).then(
+        function success(tags) {
+          tags.rows.forEach(function(tag) {
+            crTagCompletion.addItem(tag.value, tag.key);
+          });
+        },
+        function error(err) {
+          console.log(err);
+        }
+      );
+    }
   });
 
 })();
