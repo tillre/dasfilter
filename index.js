@@ -20,29 +20,26 @@ function checkError(err, req, res, body) {
 
 module.exports = function(apiUrl, apiUser, apiPass) {
 
+  return {
   //
   // validate user account
   //
-  function validateAccount(username, password) {
-    var defer = Q.defer();
-    var req = Request({
-      url: apiUrl + '/accounts/validate',
-      method: 'POST',
-      auth: { user: apiUser, pass: apiPass },
-      json: { username: username, password: password }
+    validateAccount: function(username, password) {
+      var defer = Q.defer();
+      var req = Request({
+        url: apiUrl + '/accounts/validate',
+        method: 'POST',
+        auth: { user: apiUser, pass: apiPass },
+        json: { username: username, password: password }
 
-    }, function(err, response, body) {
-      err = checkError(err, req, response, body);
-      if (err) {
-        return defer.reject(err);
-      }
-      defer.resolve(body);
-    });
-    return defer.promise;
-  }
-
-  return {
-    getConfig: getConfig,
-    validateAccount: validateAccount
+      }, function(err, response, body) {
+        err = checkError(err, req, response, body);
+        if (err) {
+          return defer.reject(err);
+        }
+        defer.resolve(body);
+      });
+      return defer.promise;
+    }
   };
 };
