@@ -1,7 +1,7 @@
 var Path = require('path');
 var env = process.env;
 
-module.exports = function(cores) {
+module.exports = function(cores, definitions) {
 
   var manifest = {
     servers: [
@@ -45,6 +45,8 @@ module.exports = function(cores) {
 
   manifest.plugins[Path.resolve('plugins/api')] = {
     debug: env.NODE_ENV !== 'production',
+    cores: cores,
+    definitions: definitions,
     staticDir: Path.join('static'),
     imagesDir: Path.join('static/images'),
     apiKey: env.DF_API_KEY || 'api-key'

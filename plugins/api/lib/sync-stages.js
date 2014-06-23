@@ -2,7 +2,7 @@ var Q = require('kew');
 var J = require('jski')();
 
 
-module.exports = function(plugin, cores, resDefs) {
+module.exports = function(plugin, cores, definitions) {
 
   // create stages which dont yet exist
 
@@ -14,7 +14,7 @@ module.exports = function(plugin, cores, resDefs) {
       if (result.rows.length > 0) {
         return null;
       }
-      var stage = J.createValue(resDefs.StartStage.schema);
+      var stage = J.createValue(definitions.StartStage.schema);
       return cores.resources.StartStage.save(stage).then(function(doc) {
         plugin.log(['api'], 'stage for start page created');
       });
@@ -40,7 +40,7 @@ module.exports = function(plugin, cores, resDefs) {
       if (!missingStages.length) return;
 
       var promises = missingStages.map(function(cls) {
-        var stage = J.createValue(resDefs.ClassificationStage.schema);
+        var stage = J.createValue(definitions.ClassificationStage.schema);
         stage.title = cls.title;
         stage.classification.id = cls._id;
         stage.classification.type = cls.type_;

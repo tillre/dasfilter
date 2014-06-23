@@ -23,9 +23,8 @@ module.exports.register = function(plugin, options, next) {
 
   // load resources and create api
   var coresHapi = plugin.plugins['cores-hapi'];
-  var cores = coresHapi.cores;
-  // var resDefs;
-  var syncStages;
+  // fn to sync stages with categories/collections/startpage
+  var syncStages = SyncStages(plugin, options.cores, options.definitions);
 
   // create api
   coresHapi.createApi({
@@ -42,9 +41,6 @@ module.exports.register = function(plugin, options, next) {
     }
   });
 
-  // fn to create a stage for every category
-  syncStages = SyncStages(plugin, cores);
-
   // load api handlers
   require('./lib/resource-handlers/user-handler.js')(coresHapi);
   require('./lib/resource-handlers/image-handler.js')(coresHapi, options.imagesDir);
@@ -58,7 +54,7 @@ module.exports.register = function(plugin, options, next) {
   // create image upload dir
   File.mkdirRec(options.imagesDir).then(function() {
 
-    var account = Account(cores.resources.User);
+    var account = Account(options.cores.resources.User);
 
     // validate account route
     plugin.route({
