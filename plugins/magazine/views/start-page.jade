@@ -27,15 +27,10 @@ html(lang="de")
     +header(classifications, classification, null, 'startpage')
 
     main.index-page(class="#{continued ? 'continued' : 'begin'}")
-      each group in groups
-        div(class="index-group #{group.type_}-#{group.display}")
-          case group.type_
-            when "oneway": +start-oneway(group)
-            when "twoway": +start-twoway(group)
-            when "threeway": +start-threeway(group)
+      +start-layout(stage.layout)
 
-      if nextDate
-        +more(urls.current() + '?date=' + nextDate)
+      if stage.nextDate
+        +more(urls.current() + '?date=' + stage.nextDate)
 
     +footer
     +body-end

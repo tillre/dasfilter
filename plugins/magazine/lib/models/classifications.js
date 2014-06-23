@@ -27,7 +27,7 @@ module.exports = function(resources) {
           if (row.doc.type_ === 'Category') {
             categories.push(row.doc);
           }
-          else if (row.doc.type_ === 'Classification') {
+          else if (row.doc.type_ === 'Collection') {
             collections.push(row.doc);
           }
         });

@@ -9,17 +9,15 @@ mixin image-node(data, size, delayLoad)
 mixin image(data, type, delayLoad)
   case type
     when "teaser-oneway":        +image-node(data, 'x', delayLoad)
-    when "teaser-twoway-first":  +image-node(data, 'l', delayLoad)
-    when "teaser-twoway-second": +image-node(data, 'm', delayLoad)
+    when "teaser-twoway":        +image-node(data, 'l', delayLoad)
     when "teaser-threeway":      +image-node(data, 'm', delayLoad)
-    when "teaser-oneway-full":   +image-node(data, 'x', delayLoad)
-    when "teaser-twoway-full":   +image-node(data, 'l', delayLoad)
 
-    when "teaser-cls": +image-node(data, 'l', delayLoad)
-    when "teaser-cls-aside": +image-node(data, 'm', delayLoad)
+    when "teaser-cls-first":       +image-node(data, 'm', delayLoad)
+    when "teaser-cls":             +image-node(data, 'm', delayLoad)
+    when "teaser-cls-aside":       +image-node(data, 'm', delayLoad)
+    when "teaser-article-related": +image-node(data, 'm', delayLoad)
 
     when "article-header": +image-node(data, 'x', delayLoad)
-    when "teaser-article-related": +image-node(data, 'm', delayLoad)
 
     when "content-oneway-default":      +image-node(data, 'x', delayLoad)
     when "content-oneway-inside-left":  +image-node(data, 'm', delayLoad)

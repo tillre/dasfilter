@@ -1,5 +1,17 @@
 mixin footer
   footer(id="footer")
+    .footer-cls
+      .footer-cls-outer
+        .footer-cls-inner
+          ul
+            each cls in classifications.categories
+              li
+                a(href=urls.classification(cls))= cls.title
+
+            each cls in classifications.collections
+              li
+                a(href=urls.classification(cls))= cls.title
+
     .footer-outer
       .footer-inner
         .footer-links

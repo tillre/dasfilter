@@ -144,8 +144,7 @@
 @modal-bg-color: rgba(0, 0, 0, 0.85);
 @modal-fg-color: white;
 
-@label-color: #C9BC7B;
-@label-padding: @gutter * 0.4;
+@label-color: #BBAD68; //#C9BC7B;
 
 
 //
@@ -177,7 +176,7 @@ a {
 .label {
     color: white;
     background-color: @label-color;
-    padding: @gutter * 0.2 @label-padding @gutter * 0.15;
+    padding: @gutter * 0.25 @gutter * 0.5 @gutter * 0.15;
     .font-teaser-label;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -185,12 +184,19 @@ a {
 
 .related-title {
     .font-aside-title;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     margin-bottom: @gutter;
-    border-top: 5px solid @fg-color;
+    border-top: 3px solid @fg-color;
     border-bottom: 1px solid @light-fg-color;
     padding: @gutter * 0.25 @gutter;
     text-align: center;
+    &:before {
+        content: '• ';
+    }
+    &:after {
+        content: ' •';
+    }
 }
 
 @media (min-width: @break-xl) {

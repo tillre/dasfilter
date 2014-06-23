@@ -62,7 +62,14 @@ function init(plugin, options, api, definitions, resources, next) {
     {
       method: 'GET',
       path: '/',
-      handler: handlers.start
+      handler: function(request, reply) {
+        if (request.query.date) {
+          handlers.startMore(request, reply);
+        }
+        else {
+          handlers.start(request, reply);
+        }
+      }
     },
 
     // category or collection page

@@ -8,31 +8,20 @@ mixin teaser-startpage(teaserType, article)
         a(class="teaser-content", href=urls.article(article.classification.category, article))
           +image(article.header.image, teaserType)
 
-      .teaser-title
+      a(class="teaser-title", href=urls.article(article.classification.category, article))
         .teaser-content
-          if (article.classification.label)
-            .label-wrapper
-              h4(class="label")= article.classification.label
+          .labels-wrapper
+            .labels
+              h4(class="label category")= article.classification.category.title
+              - if (article.classification.label)
+                h4(class="label")= article.classification.label
 
-          a(class="title", href=urls.article(article.classification.category, article))
+          .title
             .title-text
               h1
                 span(class="header-1")= article.title
                 span(class="header-2")= article.subtitle
 
-      .teaser-byline
-        .teaser-content
-          small(class="byline")
-            - var category = article.classification.category
-            span(class="category")
-              a(href=urls.classification(category))= category.title
-
-            if article.contributors.length > 0
-              - var contributor = article.contributors[0].contributor
-              span(class="seperator") &nbsp;&mdash;&nbsp;
-              span(class="contributor") von&nbsp;
-                span(class="name") #{(contributor.firstname + ' ' + contributor.lastname)}
-            span(class="date")= formatDate(article.date)
 
 
 mixin teaser-clspage(teaserType, article, showText)
@@ -45,8 +34,9 @@ mixin teaser-clspage(teaserType, article, showText)
       .teaser-info
         .teaser-content
           if (article.classification.label)
-            .label-wrapper
-              h4(class="label")= article.classification.label
+            .labels-wrapper
+              .labels
+                h4(class="label")= article.classification.label
 
           a(class="title", href=urls.article(article.classification.category, article))
             .title-text

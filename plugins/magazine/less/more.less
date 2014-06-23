@@ -1,14 +1,13 @@
 
 .more-outer {
     .row;
-    padding-top: @gutter;
+    padding-top: @gutter * 2;
+    padding-bottom: @gutter * 2;
 }
 
 .more-inner {
     .column;
     text-align: center;
-    padding-top: @gutter;
-    padding-bottom: @gutter * 2;
 }
 
 .more-button {
@@ -17,7 +16,8 @@
     .font-button;
     padding: @gutter * 0.5 @gutter * 0.5;
     color: @fg-color;
-    border-top: 4px solid @df-color;
+    border-top: 1px solid @extra-light-fg-color;
+    border-bottom: 3px solid @df-color;
 
     &:after {
         content: '';
@@ -35,6 +35,7 @@
         color: @fg-color;
     }
     &:hover {
+        border-top: 2px solid @df-color;
         color: @df-color;
         &:after {
             .svg-triangle-dark-right-hover;

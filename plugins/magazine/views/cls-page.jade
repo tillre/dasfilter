@@ -50,8 +50,12 @@ html(lang="de")
       .cls-wrapper
         .cls-main
           .cls-main-inner
-            each article in articles
-              +teaser-clspage('teaser-cls', article, true)
+            each article, index in articles
+              if index === 0
+                +teaser-clspage('teaser-cls-first', article, true)
+              else
+                +teaser-clspage('teaser-cls', article, true)
+
             if nextDate
               +more(urls.current() + '?date=' + nextDate)
         aside.cls-aside

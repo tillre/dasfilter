@@ -5,17 +5,12 @@ mixin start-teaser(type, article, showText)
 
 
 mixin start-oneway(group)
-  if group.display === 'full'
-    +start-teaser('teaser-oneway-full', group.article)
-  else
-    +start-teaser('teaser-oneway', group.article)
+  +start-teaser('teaser-oneway', group.article)
+
 
 mixin start-twoway(group)
-  if group.display === 'full'
-    +start-teaser('teaser-twoway-full', group.articles.one)
-    +start-teaser('teaser-twoway-full', group.articles.two)
-  else if group.display === 'uneven'
-    +start-teaser('teaser-twoway-full', group.articles.one)
+  if group.display === 'uneven'
+    +start-teaser('teaser-twoway', group.articles.one)
     +start-teaser('teaser-threeway', group.articles.two)
   else
     +start-teaser('teaser-twoway', group.articles.one)
@@ -23,11 +18,30 @@ mixin start-twoway(group)
 
 
 mixin start-threeway(group)
-  if group.display === 'full'
-    +start-teaser('teaser-threeway-full', group.articles.one)
-    +start-teaser('teaser-threeway-full', group.articles.two)
-    +start-teaser('teaser-threeway-full', group.articles.three)
-  else
-    +start-teaser('teaser-threeway', group.articles.one)
-    +start-teaser('teaser-threeway', group.articles.two)
-    +start-teaser('teaser-threeway', group.articles.three)
+  +start-teaser('teaser-threeway', group.articles.one)
+  +start-teaser('teaser-threeway', group.articles.two)
+  +start-teaser('teaser-threeway', group.articles.three)
+
+
+mixin start-layout(groups)
+  each group in groups
+    - var displayClass = group.display ? 'display-' + group.display : ''
+    if group.title
+      .index-group-title-wrapper
+        .index-group-title-outer
+          .index-group-title-inner
+            h3= group.title
+
+    div(class="index-group #{group.type_} #{displayClass}")
+      case group.type_
+        when "chrono-oneway": +start-oneway(group)
+        when "chrono-twoway": +start-twoway(group)
+        when "chrono-threeway": +start-threeway(group)
+
+        when "pinned-oneway": +start-oneway(group)
+        when "pinned-twoway": +start-twoway(group)
+        when "pinned-threeway": +start-threeway(group)
+
+        when "tag-oneway": +start-oneway(group)
+        when "tag-twoway": +start-twoway(group)
+        when "tag-threeway": +start-threeway(group)

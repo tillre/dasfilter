@@ -2,6 +2,8 @@
 module.exports = function(app) {
   return {
     start: require('./start-page.js')(app),
+    startMore: require('./start-more-page.js')(app),
+
     cls: require('./cls-page.js')(app),
     tag: require('./tag-page.js')(app),
     article: require('./article-page.js')(app),

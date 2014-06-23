@@ -30,6 +30,7 @@
 
     .items-title {
         .label;
+        .size-small;
         float: left;
         padding-left: 0;
         margin-top: @gutter * 0.125;
@@ -46,6 +47,7 @@
 
     ul {
         list-style: none;
+        overflow: hidden;
     }
     li {
         float: left;
@@ -92,6 +94,7 @@
         a {
             margin-top: @gutter * 0.125;
             .label;
+            .size-small;
             display: block;
             background-color: @df-color;
             color: white;
@@ -166,6 +169,17 @@
         display: table-cell;
         vertical-align: top;
         width: 100% / 3;
+
+        .title {
+            .title-text {
+                .header-1 {
+                    .font-teaser-title-smaller;
+                }
+                .header-2 {
+                    .font-teaser-subtitle-smaller;
+                }
+            }
+        }
     }
 }
 

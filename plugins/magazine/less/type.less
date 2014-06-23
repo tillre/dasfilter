@@ -126,6 +126,36 @@
         .set-font-size(30; @l);
     }
 }
+.size-article-title(@l:1) {
+    .set-font-size(28; @l);
+    @media (min-width: @break-s-landscape) {
+        .set-font-size(32; @l);
+    }
+    @media (min-width: @break-m-portrait) {
+        .set-font-size(32; @l);
+    }
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(34; @l);
+    }
+    @media (min-width: @break-l) {
+        .set-font-size(36; @l);
+    }
+}
+.size-article-subtitle(@l:1) {
+    .set-font-size(26; @l);
+    @media (min-width: @break-s-landscape) {
+        .set-font-size(31; @l);
+    }
+    @media (min-width: @break-m-portrait) {
+        .set-font-size(31; @l);
+    }
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(33; @l);
+    }
+    @media (min-width: @break-l) {
+        .set-font-size(35; @l);
+    }
+}
 
 //
 // general
@@ -159,9 +189,9 @@
 }
 .size-small {
     letter-spacing: 0.01em;
-    .set-font-size(15);
+    .set-font-size(14);
     @media (min-width: @break-s-landscape) {
-        .set-font-size(15);
+        .set-font-size(14);
     }
     @media (min-width: @break-m-portrait) {
         .set-font-size(14);
@@ -170,10 +200,16 @@
         .set-font-size(15);
     }
     @media (min-width: @break-l) {
-        .set-font-size(16);
+        .set-font-size(15);
     }
 }
-
+.size-label {
+    letter-spacing: 0.01em;
+    .set-font-size(13);
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(14);
+    }
+}
 
 body {
     .size-normal;
@@ -246,13 +282,22 @@ small {
     .type1-light;
     .size-teaser-subtitle-larger();
 }
+.font-teaser-title-huge {
+    .type1-bold;
+    .size-article-title(0.9);
+}
+.font-teaser-subtitle-huge {
+    .type1-light;
+    .size-article-title(0.9);
+}
 .font-teaser-label {
-    .type2-regular;
-    .size-small();
+    .type2-regular-i;
+    .size-label;
 }
 .font-aside-title {
-    .type2-bold;
-    .size-medium;
+    .type2-regular-i;
+    .size-normal;
+    letter-spacing: 0.05em;
 }
 .font-teaser-text {
     .type2-regular;

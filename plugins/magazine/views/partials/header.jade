@@ -25,11 +25,5 @@ mixin header(classifications, cls, tag, headerClass)
             each cls in classifications.categories
               li
                 a(href=urls.classification(cls))= cls.title
-        .drawer-list
-          h4 Sammlungen
-          ul
-            each cls in classifications.collections
-              li
-                a(href=urls.classification(cls))= cls.title
 
   div(id='header-cloak')
