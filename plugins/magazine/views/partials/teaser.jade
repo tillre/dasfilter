@@ -12,15 +12,19 @@ mixin teaser-startpage(teaserType, article)
         .teaser-content
           .labels-wrapper
             .labels
-              h4(class="label category")= article.classification.category.title
               - if (article.classification.label)
                 h4(class="label")= article.classification.label
+              h4(class="label category")= article.classification.category.title
 
           .title
             .title-text
               h1
                 span(class="header-1")= article.title
                 span(class="header-2")= article.subtitle
+
+          if article.contributors.length > 0
+            - var contributor = article.contributors[0].contributor
+            h4(class="contributor") von #{contributor.firstname} #{contributor.lastname}
 
 
 

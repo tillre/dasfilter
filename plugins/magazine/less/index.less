@@ -116,10 +116,6 @@
             max-width: 85%;
             background-color: white;
             padding-right: @gutter;
-            padding-bottom: @gutter * 0.25;
-            .title {
-                padding-bottom: 0;
-            }
         }
     }
     .teaser:nth-child(2) {
@@ -177,11 +173,13 @@
     .teaser-title {
         .no-row;
         position: absolute;
-        .linear-gradient(bottom, rgba(0,0,0,.6) 50%, rgba(0,0,0,.25) 100%;);
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
+        overflow: hidden;
+        .linear-gradient(bottom, rgba(0,0,0,.6) 50%, rgba(0,0,0,.25) 100%;);
+
         .title {
             position: absolute;
             bottom: @gutter;
@@ -201,27 +199,36 @@
         .labels-wrapper {
             position: absolute;
             bottom: 0;
+            z-index: 1;
             left: @gutter;
             right: @gutter;
+        }
+        .label {
+            border-bottom: 0;
+            border-top: 2px solid @df-color;
+            background-color: @medium-fg-color;
+            color: white;
+
+            &.category {
+                background-color: @fg-color;
+            }
+        }
+        .contributor {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            .label;
+            text-transform: none;
+            background-color: transparent;
+            color: @light-fg-color;
+            border: 0;
         }
     }
     .teaser-byline {
         display: none;
     }
-
-    @media (min-width: @break-l) {
-        .teaser-title {
-            .title {
-                left: @gutter;
-                bottom: @gutter * 2;
-            }
-            .labels-wrapper {
-                left: @gutter;
-                bottom: @gutter;
-            }
-        }
-    }
 }
+
 .layout-oneway-full {
     .teaser-title {
         .title {
@@ -247,6 +254,12 @@
 .layout-twoway-full {
     .teaser {
         width: 50%;
+    }
+    .teaser-title {
+        .title {
+            left: @gutter;
+            bottom: @gutter * 2;
+        }
     }
 }
 .layout-threeway-full {

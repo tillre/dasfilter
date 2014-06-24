@@ -4,6 +4,9 @@ mixin footer
       .footer-cls-outer
         .footer-cls-inner
           ul
+            li
+              a(href=urls.start()) Start
+
             each cls in classifications.categories
               li
                 a(href=urls.classification(cls))= cls.title

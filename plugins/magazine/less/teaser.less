@@ -57,9 +57,21 @@
         }
         .label {
             float: left;
+            border-bottom: 2px solid @df-color;
+            background-color: @extra-light-fg-color;
+            color: @fg-color;
+
             &.category {
-                background-color: @df-color;
+                background-color: @extra-extra-light-fg-color;
             }
+        }
+        .contributor {
+            display: inline-block;
+            .type2-regular-i;
+            .size-small;
+            color: @light-fg-color;
+            padding-top: @gutter * 0.125;
+            border-top: 1px solid @extra-light-fg-color;
         }
     }
     .teaser-info,
