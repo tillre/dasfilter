@@ -6,14 +6,17 @@
 .teaser-cls-first,
 .teaser-cls {
     .teaser-info {
-        .title-text {
-            padding: @gutter * 0.25 0 0;
-        }
-        .byline {
+        .contributor {
+            display: block;
+            padding-bottom: @gutter * 0.5;
+            border-top: 0;
             border-bottom: 1px solid @extra-light-fg-color;
         }
+        .date {
+            display: none;
+        }
         .text {
-            padding: @gutter * 0.5 0;
+            padding: @gutter * 0.5 0 @gutter * 0.5;
             .box-sizing(border-box);
         }
     }
@@ -30,7 +33,7 @@
 }
 
 .teaser-cls-aside {
-    margin-bottom: @gutter * 2;
+    margin: 0;
     width: 50%;
     float: left;
     .box-sizing(border-box);
@@ -42,8 +45,7 @@
             .no-column;
             margin: 0;
         }
-
-        .byline {
+        .category, .contributor, .date {
             display: none;
         }
         .title {

@@ -1,20 +1,21 @@
 include image
 
 
-mixin teaser-startpage(teaserType, article)
+mixin teaser(teaserType, article, showText, hideCategory)
   article(class="teaser #{teaserType}")
     .teaser-inner
       .teaser-image
         a(class="teaser-content", href=urls.article(article.classification.category, article))
           +image(article.header.image, teaserType)
 
-      a(class="teaser-title", href=urls.article(article.classification.category, article))
+      a(class="teaser-info", href=urls.article(article.classification.category, article))
         .teaser-content
           .labels-wrapper
             .labels
-              - if (article.classification.label)
+              if article.classification.label
                 h4(class="label")= article.classification.label
-              h4(class="label category")= article.classification.category.title
+              if !hideCategory
+                h4(class="label category")= article.classification.category.title
 
           .title
             .title-text
@@ -26,34 +27,8 @@ mixin teaser-startpage(teaserType, article)
             - var contributor = article.contributors[0].contributor
             h4(class="contributor") von #{contributor.firstname} #{contributor.lastname}
 
-
-
-mixin teaser-clspage(teaserType, article, showText)
-  article(class="teaser #{teaserType}")
-    .teaser-inner
-      .teaser-image
-        a(class="teaser-content", href=urls.article(article.classification.category, article))
-          +image(article.header.image, teaserType)
-
-      .teaser-info
-        .teaser-content
-          if (article.classification.label)
-            .labels-wrapper
-              .labels
-                h4(class="label")= article.classification.label
-
-          a(class="title", href=urls.article(article.classification.category, article))
-            .title-text
-              h1
-                span(class="header-1")= article.title
-                span(class="header-2")= article.subtitle
-
-          small(class="byline")
-            if article.contributors.length > 0
-              - var contributor = article.contributors[0].contributor
-              span(class="contributor") von&nbsp;
-                span(class="name") #{(contributor.firstname + ' ' + contributor.lastname)}
-            span(class="date")= formatDate(article.date)
+          h4(class="date")= formatDate(article.date)
 
           if showText
             .text!= markdown(article.teaser)
+

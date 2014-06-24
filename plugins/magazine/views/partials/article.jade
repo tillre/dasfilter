@@ -115,9 +115,10 @@ mixin article(article)
 
 
     if related.length > 0
-      .article-related-outer
-        .article-related-inner
-          .article-related-title
+      .article-related
+        .article-related-title-outer
+          .article-related-title-inner
             h4 Weitere Geschichten
+        .index-group.article-related-threeway
           each relatedArticle in related
-            +teaser-clspage('teaser-article-related', relatedArticle)
+            +teaser('teaser-threeway', relatedArticle)
