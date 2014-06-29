@@ -166,17 +166,18 @@
 
         .title {
             position: absolute;
-            bottom: @gutter;
-            left: @gutter;
-            right: @gutter;
+            bottom: 0;
+            left: 0;
+            right: 0;
             margin: 0;
             padding: 0;
+            padding: 0 @gutter @gutter;
+            .linear-gradient(left, rgba(0,0,0,.333) 0%, rgba(0,0,0,.0) 90%;);
         }
         h1 {
             color: white;
-            padding: @gutter * 0.5 @title-vert-padding;
+            padding: @gutter * 0.5 0;
             text-shadow: rgba(0,0,0,.9) 0 0 3px;
-            .linear-gradient(left, rgba(0,0,0,.6) 0%, rgba(0,0,0,.0) 100%;);
         }
         .labels-wrapper {
             position: absolute;
@@ -191,7 +192,11 @@
             color: @extra-extra-light-fg-color;
             background-color: transparent;
 
-            &.category {
+            &:first-child, &:only-child {
+              padding-left: 0;
+            }
+            &:last-child, &:only-child {
+              padding-right: 0;
             }
         }
         .contributor {
@@ -209,12 +214,21 @@
 .layout-oneway-full {
     .teaser-info {
         .title {
+            h1 {
+                text-align: center;
+            }
             .header-1 {
                 .font-teaser-title-huge;
             }
             .header-2 {
                 .font-teaser-subtitle-huge;
             }
+        }
+        .labels {
+            left: 50%;
+        }
+        .label {
+            .transform(translate(-50%, 0));
         }
     }
     @media (min-width: @break-m-landscape) {
@@ -223,7 +237,7 @@
                 bottom: @gutter * 5;
             }
             .labels-wrapper {
-                bottom: @gutter * 4;
+                bottom: @gutter * 5;
             }
         }
     }
@@ -231,6 +245,16 @@
 .layout-twoway-full {
     .teaser {
         width: 50%;
+    }
+    @media (min-width: @break-m-landscape) {
+        .teaser-info {
+            .title {
+                padding-bottom: @gutter * 2;
+            }
+            .labels-wrapper {
+                bottom: @gutter;
+            }
+        }
     }
 }
 .layout-threeway-full {

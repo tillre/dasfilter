@@ -13,7 +13,8 @@ mixin teaser(teaserType, article, showText, hideCategory)
           .labels-wrapper
             .labels
               if article.classification.label
-                h4(class="label generic")= article.classification.label
+                - var clsClass = hideCategory ? 'cls-label' : ''
+                h4(class="label generic #{clsClass}")= article.classification.label
               if !hideCategory
                 h4(class="label category")= article.classification.category.title
 
