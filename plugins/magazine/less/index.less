@@ -5,7 +5,7 @@
 
 
 .index-group-title-wrapper {
-    padding-top: @gutter;
+    margin-top: @gutter * 2;
     border-bottom: 3px solid @fg-color;
     .index-group-title-inner {
         .row-left();
@@ -101,16 +101,6 @@
     }
     .teaser:nth-child(1) {
         width: (100% / 3) * 2;
-        .teaser-inner {
-            position: relative;
-        }
-        .teaser-info {
-            position: absolute;
-            bottom: 0;
-            max-width: 85%;
-            background-color: white;
-            padding-right: @gutter;
-        }
     }
     .teaser:nth-child(2) {
         width: 100% / 3;
@@ -172,7 +162,7 @@
         left: 0;
         right: 0;
         overflow: hidden;
-        .linear-gradient(bottom, rgba(0,0,0,.6) 50%, rgba(0,0,0,.25) 100%;);
+        .linear-gradient(bottom, rgba(0,0,0,.5) 0%, rgba(0,0,0,.1) 50%, rgba(0,0,0,.0) 100%;);
 
         .title {
             position: absolute;
@@ -180,15 +170,13 @@
             left: @gutter;
             right: @gutter;
             margin: 0;
+            padding: 0;
         }
         h1 {
             color: white;
-            .header-1 {
-                text-shadow: rgba(0,0,0,.9) 0 0 3px;
-            }
-            .header-2 {
-                text-shadow: rgba(0,0,0,.9) 0 0 3px;
-            }
+            padding: @gutter * 0.5 @title-vert-padding;
+            text-shadow: rgba(0,0,0,.9) 0 0 3px;
+            .linear-gradient(left, rgba(0,0,0,.6) 0%, rgba(0,0,0,.0) 100%;);
         }
         .labels-wrapper {
             position: absolute;
@@ -198,11 +186,12 @@
             right: @gutter;
         }
         .label {
-            background-color: @medium-fg-color;
-            color: white;
+            border-bottom: 0;
+            border-top: 2px solid @df-color;
+            color: @extra-extra-light-fg-color;
+            background-color: transparent;
 
             &.category {
-                background-color: @fg-color;
             }
         }
         .contributor {
@@ -211,7 +200,7 @@
             right: 0;
             padding: @gutter * 0.25 @gutter * 0.5 @gutter * 0.15;
             .font-teaser-label;
-            color: @light-fg-color;
+            color: @extra-light-fg-color;
             border: 0;
         }
     }
@@ -242,12 +231,6 @@
 .layout-twoway-full {
     .teaser {
         width: 50%;
-    }
-    .teaser-info {
-        .title {
-            left: @gutter;
-            bottom: @gutter * 2;
-        }
     }
 }
 .layout-threeway-full {

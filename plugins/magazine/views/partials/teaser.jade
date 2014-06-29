@@ -13,7 +13,7 @@ mixin teaser(teaserType, article, showText, hideCategory)
           .labels-wrapper
             .labels
               if article.classification.label
-                h4(class="label")= article.classification.label
+                h4(class="label generic")= article.classification.label
               if !hideCategory
                 h4(class="label category")= article.classification.category.title
 
@@ -31,4 +31,3 @@ mixin teaser(teaserType, article, showText, hideCategory)
 
           if showText
             .text!= markdown(article.teaser)
-

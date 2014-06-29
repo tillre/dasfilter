@@ -40,7 +40,7 @@
             text-decoration: none;
         }
         .title {
-            padding: @gutter * 0.5 0;
+            padding: @gutter * 0.5 @title-vert-padding;
             display: block;
         }
         .labels-wrapper {
@@ -55,11 +55,20 @@
         .label {
             float: left;
             border-bottom: 2px solid @df-color;
-            background-color: @extra-light-fg-color;
+            background-color: white;
             color: @fg-color;
 
+            &.generic {
+                padding-right: 0;
+                &:after {
+                    content: '•';
+                    padding-left: @title-vert-padding;
+                }
+            }
             &.category {
-                background-color: @extra-extra-light-fg-color;
+                background-color: white;
+                color: @fg-color;
+                border-right: 0;
             }
         }
         .contributor {
@@ -67,8 +76,8 @@
             .type2-regular-i;
             .size-small;
             color: @light-fg-color;
-            padding-top: @gutter * 0.125;
-            border-top: 1px solid @extra-light-fg-color;
+            padding: @gutter * 0.25 @title-vert-padding 0;
+            border-top: 1px solid @extra-extra-light-fg-color;
         }
         .date {
             display: none;
@@ -82,4 +91,3 @@
         }
     }
 }
-

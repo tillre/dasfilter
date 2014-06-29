@@ -173,10 +173,13 @@ a {
 @import "cls.less";
 @import "article.less";
 
+@title-vert-padding: 12px;
+
 .label {
     color: white;
     background-color: @label-color;
-    padding: @gutter * 0.25 @gutter * 0.5 @gutter * 0.15;
+    //padding: @gutter * 0.25 @gutter * 0.5 @gutter * 0.15;
+    padding: @gutter * 0.25 @title-vert-padding @gutter * 0.15;
     .font-teaser-label;
     letter-spacing: 0.05em;
     text-transform: uppercase;
