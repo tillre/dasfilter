@@ -311,16 +311,19 @@ small {
 }
 .font-article-title {
     .type1-bold;
-    .size-article-title();
+    .size-article-title(0.9);
 }
 .font-article-subtitle {
     .type1-light;
-    .size-article-subtitle();
+    .size-article-subtitle(0.9);
 }
 .font-cls-article-text,
 .font-article-text {
     .size-normal;
     .type2-regular;
+    p {
+        letter-spacing: 0.01em;
+    }
     b, strong {
         .type2-bold;
     }

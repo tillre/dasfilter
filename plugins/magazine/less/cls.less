@@ -11,6 +11,10 @@
                 content: '';
             }
         }
+        .title {
+            padding-left: 0;
+            padding-right: 0;
+        }
         .contributor {
             display: block;
             padding-bottom: @gutter * 0.5;
@@ -94,6 +98,11 @@
             }
             .labels {
                 .transform(translate(-100%, 0));
+            }
+            .label {
+                margin-top: 1px;
+                border-bottom: 0;
+                border-top: 2px solid @df-color;
             }
             .title {
                 overflow: hidden;
