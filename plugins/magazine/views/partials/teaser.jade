@@ -8,7 +8,6 @@ mixin teaser(teaserType, article, showText, hideCategory)
         a.teaser-content(href=urls.article(article.classification.category, article))
           +image(article.header.image, teaserType)
           
-          //h4.label The Label
           if article.classification.label
             h4.label= article.classification.label
 
@@ -21,7 +20,7 @@ mixin teaser(teaserType, article, showText, hideCategory)
 
           .byline
             if !hideCategory
-              h4.category= article.classification.category.title
+              a.category(href=urls.classification(article.classification.category))= article.classification.category.title
 
             if article.contributors.length > 0
               - var contributor = article.contributors[0].contributor
