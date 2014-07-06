@@ -57,6 +57,19 @@
 
 @media (min-width: @break-m-portrait) {
 
+    .cls-main, .cls-aside {
+        padding-bottom: @gutter * 2;
+    }
+    
+    .teaser-cls-first {
+        .teaser-image {
+            .label {
+                top: inherit;
+                bottom: 0;
+            }
+        }
+    }
+
     .teaser-cls {
         .row;
         overflow: hidden;
@@ -68,6 +81,11 @@
             float: left;
             width: 50%;
             border: 0;
+
+            .label {
+                left: inherit;
+                right: 0;
+            }
         }
         .teaser-info {
             .no-row;
@@ -113,7 +131,6 @@
     .cls-main, .cls-aside {
         display: table-cell;
         vertical-align: top;
-        padding-bottom: @gutter * 2;
     }
 
     .cls-main {

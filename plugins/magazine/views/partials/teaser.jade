@@ -7,7 +7,10 @@ mixin teaser(teaserType, article, showText, hideCategory)
       .teaser-image
         a.teaser-content(href=urls.article(article.classification.category, article))
           +image(article.header.image, teaserType)
-          h4.label The Label
+          
+          //h4.label The Label
+          if article.classification.label
+            h4.label= article.classification.label
 
       .teaser-info
         .teaser-content
