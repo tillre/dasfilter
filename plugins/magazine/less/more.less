@@ -19,10 +19,6 @@
     border-top: 1px solid @extra-light-fg-color;
     border-bottom: 2px solid @light-fg-color;
 
-    &:hover {
-        color: @df-color;
-    }
-    
     &:after {
         content: '';
         display: inline-block;
@@ -35,7 +31,10 @@
         background-position: center 1px;
     }
 
-    &:visited, &:active, &:hover {
+    &:visited, &:active {
         color: @fg-color;
+    }
+    &:hover {
+        color: @df-color;
     }
 }
