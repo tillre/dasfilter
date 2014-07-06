@@ -1,19 +1,30 @@
 
 .teaser {
     margin-top: @gutter * 2;
-    .teaser-image {
+    &:first-child {
+        margin-top: 0;
+    }
 
+    .teaser-image {
         .teaser-content {
             display: block;
+            position: relative;
         }
         img {
-            border-top: 1px solid @extra-extra-light-fg-color;
             display: block;
             width: 100%;
         }
         a, img {
             color: @fg-color;
             text-decoration: none;
+        }
+        .label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            .label-base;
+            color: white;
+            background-color: @label-color;
         }
     }
     .teaser-info,
@@ -41,43 +52,26 @@
             text-decoration: none;
         }
         .title {
+            display: block;
             padding: @gutter * 0.5 0;
         }
-        .labels-wrapper {
-            position: relative;
+        .byline {
+            overflow: hidden;
         }
-        .labels {
-            position: absolute;
-            left: 0;
-            top: 0;
-            .transform(translate(0, -100%));
-        }
-        .label {
+        .category, .contributor, .date {
             float: left;
-            border-bottom: 2px solid @df-color;
-            background-color: white;
-            color: @fg-color;
-
-            &.generic {
-                padding-right: 0;
-                &:after {
-                    content: '•';
-                    padding-left: @title-vert-padding;
-                }
-            }
-            &.category {
-                background-color: white;
-                color: @fg-color;
-                border-right: 0;
-            }
+            display: block;
+            .label-base;
+            background-color: transparent;
         }
-        .contributor {
-            display: inline-block;
-            .type2-regular-i;
-            .size-small;
+        .category {
+            color: @fg-color;
+            border-top: 2px solid @df-color;
+        }
+        .contributor, .date {
             color: @light-fg-color;
-            padding: @gutter * 0.25 0;
-            border-top: 1px solid @extra-extra-light-fg-color;
+            border-top: 2px solid @extra-extra-light-fg-color;
+            text-transform: none;
         }
         .date {
             display: none;

@@ -151,8 +151,13 @@
         height: 100%;
         position: relative;
     }
-    .teaser-image img {
-        border: 0;
+    .teaser-image {
+        img {
+            border: 0;
+        }
+        .label {
+            display: none;
+        }
     }
     .teaser-info {
         .no-row;
@@ -178,33 +183,16 @@
             padding: @gutter * 0.5 0;
             text-shadow: rgba(0,0,0,.9) 0 0 3px;
         }
-        .labels-wrapper {
+        .category {
             position: absolute;
             bottom: 0;
-            z-index: 1;
-            left: @gutter;
-            right: @gutter;
-        }
-        .label {
-            border-bottom: 0;
-            border-top: 2px solid @df-color;
-            color: @extra-extra-light-fg-color;
-            background-color: transparent;
-
-            &:first-child, &:only-child {
-              padding-left: 0;
-            }
-            &:last-child, &:only-child {
-              padding-right: 0;
-            }
+            color: @extra-light-fg-color;
         }
         .contributor {
             position: absolute;
             bottom: 0;
-            right: 0;
-            padding: @gutter * 0.25 @gutter * 0.5 @gutter * 0.15;
-            .font-teaser-label;
-            color: @extra-light-fg-color;
+            right: @gutter * 0.5;
+            color: @light-fg-color;
             border: 0;
         }
     }
@@ -223,10 +211,8 @@
                 .font-teaser-subtitle-huge;
             }
         }
-        .labels {
+        .category {
             left: 50%;
-        }
-        .label {
             .transform(translate(-50%, 0));
         }
     }
@@ -234,9 +220,10 @@
         .teaser-info {
             .title {
                 bottom: @gutter * 5;
+                padding-bottom: @gutter * 1.5;
             }
-            .labels-wrapper {
-                bottom: @gutter * 5;
+            .category {
+                bottom: @gutter * 7;
             }
         }
     }
@@ -250,7 +237,7 @@
             .title {
                 padding-bottom: @gutter * 2;
             }
-            .labels-wrapper {
+            .category {
                 bottom: @gutter;
             }
         }

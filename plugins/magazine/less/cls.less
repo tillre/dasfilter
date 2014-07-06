@@ -6,23 +6,9 @@
 .teaser-cls-first,
 .teaser-cls {
     .teaser-info {
-        .label.cls-label {
-            &:after {
-                content: '';
-            }
-        }
         .title {
             padding-left: 0;
             padding-right: 0;
-        }
-        .contributor {
-            display: block;
-            padding-bottom: @gutter * 0.5;
-            border-top: 0;
-            border-bottom: 1px solid @extra-light-fg-color;
-        }
-        .date {
-            display: none;
         }
         .text {
             padding: @gutter * 0.5 0 @gutter * 0.5;
@@ -93,23 +79,10 @@
             .teaser-content {
                 .no-column;
             }
-            .labels-wrapper {
-                margin-left: -@gutter;
-            }
-            .labels {
-                .transform(translate(-100%, 0));
-            }
-            .label {
-                margin-top: 1px;
-                border-bottom: 0;
-                border-top: 2px solid @df-color;
-            }
             .title {
                 overflow: hidden;
                 border-top: 3px solid @fg-color;
                 margin: 0;
-            }
-            .title-text {
                 .header-1 {
                     .font-teaser-title-smaller;
                 }

@@ -2,33 +2,29 @@ include image
 
 
 mixin teaser(teaserType, article, showText, hideCategory)
-  article(class="teaser #{teaserType}")
+  article.teaser(class=teaserType)
     .teaser-inner
       .teaser-image
-        a(class="teaser-content", href=urls.article(article.classification.category, article))
+        a.teaser-content(href=urls.article(article.classification.category, article))
           +image(article.header.image, teaserType)
+          h4.label The Label
 
-      a(class="teaser-info", href=urls.article(article.classification.category, article))
+      .teaser-info
         .teaser-content
-          .labels-wrapper
-            .labels
-              if article.classification.label
-                - var clsClass = hideCategory ? 'cls-label' : ''
-                h4(class="label generic #{clsClass}")= article.classification.label
-              if !hideCategory
-                h4(class="label category")= article.classification.category.title
+          a.title(href=urls.article(article.classification.category, article))
+            h1
+              span.header-1= article.title
+              span.header-2= article.subtitle
 
-          .title
-            .title-text
-              h1
-                span(class="header-1")= article.title
-                span(class="header-2")= article.subtitle
+          .byline
+            if !hideCategory
+              h4.category= article.classification.category.title
 
-          if article.contributors.length > 0
-            - var contributor = article.contributors[0].contributor
-            h4(class="contributor") von #{contributor.firstname} #{contributor.lastname}
+            if article.contributors.length > 0
+              - var contributor = article.contributors[0].contributor
+              h4.contributor von #{contributor.firstname} #{contributor.lastname}
 
-          h4(class="date")= formatDate(article.date)
+            h4.date= formatDate(article.date)
 
           if showText
             .text!= markdown(article.teaser)
