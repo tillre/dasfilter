@@ -44,7 +44,7 @@ html(lang="de")
 
   body
     //- either classification or tag have to be null
-    +header(classifications, classification, tag)
+    +header(classifications, classification, tag, 'cls')
 
     main.index-page.cls-page
       - var hideCategory = classification && classification.type_ === 'Category'

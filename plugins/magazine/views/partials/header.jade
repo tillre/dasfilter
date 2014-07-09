@@ -1,9 +1,9 @@
 mixin header(classifications, cls, tag, headerClass)
   header(id="header", class="#{headerClass}")
     nav(id="nav-bar")
+      a(class="drawer-btn", href="#nav-drawer", title="Menu")
       .main-nav-outer
         .main-nav-inner
-          a(class="drawer-btn", href="#nav-drawer", title="Menu")
           a(class="header-logo", href=urls.start(), title="Startseite")
 
           if cls
