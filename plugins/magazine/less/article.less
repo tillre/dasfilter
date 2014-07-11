@@ -97,10 +97,12 @@
             .label-base;
             .size-small;
             display: block;
-            background-color: @df-color;
+            background-color: @light-fg-color;
             color: white;
             text-decoration: none;
-            &:visited, &:active, &:hover { color: white; }
+            &:hover {
+                background-color: @df-color;
+            }
         }
     }
 }
