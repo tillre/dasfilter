@@ -3,30 +3,29 @@ include image
 
 mixin teaser(teaserType, article, showText, hideCategory)
   article.teaser(class=teaserType)
-    .teaser-inner
-      .teaser-image
-        a.teaser-content(href=urls.article(article.classification.category, article))
-          +image(article.header.image, teaserType)
-          
-          if article.classification.label
-            h4.label= article.classification.label
+    .teaser-image
+      a.teaser-content(href=urls.article(article.classification.category, article))
+        +image(article.header.image, teaserType)
+        
+        if article.classification.label
+          h4.label= article.classification.label
 
-      .teaser-info
-        .teaser-content
-          a.title(href=urls.article(article.classification.category, article))
-            h1
-              span.header-1= article.title
-              span.header-2= article.subtitle
+    .teaser-info
+      .teaser-content
+        a.title(href=urls.article(article.classification.category, article))
+          h1
+            span.header-1= article.title
+            span.header-2= article.subtitle
 
-          .byline
-            if !hideCategory
-              a.category(href=urls.classification(article.classification.category))= article.classification.category.title
+        .byline
+          if !hideCategory
+            a.category(href=urls.classification(article.classification.category))= article.classification.category.title
 
-            if article.contributors.length > 0
-              - var contributor = article.contributors[0].contributor
-              h4.contributor von #{contributor.firstname} #{contributor.lastname}
+          if article.contributors.length > 0
+            - var contributor = article.contributors[0].contributor
+            h4.contributor von #{contributor.firstname} #{contributor.lastname}
 
-            h4.date= formatDate(article.date)
+          h4.date= formatDate(article.date)
 
-          if showText
-            .text!= markdown(article.teaser)
+        if showText
+          .text!= markdown(article.teaser)

@@ -32,7 +32,7 @@ mixin start-layout(groups)
           .index-group-title-inner
             h3= group.title
 
-    div(class="index-group #{group.type_} #{displayClass}")
+    .index-group(class="#{group.type_} #{displayClass}")
       case group.type_
         when "chrono-oneway": +start-oneway(group)
         when "chrono-twoway": +start-twoway(group)

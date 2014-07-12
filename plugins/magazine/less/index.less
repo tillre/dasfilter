@@ -3,6 +3,11 @@
     overflow: hidden;
 }
 
+.index-group:first-child {
+    .teaser:first-child {
+        margin-top: 0;
+    }
+}
 
 .index-group-title-wrapper {
     margin-top: @gutter * 2;
@@ -26,41 +31,36 @@
 
 
 .layout-nway-base {
-    display: table;
-    height: 100%;
-
+    overflow: hidden;
     .teaser {
-        display: table-cell;
-        vertical-align: top;
-        height: 100%;
-    }
-    .teaser-inner {
-        display: table;
-        height: 100%;
-    }
-    .teaser-info {
-        display: table-row;
-        word-break: break-word;
-        height: 100%;
-        vertical-align: top;
+        float: left;
     }
 }
 
 .layout-oneway {
-    .teaser-inner {
-        position: relative;
+
+    .row;
+    .teaser {
+        overflow: hidden;
     }
+
     .teaser-image {
-        .row;
-        .teaser-content {
-            .column;
-        }
+        .column;
+        float: left;
+        width: 100% / 12 * 8;
     }
+    
     .teaser-info {
-        position: absolute;
-        bottom: @gutter * 2;
-        background-color: white;
-        padding-bottom: @gutter * 0.25;
+        .no-row;
+        .column;
+        padding-left: 0;
+        float: left;
+        width: 100% / 12 * 4;
+        
+        .teaser-content {
+            .no-column;
+        }
+
         .header-1 {
             .font-teaser-title-larger;
         }
@@ -92,13 +92,11 @@
     }
 }
 .layout-twoway-uneven {
+    .layout-nway-base;
     .row;
-    display: table;
 
     .teaser {
         .column;
-        display: table-cell;
-        vertical-align: top;
     }
     .teaser-info {
         .no-row;
@@ -148,14 +146,11 @@
 .layout-oneway-full,
 .layout-threeway-full,
 .layout-twoway-full {
-    display: table;
-    height: 100%;
+    overflow: hidden;
     margin-top: 0;
 
     .teaser {
-        display: table-cell;
-        vertical-align: top;
-        height: 100%;
+        float: left;
         position: relative;
     }
     .teaser-image {
@@ -283,13 +278,9 @@
 
     .index-group {
         margin-top: @gutter * 2;
-    }
-
-    .teaser {
-        width: 100%;
-	  }
-
-    .index-group {
+        .teaser {
+            margin-top: 0;
+	      }
 
         &.chrono-oneway {
             .layout-oneway;
