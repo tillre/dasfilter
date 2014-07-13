@@ -27,12 +27,12 @@ function threeway() {
 var stageDraft = {
   layout: [
     twoway(),
+    threeway(),
+    threeway(),
+    threeway(),
+    threeway(),
+    threeway(),
     threeway()
-    // threeway(),
-    // threeway(),
-    // threeway(),
-    // threeway(),
-    // threeway()
   ]
 };
 
