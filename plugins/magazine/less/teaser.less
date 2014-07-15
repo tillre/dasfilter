@@ -115,8 +115,8 @@
             right: 0;
             margin: 0;
             padding: @gutter * 0.5 @gutter @gutter * 1.5;
-            .linear-gradient(left, rgba(0,0,0,.666) 0%, rgba(0,0,0,.111) 100%;);
-            background-color: rgba(0,0,0,0.333);
+            .linear-gradient(left, rgba(0,0,0,.444) 0%, rgba(0,0,0,.111) 100%;);
+            background-color: rgba(0,0,0,0.444);
             color: white;
 
             .header-1 {
@@ -133,18 +133,15 @@
             position: absolute;
             bottom: 0;
         }
-        .category {
+        .category, .contributor {
             color: @extra-light-fg-color;
-            border-top: 2px solid @light-fg-color;
-
+            border-top: 2px solid @extra-light-fg-color;
+        }
+        .category {
             &:hover {
                 color: @df-color;
                 border-top: 2px solid @df-color;
             }
-        }
-        .contributor {
-            color: @light-fg-color;
-            border-top: 2px solid @light-fg-color;
         }
     }
 }
