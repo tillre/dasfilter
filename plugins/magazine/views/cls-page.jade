@@ -10,7 +10,7 @@ mixin cls-aside-article-collection(c)
   .cls-aside-group
     h2(class="cls-aside-group-title")= c.title
     each article in c.articles
-      +teaser('teaser-cls-aside', article)
+      +teaser('teaser-cls-aside', article, { hideCategory: true })
 
 
 mixin cls-aside(aside)
@@ -47,15 +47,15 @@ html(lang="de")
     +header(classifications, classification, tag, 'cls')
 
     main.index-page.cls-page
-      - var hideCategory = classification && classification.type_ === 'Category'
+      - teaserOptions = { showText: true, showCategory: !(classification && classification.type_ === 'Category') }
       .cls-wrapper
         .cls-main
           .cls-main-inner
             each article, index in articles
               if index === 0
-                +teaser('teaser-cls-first', article, true, hideCategory)
+                +teaser('teaser-cls-first', article, teaserOptions)
               else
-                +teaser('teaser-cls', article, true, hideCategory)
+                +teaser('teaser-cls', article, teaserOptions)
 
             if nextDate
               +more(urls.current() + '?date=' + nextDate)

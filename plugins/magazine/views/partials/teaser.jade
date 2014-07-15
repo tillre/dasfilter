@@ -1,12 +1,15 @@
 include image
 
+mixin teaser(teaserType, article, options)
+  - options = options || {}
+  - var classes = [teaserType]
+  - if (options.inverted) classes.push('inverted')
 
-mixin teaser(teaserType, article, showText, hideCategory)
-  article.teaser(class=teaserType)
+  article.teaser(class=classes)
     .teaser-image
       a.teaser-content(href=urls.article(article.classification.category, article))
         +image(article.header.image, teaserType)
-        
+
         if article.classification.label
           h4.label= article.classification.label
 
@@ -18,7 +21,7 @@ mixin teaser(teaserType, article, showText, hideCategory)
             span.header-2= article.subtitle
 
         .byline
-          if !hideCategory
+          if options.showCategory
             a.category(href=urls.classification(article.classification.category))= article.classification.category.title
 
           if article.contributors.length > 0
@@ -27,5 +30,5 @@ mixin teaser(teaserType, article, showText, hideCategory)
 
           h4.date= formatDate(article.date)
 
-        if showText
+        if options.showText
           .text!= markdown(article.teaser)

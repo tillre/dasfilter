@@ -151,68 +151,6 @@
 
     .teaser {
         float: left;
-        position: relative;
-    }
-    .teaser-image {
-        img {
-            border: 0;
-        }
-        .label {
-            display: none;
-        }
-    }
-    .teaser-info {
-        .no-row;
-
-        .title {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: 0;
-            overflow: hidden;
-            //.linear-gradient(bottom, rgba(0,0,0,.5) 0%, rgba(0,0,0,.1) 50%, rgba(0,0,0,.0) 100%;);
-        }
-        h1 {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: 0;
-            padding: @gutter * 0.5 @gutter @gutter * 1.5;
-            .linear-gradient(left, rgba(0,0,0,.444) 0%, rgba(0,0,0,.111) 90%;);
-            background-color: rgba(0,0,0,0.444);
-            color: white;
-
-            .header-1 {
-                .font-teaser-invert-title;
-            }
-            .header-2 {
-                .font-teaser-invert-subtitle;
-            }
-        }
-        h1, .category, .contributor {
-            text-shadow: rgba(0,0,0,.9) 0 0 3px;
-        }
-        .category {
-            position: absolute;
-            bottom: 0;
-            color: @extra-light-fg-color;
-            border-top: 1px solid @light-fg-color;
-
-            &:hover {
-                color: @df-color;
-                border-top: 2px solid @df-color;
-            }
-        }
-        .contributor {
-            position: absolute;
-            bottom: 0;
-            right: @gutter * 0.5;
-            color: @light-fg-color;
-            border: 0;
-        }
     }
 }
 

@@ -1,26 +1,26 @@
 
-mixin start-teaser(type, article, showText)
+mixin start-teaser(type, article, options)
   if article && article._id
-    +teaser(type, article, showText)
+    +teaser(type, article, options)
 
 
-mixin start-oneway(group)
-  +start-teaser('teaser-oneway', group.article)
+mixin start-oneway(group, toptions)
+  +start-teaser('teaser-oneway', group.article, toptions)
 
 
-mixin start-twoway(group)
+mixin start-twoway(group, toptions)
   if group.display === 'uneven'
-    +start-teaser('teaser-twoway', group.articles.one)
-    +start-teaser('teaser-threeway', group.articles.two)
+    +start-teaser('teaser-twoway', group.articles.one, toptions)
+    +start-teaser('teaser-threeway', group.articles.two, toptions)
   else
-    +start-teaser('teaser-twoway', group.articles.one)
-    +start-teaser('teaser-twoway', group.articles.two)
+    +start-teaser('teaser-twoway', group.articles.one, toptions)
+    +start-teaser('teaser-twoway', group.articles.two, toptions)
 
 
-mixin start-threeway(group)
-  +start-teaser('teaser-threeway', group.articles.one)
-  +start-teaser('teaser-threeway', group.articles.two)
-  +start-teaser('teaser-threeway', group.articles.three)
+mixin start-threeway(group, toptions)
+  +start-teaser('teaser-threeway', group.articles.one, toptions)
+  +start-teaser('teaser-threeway', group.articles.two, toptions)
+  +start-teaser('teaser-threeway', group.articles.three, toptions)
 
 
 mixin start-layout(groups)
@@ -34,14 +34,14 @@ mixin start-layout(groups)
 
     .index-group(class="#{group.type_} #{displayClass}")
       case group.type_
-        when "chrono-oneway": +start-oneway(group)
-        when "chrono-twoway": +start-twoway(group)
-        when "chrono-threeway": +start-threeway(group)
+        when "chrono-oneway": +start-oneway(group, { showCategory: true })
+        when "chrono-twoway": +start-twoway(group, { showCategory: true })
+        when "chrono-threeway": +start-threeway(group, { showCategory: true })
 
-        when "pinned-oneway": +start-oneway(group)
-        when "pinned-twoway": +start-twoway(group)
-        when "pinned-threeway": +start-threeway(group)
+        when "pinned-oneway": +start-oneway(group, { showCategory: true, inverted: true })
+        when "pinned-twoway": +start-twoway(group, { showCategory: true, inverted: true })
+        when "pinned-threeway": +start-threeway(group, { showCategory: true, inverted: true })
 
-        when "tag-oneway": +start-oneway(group)
-        when "tag-twoway": +start-twoway(group)
-        when "tag-threeway": +start-threeway(group)
+        when "tag-oneway": +start-oneway(group, { showCategory: true, inverted: true })
+        when "tag-twoway": +start-twoway(group, { showCategory: true, inverted: true })
+        when "tag-threeway": +start-threeway(group, { showCategory: true, inverted: true })
