@@ -1,34 +1,38 @@
 include image
 
-mixin teaser(teaserType, article, options)
-  - options = options || {}
-  - var classes = [teaserType]
-  - if (options.inverted) classes.push('inverted')
+mixin teaser(teaser)
+  - var doc = teaser.doc
+  - var classes = []
+  - if (teaser.display) classes.push(teaser.display)
+  - if (teaser.span) classes.push('span' + teaser.span)
 
   article.teaser(class=classes)
-    .teaser-image
-      a.teaser-content(href=urls.article(article.classification.category, article))
-        +image(article.header.image, teaserType)
+    .teaser-inner
+      if teaser.title
+        h2.teaser-meta-title= teaser.title
 
-        if article.classification.label
-          h4.label= article.classification.label
+      .teaser-image-wrapper
+        a.teaser-image(href=urls.article(doc.classification.category, doc))
+          +image(doc.header.image, teaserType)
 
-    .teaser-info
-      .teaser-content
-        a.title(href=urls.article(article.classification.category, article))
-          h1
-            span.header-1= article.title
-            span.header-2= article.subtitle
+          if doc.classification.label
+            h4.label= doc.classification.label
 
-        .byline
-          if options.showCategory
-            a.category(href=urls.classification(article.classification.category))= article.classification.category.title
+      .teaser-info-wrapper
+        .teaser-info
+          a.title(href=urls.article(doc.classification.category, doc))
+            h1
+              span.header-1= doc.title
+              span.header-2= doc.subtitle
 
-          if article.contributors.length > 0
-            - var contributor = article.contributors[0].contributor
-            h4.contributor von #{contributor.firstname} #{contributor.lastname}
+          .byline
+            a.category(href=urls.classification(doc.classification.category))= doc.classification.category.title
 
-          h4.date= formatDate(article.date)
+            if doc.contributors.length > 0
+              - var contributor = doc.contributors[0].contributor
+              h4.contributor von #{contributor.firstname} #{contributor.lastname}
 
-        if options.showText
-          .text!= markdown(article.teaser)
+            h4.date= formatDate(doc.date)
+
+          if teaser.showText
+            .text!= markdown(doc.teaser)

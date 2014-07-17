@@ -1,211 +1,225 @@
+var Util = require('util');
 var Q = require('kew');
 var _ = require('lodash');
 
-//
-// collect article references from the layout by type
-//
-function parseLayout(layout) {
-  var r = {
-    pinnedRefs: [],
-    pinnedIds: [],
-    usedIds: {},
 
-    chronoRefs: [],
-
-    tagRefs: []
-  };
-
-  function addRef(article) {
-    if (article.id_) {
-      r.pinnedRefs.push(article);
-      r.pinnedIds.push(article.id_);
-      r.usedIds[article.id_] = true;
-    }
-    else {
-      r.chronoRefs.push(article);
-    }
+// get the span size of a teaser according to group size and index of teaser
+function getSpanSize(groupSize, i) {
+  switch(groupSize) {
+  case 1: return [6][i];
+  case 2: return [3, 3][i];
+  case 3: return [2, 2, 2][i];
+  case 4: return [3, 3, 3, 3][i];
+  case 5: return [3, 3, 2, 2, 2][i];
+  case 6: return [2, 2, 2, 2, 2, 2][i];
+  default: return 2;
   }
-
-  function addTag(tag, refs) {
-    r.tagRefs.push({
-      tag: tag,
-      refs: refs
-    });
-  }
-
-  layout.forEach(function(row) {
-    switch(row.type_) {
-
-    case 'chrono-oneway':
-      row.article = {};
-    case 'pinned-oneway':
-      addRef(row.article);
-      break;
-
-    case 'chrono-twoway':
-      row.articles = { one: {}, two: {} };
-    case 'pinned-twoway':
-      addRef(row.articles.one);
-      addRef(row.articles.two);
-      break;
-
-    case 'chrono-threeway':
-      row.articles = { one: {}, two: {}, three: {} };
-    case 'pinned-threeway':
-      addRef(row.articles.one);
-      addRef(row.articles.two);
-      addRef(row.articles.three);
-      break;
-
-    case 'tag-oneway':
-      row.article = {};
-      addTag(row.tag, [
-        row.article
-      ]);
-      break;
-
-    case 'tag-twoway':
-      row.articles = { one: {}, two: {} };
-      addTag(row.tag, [
-        row.articles.one, row.articles.two
-      ]);
-      break;
-
-    case 'tag-threeway':
-      row.articles = { one: {}, two: {}, three: {} };
-      addTag(row.tag, [
-        row.articles.one, row.articles.two, row.articles.three
-      ]);
-      break;
-    }
-  });
-
-  return r;
-}
-
-// count occurence of tags
-function countTags(articles) {
-  return _.reduce(articles, function(counts, a) {
-    if (!a.classification.tags) {
-      return counts;
-    }
-    a.classification.tags.forEach(function(t) {
-      if (counts[t.slug]) counts[t.slug]++;
-      else counts[t.slug] = 1;
-    });
-    return counts;
-  }, {});
 }
 
 
-// merge docs into refs
-function mergeDocs(used, docs, refs) {
-  var ri = 0;
-  var di = 0;
-  var uniqueDocs = [];
-  var duplicates = [];
-  // merge non duplicates
-  while (true) {
-    if (di === docs.length) break;
-    if (ri === refs.length) break;
-    if (used[docs[di]._id]) {
-      duplicates.push(docs[di]);
-      ++di;
-      continue;
+// precendence: pinned ; tag, collection, category, chrono
+// teaser format: { span, [id], [display], doc }
+
+function collectRefs(stage) {
+  return stage.groups.reduce(function(refs, group) {
+    var i, t;
+
+    switch(group.type_) {
+    case 'chrono':
+      group.teasers = [];
+      for (i = 0; i < group.numTeasers; ++i) {
+        t = {
+          display: 'light',
+          span: getSpanSize(group.numTeasers, i),
+          doc: {}
+        };
+        group.teasers.push(t);
+        refs.chrono.push(t);
+      }
+      break;
+
+    case 'pinned':
+      group.teasers.forEach(function(t, i) {
+        // add to chronos when id not set
+        t.span = getSpanSize(group.teasers.length, i);
+        t.display = 'dark';
+        t.doc = {};
+        if (t.article.id_) {
+          t.id = t.article.id_;
+          refs.pinned.push(t);
+        } else {
+          refs.chrono.push(t);
+        }
+      });
+      break;
+
+    case 'tag':
+      group.teasers = [];
+      for (i = 0; i < group.numTeasers; ++i) {
+        t = {
+          id: group.tag.slug,
+          span: getSpanSize(group.numTeasers, i),
+          display: 'dark',
+          doc: {}
+        };
+        group.teasers.push(t);
+        refs.tag.push(t);
+      }
+      break;
+
+    case 'category':
+      group.teasers = [];
+      for (i = 0; i < group.numTeasers; ++i) {
+        t = {
+          id: group.category.id_,
+          span: getSpanSize(group.numTeasers, i),
+          display: 'dark',
+          doc: {}
+        };
+        group.teasers.push(t);
+        refs.category.push(t);
+      }
+      break;
+
+    case 'collection':
+      group.teasers = [];
+      for (i = 0; i < group.numTeasers; ++i) {
+        t = {
+          id: group.collection.id_,
+          span: getSpanSize(group.numTeasers, i),
+          display: 'dark',
+          doc: {}
+        };
+        group.teasers.push(t);
+        refs.collection.push(t);
+      }
+      break;
+
+    case 'mixed':
+      group.teasers.forEach(function(t, i) {
+        t.span = getSpanSize(group.teasers.length, i);
+        t.display = 'dark';
+        t.doc = {};
+
+        switch(t.type_) {
+        case 'chronoTeaser':
+          t.display = 'light';
+          refs.chrono.push(t);
+          break;
+
+        case 'pinnedTeaser':
+          if (t.article.id_) {
+            t.id = t.article.id_;
+            refs.pinned.push(t);
+          } else {
+            refs.chrono.push(t);
+          }
+          break;
+
+        case 'tagTeaser':
+          t.id = t.tag.slug;
+          refs.tag.push(t);
+          break;
+
+        case 'categoryTeaser':
+          t.id = t.category.id_;
+          refs.category.push(t);
+          break;
+
+        case 'collectionTeaser':
+          t.id = t.collection.id_;
+          refs.collection.push(t);
+          break;
+        }
+      });
+      break;
     }
-    _.merge(refs[ri], docs[di]);
-    used[docs[di]._id] = true;
-    uniqueDocs.push(docs[di]);
-    ++ri;
-    ++di;
-  }
-  // merge duplicates in case we have run out of uniques
-  if (ri < refs.length) {
-    for (var i = ri; i < refs.length && duplicates.length > 0; ++i) {
-      _.merge(refs[i], duplicates.pop());
-    }
-  }
-  // return only the uniquely merged docs
-  return uniqueDocs;
-}
-
-
-// merge docs for the chronological teasers set
-function mergeChronos(app, stage, config, startDate) {
-
-  // get docs for the chronological teasers set
-  return app.models.teasers.byClsDate(
-    '*',
-    startDate || new Date().toISOString(),
-    config.chronoRefs.length + config.pinnedRefs.length
-
-  ).then(function(docs) {
-    // merge chrono docs
-    var chronoDocs = mergeDocs(config.usedIds, docs, config.chronoRefs);
-
-    if (config.chronoRefs.length > 0) {
-      stage.nextDate = config.chronoRefs[config.chronoRefs.length - 1].date;
-    }
-    return chronoDocs;
+    return refs;
+  }, {
+    chrono: [],
+    pinned: [],
+    tag: [],
+    category: [],
+    collection: []
   });
 }
 
 
-// merge docs for the pinned teasers set
-function mergePinned(app, stage, config) {
-  if (config.pinnedIds.length === 0) {
-    return Q.resolve([]);
+function mergePinned(load, refs) {
+  if (refs.length === 0) {
+    Q.resolve([]);
   }
-  return app.models.teasers.byIds(config.pinnedIds).then(function(docs) {
-
-    // merge docs into pinned stage refs
-    for (var i = 0; i < config.pinnedRefs.length && i < docs.length; ++i) {
-      _.merge(config.pinnedRefs[i], docs[i]);
+  var ids = refs.map(function(r) {
+    return r.id_;
+  });
+  return load(ids).then(function(docs) {
+    for (var i = 0; i < refs.length && i < docs.length; ++i) {
+      _.merge(refs[i].doc, docs[i]);
     }
     return docs;
   });
 }
 
 
-// merge docs for the tags teasers sets
-function mergeTags(app, stage, config, allDocs) {
-  if (config.tagRefs.length === 0) {
-    return Q.resolve();
+function mergeCls(load, refs, allDocs) {
+  if (refs.length === 0) {
+    Q.resolve([]);
   }
   var date = new Date().toISOString();
-  var tagCounts = countTags(allDocs);
+  var newDocs = [];
+  var refsByCls = refs.reduce(function(acc, r) {
+    if (!acc[r.id]) {
+      acc[r.id] = [r];
+    } else {
+      acc[r.id].push(r);
+    }
+    return acc;
+  }, {});
 
-  return Q.all(config.tagRefs.map(function(tr) {
-    var slug = tr.tag.slug;
-    var limit = tr.refs.length + (tagCounts[slug] ? tagCounts[slug] : 0);
-
-    return app.models.teasers.byTag(slug, date, limit).then(function(docs) {
-      mergeDocs(config.usedIds, docs, tr.refs);
+  return Q.all(_.map(refsByCls, function(refs, id) {
+    return load(id, date, refs.length).then(function(docs) {
+      newDocs = newDocs.concat(docs);
+      for (var i = 0; i < refs.length && i < docs.length; ++i) {
+        _.merge(refs[i].doc, docs[i]);
+      }
     });
-  }));
+  })).then(function() {
+    return newDocs;
+  });
 }
 
 
-//
-// get chronological and pinned teasers from the db and merge them into the layout
-//
-module.exports = function prepareStage(app, stage, startDate) {
+function mergeChrono(load, refs, allDocs) {
+  if (refs.length === 0) {
+    Q.resolve([]);
+  }
+  var date = new Date().toISOString();
+  return load('*', date, refs.length).then(function(docs) {
+    for (var i = 0; i < refs.length && i < docs.length; ++i) {
+      _.merge(refs[i].doc, docs[i]);
+    }
+  });
+}
 
-  var config = parseLayout(stage.layout);
+
+module.exports = function(app, stage) {
   var allDocs = [];
+  var refs = collectRefs(stage);
 
-  return mergeChronos(app, stage, config, startDate).then(function(docs) {
-
+  return mergePinned(app.models.teasers.byIds, refs.pinned).then(function(docs) {
     allDocs = allDocs.concat(docs);
-
-    return mergePinned(app, stage, config);
-
+    return mergeCls(app.models.teasers.byTag, refs.tag, allDocs);
   }).then(function(docs) {
-
     allDocs = allDocs.concat(docs);
-
-    return mergeTags(app, stage, config, allDocs).then(function() {
-      return stage;
-    });
+    return mergeCls(app.models.teasers.byClsDate, refs.collection, allDocs);
+  }).then(function(docs) {
+    allDocs = allDocs.concat(docs);
+    return mergeCls(app.models.teasers.byClsDate, refs.category, allDocs);
+  }).then(function(docs) {
+    allDocs = allDocs.concat(docs);
+    return mergeChrono(app.models.teasers.byClsDate, refs.chrono, allDocs);
+  }).then(function() {
+    console.log('--------- stage at end', Util.inspect(stage, { depth: 100 }));
+    return stage;
   });
 };

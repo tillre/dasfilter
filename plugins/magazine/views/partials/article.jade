@@ -119,6 +119,7 @@ mixin article(article)
         .article-related-title-outer
           .article-related-title-inner
             h4 Weitere Geschichten
-        .index-group.article-related-threeway
-          each relatedArticle in related
-            +teaser('teaser-threeway', relatedArticle)
+        .teaser-group-wrapper.default
+          .teaser-group.chrono
+            each teaser in related
+              +teaser(teaser)

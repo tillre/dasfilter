@@ -21,7 +21,13 @@ function prepareStage(app, id) {
           item.numArticles
 
         ).then(function(docs) {
-          item.articles = docs;
+          item.articles = docs.map(function(doc) {
+            return {
+              display: 'dark',
+              span: 2,
+              doc: doc
+            };
+          });
         }));
       }
       else if (item.type_ === 'articles') {
@@ -36,7 +42,11 @@ function prepareStage(app, id) {
     promises.push(
       app.models.teasers.byIds(ids).then(function(docs) {
         docs.forEach(function(doc) {
-          _.merge(refs[doc._id], doc);
+          _.merge(refs[doc._id], {
+            display: 'dark',
+            span: 2,
+            doc: doc
+          });
         });
       })
     );
@@ -76,6 +86,13 @@ module.exports = function clsHandler(app) {
         );
 
       }).then(function(docs) {
+        var teasers = docs.map(function(doc) {
+          return {
+            display: 'light cls',
+            showText: true,
+            doc: doc
+          };
+        });
 
         var nextDate = '';
         if (docs.length > NUM_ARTICLES) {
@@ -84,7 +101,7 @@ module.exports = function clsHandler(app) {
         }
 
         app.replyView(request, reply, 'cls-page', {
-          articles: docs,
+          teasers: teasers,
           classification: cls,
           classifications: classes,
           stage: stage,

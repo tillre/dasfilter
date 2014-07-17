@@ -56,13 +56,20 @@ module.exports = function(app) {
           doc.date,
           3
 
-        ).then(function(relatedDocs) {
+        ).then(function(docs) {
+          var teaser = docs.map(function(doc) {
+            return {
+              display: 'light',
+              span: 2,
+              doc: doc
+            };
+          });
           if (articleBelongsToClassification(doc, cls._id, cls.type_)) {
             app.replyView(request, reply, 'article-page', {
               article: prepareArticle(app, doc),
               classification: cls,
               classifications: classes,
-              related: relatedDocs
+              related: teaser
             });
           }
           else {

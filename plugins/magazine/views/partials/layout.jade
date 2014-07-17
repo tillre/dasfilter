@@ -1,0 +1,23 @@
+
+
+mixin layout-chrono-group(group)
+  each teaser in group.teasers
+    +teaser(teaser)
+
+mixin layout-defined-group(group)
+  each teaser in group.teasers
+    +teaser(teaser)
+
+mixin layout-mixed-group(group)
+  each teaser in group.teasers
+    +teaser(teaser)
+
+mixin layout-groups(groups)
+  each group in groups
+    .teaser-group-wrapper(class=group.display)
+      if group.title
+        .group-meta-title
+          h2.teaser-meta-title= group.title
+      .teaser-group(class=group.type_)
+        each teaser in group.teasers
+          +teaser(teaser)

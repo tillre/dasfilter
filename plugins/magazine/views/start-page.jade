@@ -1,7 +1,7 @@
 include partials/head
 include partials/header
 include partials/teaser
-include partials/start-layout
+include partials/layout
 include partials/more
 include partials/footer
 include partials/body-end
@@ -27,7 +27,7 @@ html(lang="de")
     +header(classifications, classification, null, 'start')
 
     main.index-page(class="#{continued ? 'continued' : 'begin'}")
-      +start-layout(stage.layout)
+      +layout-groups(stage.groups)
 
       if stage.nextDate
         +more(urls.current() + '?date=' + stage.nextDate)

@@ -8,9 +8,9 @@ include partials/body-end
 
 mixin cls-aside-article-collection(c)
   .cls-aside-group
-    h2(class="cls-aside-group-title")= c.title
+    h2(class="teaser-meta-title")= c.title
     each article in c.articles
-      +teaser('teaser-cls-aside', article, { hideCategory: true })
+      +teaser(article)
 
 
 mixin cls-aside(aside)
@@ -23,17 +23,14 @@ mixin cls-aside(aside)
 
 doctype html
 html(lang="de")
+  //- either classification or tag have to be null
+  - var clsTitle = classification ? classification.title : tag ? tag.name : ''
+
   head
-    if classification
-      title #{classification.title} | Das Filter
-    else if tag
-      title #{tag.name} | Das Filter
+    title #{clsTitle} | Das Filter
 
     meta(property="og:title", content="Das Filter")
-    if classification
-      meta(property="og:description", content="#{classification.title}")
-    else if tag
-      meta(property="og:description", content="#{tag.name}")
+    meta(property="og:description", content="#{clsTitle}")
     meta(property="og:url", content=urls.full())
     meta(property="og:type", content="website")
     meta(property="og:image", content=urls.asset('img/df_logo_3d.jpg'))
@@ -43,22 +40,21 @@ html(lang="de")
     +head
 
   body
-    //- either classification or tag have to be null
     +header(classifications, classification, tag, 'cls')
 
     main.index-page.cls-page
       - teaserOptions = { showText: true, showCategory: !(classification && classification.type_ === 'Category') }
       .cls-wrapper
         .cls-main
-          .cls-main-inner
-            each article, index in articles
-              if index === 0
-                +teaser('teaser-cls-first', article, teaserOptions)
-              else
-                +teaser('teaser-cls', article, teaserOptions)
 
-            if nextDate
-              +more(urls.current() + '?date=' + nextDate)
+          h2(class="teaser-meta-title")= clsTitle
+          .teasers
+            each teaser in teasers
+              +teaser(teaser)
+
+          if nextDate
+            +more(urls.current() + '?date=' + nextDate)
+
         aside.cls-aside
           .cls-aside-inner
             if stage
