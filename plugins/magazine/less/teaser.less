@@ -96,15 +96,6 @@
 
 @media (min-width: @break-m-portrait) {
 
-    .teaser {
-        float: left;
-        margin-bottom: 0;
-    }
-
-    .teaser-group {
-        overflow: hidden;
-    }
-
     .teaser.light {
     }
 
@@ -257,6 +248,16 @@
 
     .teaser-group-wrapper {
         margin-bottom: @gutter * 2;
+
+        .teaser {
+            float: left;
+            margin-bottom: 0;
+        }
+
+        .teaser-group {
+            overflow: hidden;
+        }
+
 
         // sizes
         &.default {

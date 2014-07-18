@@ -85,23 +85,25 @@
 
 @media(min-width: @break-m-landscape) {
 
-    @main-width: (100% / 3) * 2;
-    @aside-width: (100% / 3);
-
     .cls-wrapper {
         overflow: hidden;
     }
 
     .cls-main {
-        width: @main-width;
+        width: (100% / 3) * 2;
         float: left;
         border-right: 1px solid #ccc;
     }
     .cls-aside {
-        width: @aside-width;
+        width: 100% / 3;
         float: left;
-        .teaser.dark {
+        .teaser {
             width: auto;
+            margin-bottom: 0;
+
+            .byline {
+                display: none;
+            }
         }
     }
     .cls-aside-group {
