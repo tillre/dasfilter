@@ -98,12 +98,14 @@ function collectRefs(stage) {
     case 'mixed':
       group.teasers.forEach(function(t, i) {
         t.span = getSpanSize(group.teasers.length, i);
-        t.display = 'dark';
+        t.display = 'light mixed';
+        t.headlineFirst = true;
         t.doc = {};
 
         switch(t.type_) {
         case 'chronoTeaser':
           t.display = 'light';
+          t.headlineFirst = false;
           refs.chrono.push(t);
           break;
 
