@@ -43,11 +43,10 @@ html(lang="de")
     +header(classifications, classification, tag, 'cls')
 
     main.index-page.cls-page
-      - teaserOptions = { showText: true, showCategory: !(classification && classification.type_ === 'Category') }
+      +header-categories(classifications, classification)
+
       .cls-wrapper
         .cls-main
-
-          h2(class="teaser-meta-title")= clsTitle
           .teasers
             each teaser in teasers
               +teaser(teaser)

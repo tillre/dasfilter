@@ -17,14 +17,9 @@ mixin teaser-info(teaser)
           span.header-1= teaser.doc.title
           span.header-2= teaser.doc.subtitle
 
-      .byline
-        a.category(href=urls.classification(teaser.doc.classification.category))= teaser.doc.classification.category.title
-
-        if teaser.doc.contributors.length > 0
-          - var contributor = teaser.doc.contributors[0].contributor
-          h4.contributor von #{contributor.firstname} #{contributor.lastname}
-
-        h4.date= formatDate(teaser.doc.date)
+      if teaser.doc.contributors.length > 0
+        - var contributor = teaser.doc.contributors[0].contributor
+        h4.contributor von #{contributor.firstname} #{contributor.lastname}
 
       if teaser.showText
         .text!= markdown(teaser.doc.teaser)
@@ -39,6 +34,8 @@ mixin teaser(teaser)
     .teaser-inner
       if teaser.title
         h2.teaser-meta-title= teaser.title
+
+      a.category(href=urls.classification(teaser.doc.classification.category))= teaser.doc.classification.category.title
 
       if teaser.headlineFirst
         +teaser-info(teaser)
