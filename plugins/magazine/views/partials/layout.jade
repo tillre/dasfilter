@@ -20,4 +20,5 @@ mixin layout-groups(groups)
           h2.teaser-meta-title= group.title
       .teaser-group(class=group.type_)
         each teaser in group.teasers
-          +teaser(teaser)
+          if teaser.doc
+            +teaser(teaser)
