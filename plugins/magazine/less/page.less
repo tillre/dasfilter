@@ -6,10 +6,21 @@ main {
     margin-top: @header-height;
 }
 
-main.generic-page {
+.generic-page main {
     margin-bottom: @gutter * 2;
+
+    .classifications-wrapper {
+        border-bottom: 1px solid @header-border-color;
+    }
 
     .content-header .title {
         text-align: center;
+    }
+}
+
+.chrono-page {
+    .teaser-meta-title {
+        border-bottom: 0;
+        margin-bottom: @gutter;
     }
 }

@@ -90,6 +90,7 @@ module.exports = function clsHandler(app) {
           return {
             display: 'light cls',
             showText: true,
+            hideCategory: cls.type_ === 'Category',
             doc: doc
           };
         });
@@ -101,6 +102,7 @@ module.exports = function clsHandler(app) {
         }
 
         app.replyView(request, reply, 'cls-page', {
+          title: cls.title,
           teasers: teasers,
           classification: cls,
           classifications: classes,

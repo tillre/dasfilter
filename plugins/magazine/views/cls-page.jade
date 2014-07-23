@@ -23,14 +23,11 @@ mixin cls-aside(aside)
 
 doctype html
 html(lang="de")
-  //- either classification or tag have to be null
-  - var clsTitle = classification ? classification.title : tag ? tag.name : ''
-
   head
-    title #{clsTitle} | Das Filter
+    title #{title} | Das Filter
 
     meta(property="og:title", content="Das Filter")
-    meta(property="og:description", content="#{clsTitle}")
+    meta(property="og:description", content="#{title}")
     meta(property="og:url", content=urls.full())
     meta(property="og:type", content="website")
     meta(property="og:image", content=urls.asset('img/df_logo_3d.jpg'))
@@ -39,10 +36,10 @@ html(lang="de")
 
     +head
 
-  body
-    +header(classifications, classification, tag, 'cls')
+  body.cls-page
+    +header(classifications, classification, tag)
 
-    main.index-page.cls-page
+    main
       +header-categories(classifications, classification)
 
       .cls-wrapper

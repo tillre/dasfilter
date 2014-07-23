@@ -29,11 +29,20 @@ module.exports = function tagHandler(app) {
           });
         }
         return {
-          display: 'light cls',
-          showText: true,
+          display: 'light',
+          span: 2,
           doc: doc
         };
       });
+
+      var groups = [
+        {
+          title: tag.name,
+          type_: 'chrono',
+          display: 'default',
+          teasers: teasers
+        }
+      ];
 
       var nextDate = '';
       if (docs.length > NUM_ARTICLES) {
@@ -41,8 +50,9 @@ module.exports = function tagHandler(app) {
         docs.pop();
       }
 
-      app.replyView(request, reply, 'cls-page', {
-        teasers: teasers,
+      app.replyView(request, reply, 'chrono-page', {
+        title: tag.name,
+        groups: groups,
         tag: tag,
         classifications: classes,
         nextDate: nextDate,

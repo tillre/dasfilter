@@ -5,24 +5,22 @@ mixin cls-list(items, cls)
          - var active = (cls && cls._id === item._id) ? 'active' : ''
          a(class=active, href=urls.classification(item))= item.title
 
-mixin header(classifications, cls, tag, headerClass)
+mixin header(classifications, cls, tag)
   header(id="header", class="#{headerClass}")
     nav(id="nav-bar")
-      a(class="drawer-btn", href="#nav-drawer", title="Menu")
+      a.drawer-btn(href="#nav-drawer", title="Menu")
       .main-nav-outer
         .main-nav-inner
-          a(class="header-logo", href=urls.start(), title="Startseite")
+          a.header-logo(href=urls.start(), title="Startseite")
 
           if cls
-            a(class="header-cls", href=urls.classification(cls), title=cls.title)
-              span= cls.title
+            a.header-cls(href=urls.classification(cls), title=cls.title)= cls.title
           if tag
-            a(class="header-cls", href=urls.tag(tag), title=tag.name)
-              span= tag.name
+            a.header-cls(href=urls.tag(tag), title=tag.name)= tag.name
 
-          a(class="header-social google-plus", href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank", title="Das Filter auf Google+")
-          a(class="header-social facebook", href="https://facebook.com/dasfilter", title="Das Filter auf Facebook")
-          a(class="header-social twitter", href="https://twitter.com/dasfilter", title="Das Filter auf Twitter")
+          a.header-social.google-plus(href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank", title="Das Filter auf Google+")
+          a.header-social.facebook(href="https://facebook.com/dasfilter", title="Das Filter auf Facebook")
+          a.header-social.twitter(href="https://twitter.com/dasfilter", title="Das Filter auf Twitter")
 
     nav(id="nav-drawer")
       .drawer-inner

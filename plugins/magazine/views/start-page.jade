@@ -1,6 +1,5 @@
 include partials/head
 include partials/header
-include partials/teaser
 include partials/layout
 include partials/more
 include partials/footer
@@ -23,10 +22,10 @@ html(lang="de")
 
     +head
 
-  body
+  body.start-page
     +header(classifications, classification, null, 'start')
 
-    main.index-page(class="#{continued ? 'continued' : 'begin'}")
+    main
       +header-categories(classifications, classification)
       +layout-groups(stage.groups)
 

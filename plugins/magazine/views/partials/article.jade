@@ -9,43 +9,43 @@ mixin contributors(contributors)
     if index > 0
       | ,&nbsp
     if c.field
-      span(class="field") #{c.field}:
+      span.field #{c.field}:
         | &nbsp;
-    span(class="name") #{c.contributor.firstname} #{c.contributor.lastname}
+    span.name #{c.contributor.firstname} #{c.contributor.lastname}
 
 
 mixin article-byline(contributors, date)
-  small(class="byline")
-    span(class="date")= formatDate(date)
+  small.byline
+    span.date= formatDate(date)
     if contributors.length > 0
-      span(class="contributors")
-        span(class="divider") &nbsp;&ndash;&nbsp;
+      span.contributors
+        span.divider &nbsp;&ndash;&nbsp;
         +contributors(contributors)
 
 
 //- main mixin
 
 mixin article(article)
-  article(class="article-wrapper")
+  article.article-wrapper
     - var hasAltImage = article.header.altImage && article.header.altImage.id_;
     - var hasEmbed = article.header.embed && article.header.embed.embed;
     - var hasGallery = article.header.gallery && article.header.gallery.id_;
 
-    header(class="content-header")
+    header.content-header
       .title-outer
         .title-inner
           .title
             h1
-              span(class="header-1")= article.title
-              span(class="header-2")= article.subtitle
-            span(class="seperator")
+              span.header-1= article.title
+              span.header-2= article.subtitle
+            span.seperator
             +article-byline(article.contributors, article.date)
 
       if hasEmbed
         .article-media(class="#{article.header.embed.type}")
           .media-outer
             .media-inner
-              div(class="embed-source")!= article.header.embed.embed
+              div.embed-source!= article.header.embed.embed
 
       else if hasGallery
         .article-media
@@ -53,7 +53,7 @@ mixin article(article)
             .media-inner
               +slideshow(article.header.gallery.images, 'slideshow-header')
       else
-        .article-media(class="article-image")
+        .article-media.article-image
           .media-outer
             .media-inner
               if hasAltImage
@@ -79,19 +79,19 @@ mixin article(article)
             - var shareTitle = encodeURIComponent(article.title + ' - ' + article.subtitle)
             ul
               li
-                a(class="article-social-link twitter",
+                a.article-social-link.twitter(
                   href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
                   target="_blank",
                   onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
                   title="Twitter")
               li
-                a(class="article-social-link facebook",
+                a.article-social-link.facebook(
                   href="https://facebook.com/sharer.php?u=#{shareUrl}",
                   target="_blank",
                   onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
                   title="Facebook")
               li
-                a(class="article-social-link google-plus",
+                a.article-social-link.google-plus(
                   href="https://plus.google.com/share?url=#{shareUrl}",
                   onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
                 target="_blank"

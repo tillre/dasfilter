@@ -1,0 +1,37 @@
+include partials/head
+include partials/header
+include partials/layout
+include partials/more
+include partials/footer
+include partials/body-end
+
+
+doctype html
+html(lang="de")
+  head
+    title #{title} | Das Filter
+    meta(name="description", content="#{title}")
+
+    meta(property="og:title", content="Das Filter")
+    meta(property="og:description", content="#{title}")
+    meta(property="og:url", content=urls.full())
+    meta(property="og:type", content="website")
+    meta(property="og:image", content=urls.asset('img/df_logo_3d.jpg'))
+
+    link(href=urls.rss() rel="alternate" type="application/rss+xml" title="Das Filter RSS feed")
+
+    +head
+
+  body.chrono-page
+    +header(classifications, classification, tag)
+
+    main
+      +header-categories(classifications)
+
+      +layout-groups(groups)
+
+      if nextDate
+        +more(urls.current() + '?date=' + nextDate)
+
+    +footer(classifications)
+    +body-end

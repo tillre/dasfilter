@@ -1,7 +1,19 @@
 
 .classifications-wrapper {
-    background-color: @fg-color;
     padding: @gutter * 0.75 0 @gutter * 0.65;
+
+    footer & {
+        background-color: @fg-color;
+        li {
+            a {
+                color: white;
+            }
+            a.active {
+                background-color: white;
+                color: @fg-color;
+            }
+        }
+    }
 }
 
 .classifications {
@@ -20,12 +32,16 @@
             .label-base;
             padding-top: 0;
             padding-bottom: 0;
-            color: white;
+            color: @fg-color;
             display: block;
-            border-right: 1px solid white;
+            border-right: 1px solid @light-fg-color;
         }
-        a:hover, a.active {
+        a:hover {
             background-color: @df-color;
+            color: white;
+        }
+        a.active {
+            background-color: @fg-color;
             color: white;
         }
     }
@@ -33,6 +49,7 @@
         border-right: 0;
     }
 }
+
 
 
 
@@ -73,31 +90,6 @@
         overflow: hidden;
     }
 
-    // @media(max-width: @break-m-portrait) {
-    //     margin-left: 0;
-    //     margin-right: 0;
-    //     .main-nav {
-    //         padding-left: 0;
-    //         padding-right: 0;
-    //     }
-    // }
-
-    // @media (min-width: @break-m-landscape) {
-    //     .main-nav-outer {
-    //         .row;    }
-    //     .main-nav-inner {
-    //         .column;
-    //     }
-    // }
-
-    // @media (min-width: @break-xl) {
-    //     .main-nav-outer {
-    //         max-width: @max-page-width;
-    //         margin-left: auto;
-    //         margin-right: auto;
-    //     }
-    // }
-
     .header-logo {
         display: block;
         float: left;
@@ -105,25 +97,16 @@
         background-position: center;
         width: 33px;
         height: @header-height - 2;
-        //margin-top: 2px;
         .svg-logo-dark-small;
 
         &:hover {
             border-bottom: 2px solid @df-color;
         }
 
-        .start & {
+        .start-page &, .generic-page & {
             width: 206px;
             .svg-logo-dark;
         }
-
-        // @media (min-width: @break-m-portrait) {
-        //     width: 206px;
-        //     .svg-logo-dark;
-        // }
-        // @media (min-width: @break-m-landscape) {
-        //     margin-left: -16px;
-        // }
     }
 
 
@@ -135,7 +118,7 @@
         float: left;
         .font-cls-title;
         font-size: 18px;
-        padding: 15px 16px 0;
+        padding: 11px 16px 0;
         text-transform: uppercase;
         height: @header-height;
         color: @header-cls-fg-color;
@@ -143,15 +126,8 @@
         .box-sizing(border-box);
         border-left: 1px solid @header-border-color;
 
-        .cls & {
-            color: @df-color;
-        }
-
         &:hover {
             color: @df-color;
-        }
-        span {
-            border-top: 2px solid @df-color;
         }
     }
 

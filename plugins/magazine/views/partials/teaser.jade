@@ -35,7 +35,9 @@ mixin teaser(teaser)
       if teaser.title
         h2.teaser-meta-title= teaser.title
 
-      a.category(href=urls.classification(teaser.doc.classification.category))= teaser.doc.classification.category.title
+      if !teaser.hideCategory
+        .category
+          a(href=urls.classification(teaser.doc.classification.category))= teaser.doc.classification.category.title
 
       if teaser.headlineFirst
         +teaser-info(teaser)
