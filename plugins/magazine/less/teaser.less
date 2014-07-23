@@ -3,7 +3,7 @@
 .teaser-meta-title {
     .type2-bold;
     .size-normal;
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
     color: @fg-color;
     padding: @gutter * 0.3 0 @gutter * 0.25 0;
@@ -29,7 +29,7 @@
         }
         .label {
             position: absolute;
-            top: 0;
+            bottom: 0;
             .label-base;
             color: white;
             background-color: @label-color;
@@ -73,7 +73,7 @@
         display: block;
         .type2-regular-i;
         text-transform: uppercase;
-        text-align: center;
+        text-align: left;
         color: @light-fg-color;
         border-top: 3px solid @extra-light-fg-color;
         border-bottom: 1px solid @extra-light-fg-color;
@@ -104,8 +104,9 @@
             .size-label;
         }
         .teaser-image {
-            label {
-                display: none;
+            .label {
+                top: 0;
+                bottom: inherit;
             }
         }
         .teaser-inner {
@@ -275,11 +276,7 @@
         &.pinned, &.tag, &.collection, &.category {
             .teaser-meta-title {
                 .size-normal;
-            }
-        }
-        &.pinned, &.tag, &.collection, &.category {
-            .teaser-meta-title {
-                .size-normal;
+                text-align: center;
             }
         }
     }
