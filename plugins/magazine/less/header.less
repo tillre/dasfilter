@@ -68,13 +68,20 @@
 
 #header-cloak {
     position: fixed;
-    z-index: 88;
+    z-index: 87;
     top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: none;
+    left: -99999px;
     background-color: rgba(255, 255, 255, 0.75);
+    opacity: 0;
+
+    .transition(opacity 250ms ease-out);
+
+    &.visible {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 1;
+    }
 }
 
 
@@ -154,6 +161,10 @@
 
     background-color: white;
     border-top: 3px solid @df-color;
+
+    &.open {
+        left: 0;
+    }
 
     .transition(left 250ms ease-out);
 
