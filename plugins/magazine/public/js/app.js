@@ -52,35 +52,44 @@
     var header = byId('header');
     var bar = byId('nav-bar');
     var drawer = byId('nav-drawer');
+    var drawerBtn = bySel1(bar, '.drawer-btn');
     var cloak = byId('header-cloak');
     var main = byTagName1('main');
 
     if (!header) return;
     var open = false;
 
-    function toggleMenu() {
+    function toggleMenu(toggle) {
+      if (typeof toggle !== 'undefined') {
+        if ((open && toggle) || (!open && !toggle)) {
+          return;
+        }
+      }
       if (!open) {
-        disableWindowScroll();
-        cloak.style.display = 'block';
-        drawer.style.left = '0px';
-        main.style.left = drawer.offsetWidth + 'px';
+        cloak.className = 'visible';
+        drawer.className = 'open';
       }
       else {
-        enableWindowScroll();
-        cloak.style.display = 'none';
-        drawer.style.left = -drawer.offsetWidth + 'px';
-        main.style.left = '0px';
+        cloak.className = '';
+        drawer.className = '';
       }
       open = !open;
     }
 
-    bySel1(bar, '.drawer-btn').addEventListener('click', function(e) {
+
+    drawerBtn.addEventListener('click', function(e) {
       e.preventDefault();
       toggleMenu();
+    });
+    drawerBtn.addEventListener('mouseover', function(e) {
+      toggleMenu(true);
     });
 
     cloak.addEventListener('click', function(e) {
       toggleMenu();
+    });
+    cloak.addEventListener('mouseover', function(e) {
+      toggleMenu(false);
     });
   }
 
