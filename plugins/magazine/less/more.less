@@ -1,7 +1,7 @@
 
 .more-outer {
     .row;
-    padding-top: @gutter * 3;
+    padding-top: @gutter * 2;
     padding-bottom: @gutter * 2;
 }
 
@@ -13,10 +13,12 @@
 .more-button {
     text-decoration: none;
     text-transform: uppercase;
-    .font-button;
-    padding: @gutter * 0.25 0 @gutter * 0.25 @gutter * 0.5;
+    .type2-bold;
+    .set-font-size(18);
+    letter-spacing: 0.05em;
+    padding: @gutter * 0.25 @gutter * 0.25 @gutter * 0.25 @gutter * 0.5;
     color: @fg-color;
-    border-top: 2px solid @fg-color;
+    border-top: 3px solid @fg-color;
 
     &:after {
         content: '';
@@ -25,7 +27,7 @@
         margin-top: 1px;
         width: 11px;
         height: 16px;
-        .svg-triangle-dark-right;
+        .svg-arrow-right;
         background-size: contain;
         background-position: center 1px;
     }
@@ -35,5 +37,9 @@
     }
     &:hover {
         color: @df-color;
+        border-top: 3px solid @df-color;
+        &:after {
+            .svg-arrow-right-hover;
+        }
     }
 }

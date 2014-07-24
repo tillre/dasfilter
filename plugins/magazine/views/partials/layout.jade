@@ -14,11 +14,12 @@ mixin layout-mixed-group(group)
 
 mixin layout-groups(groups)
   each group in groups
-    .teaser-group-wrapper(class=[group.type_, group.display])
-      if group.title
-        .group-meta-title
-          h2.teaser-meta-title= group.title
-      .teaser-group(class=group.type_)
-        each teaser in group.teasers
-          if teaser.doc
-            +teaser(teaser)
+    if group.teasers.length > 0
+      .teaser-group-wrapper(class=[group.type_, group.display])
+        if group.title
+          .group-meta-title
+            h2.teaser-meta-title= group.title
+        .teaser-group
+          each teaser in group.teasers
+            if teaser.doc
+              +teaser(teaser)

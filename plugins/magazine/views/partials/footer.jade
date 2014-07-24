@@ -2,20 +2,17 @@ mixin footer(classifications, cls, isStartPage)
   footer(id="footer")
     .classifications-wrapper
       .classifications
-         ul
-           if !isStartPage
-             li.start-item
-               a(href=urls.start()) Start
+        ul
+          each item in classifications.categories
+            li
+              - var active = (cls && cls._id === item._id) ? 'active' : ''
+              a(class=active, href=urls.classification(item))= item.title
 
-           // each item in classifications.categories
-           //   li
-           //     - var active = (cls && cls._id === item._id) ? 'active' : ''
-           //     a(class=active, href=urls.classification(item))= item.title
-
-           each item in classifications.collections
-             li
-               - var active = (cls && cls._id === item._id) ? 'active' : ''
-               a(class=active, href=urls.classification(item))= item.title
+        ul
+          each item in classifications.collections
+            li
+              - var active = (cls && cls._id === item._id) ? 'active' : ''
+              a(class=active, href=urls.classification(item))= item.title
 
     .footer-outer
       .footer-inner
@@ -23,6 +20,9 @@ mixin footer(classifications, cls, isStartPage)
           .footer-list-group
             .footer-list
               ul
+                if !isStartPage
+                  li
+                    a(href="/") Start
                 li
                   a(href="/s/ueber-uns") Über uns
                 li

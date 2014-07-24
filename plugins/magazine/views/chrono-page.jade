@@ -22,16 +22,16 @@ html(lang="de")
 
     +head
 
-  body.chrono-page
+  body.chrono-page(class=pageType)
     +header(classifications, classification, tag)
 
     main
       +header-categories(classifications)
 
-      +layout-groups(groups)
+      +layout-groups(stage.groups)
 
-      if nextDate
-        +more(urls.current() + '?date=' + nextDate)
+      if stage.nextDate
+        +more(urls.current() + '?date=' + stage.nextDate)
 
     +footer(classifications)
     +body-end

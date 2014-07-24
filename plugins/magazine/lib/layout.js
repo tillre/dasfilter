@@ -17,8 +17,25 @@ function getSpanSize(groupSize, i) {
 }
 
 
-function collectRefs(stage) {
-  // ref format: { type, span, [id], [display], doc }
+function createTeaser(type, span, display, options, groupOptions) {
+  return _.merge({
+    type: type,
+    span: span,
+    display: display || ''
+  }, options, groupOptions);
+}
+
+
+function createGroup(type, display, options) {
+  return _.merge({
+    type_: type,
+    display: display || '',
+    teasers: []
+  }, options);
+}
+
+
+function createRefs() {
   var refs = {
     chrono: [],
     pinned: [],
@@ -27,38 +44,40 @@ function collectRefs(stage) {
     collection: {}
   };
 
-  function addChrono(r) {
-    refs.chrono.push(r);
-  }
+  return _.merge(refs, {
+    addChrono: function(r) {
+      refs.chrono.push(r);
+    },
 
-  function addPinned(r) {
-    refs.pinned.push(r);
-  }
+    addPinned: function(r) {
+      refs.pinned.push(r);
+    },
 
-  function addCls(type, r) {
-    if (!refs[type][r.id]) {
-      refs[type][r.id] = [r];
+    addCls: function(type, r) {
+      if (!refs[type][r.id]) {
+        refs[type][r.id] = [r];
+      }
+      else {
+        refs[type][r.id].push(r);
+      }
     }
-    else {
-      refs[type][r.id].push(r);
-    }
-  }
+  });
+}
 
 
-  stage.groups.forEach(function(group) {
+function collectGroupRefs(group, refs) {
     var i, t;
 
     switch(group.type_) {
     case 'chrono':
-      group.teasers = [];
+      group.teasers = group.teasers || [];
       for (i = 0; i < group.numTeasers; ++i) {
-        t = {
-          type: 'chrono',
-          display: 'light',
-          span: getSpanSize(group.numTeasers, i)
-        };
+        t = createTeaser('chrono',
+                         getSpanSize(group.numTeasers, i),
+                         'light',
+                         group.teaserOptions);
         group.teasers.push(t);
-        addChrono(t);
+        refs.addChrono(t);
       }
       break;
 
@@ -70,10 +89,10 @@ function collectRefs(stage) {
         if (t.article.id_) {
           t.type = 'pinned';
           t.id = t.article.id_;
-          addPinned(t);
+          refs.addPinned(t);
         } else {
           t.type = 'chrono';
-          addChrono(t);
+          refs.addChrono(t);
         }
       });
       break;
@@ -81,42 +100,39 @@ function collectRefs(stage) {
     case 'tag':
       group.teasers = [];
       for (i = 0; i < group.numTeasers; ++i) {
-        t = {
-          type: 'tag',
-          id: group.tag.slug,
-          span: getSpanSize(group.numTeasers, i),
-          display: 'dark'
-        };
+        t = createTeaser('tag',
+                         getSpanSize(group.numTeasers, i),
+                         'dark',
+                         { id: group.tag.slug },
+                         group.teaserOptions);
         group.teasers.push(t);
-        addCls('tag', t);
+        refs.addCls('tag', t);
       }
       break;
 
     case 'category':
       group.teasers = [];
       for (i = 0; i < group.numTeasers; ++i) {
-        t = {
-          type: 'category',
-          id: group.category.id_,
-          span: getSpanSize(group.numTeasers, i),
-          display: 'dark'
-        };
+        t = createTeaser('category',
+                         getSpanSize(group.numTeasers, i),
+                         'dark',
+                         { id: group.category.id_ },
+                         group.teaserOptions);
         group.teasers.push(t);
-        addCls('category', t);
+        refs.addCls('category', t);
       }
       break;
 
     case 'collection':
       group.teasers = [];
       for (i = 0; i < group.numTeasers; ++i) {
-        t = {
-          type: 'collection',
-          id: group.collection.id_,
-          span: getSpanSize(group.numTeasers, i),
-          display: 'dark'
-        };
+        t = createTeaser('collection',
+                         getSpanSize(group.numTeasers, i),
+                         'dark',
+                         { id: group.collection.id_ },
+                         group.teaserOptions);
         group.teasers.push(t);
-        addCls('collection', t);
+        refs.addCls('collection', t);
       }
       break;
 
@@ -131,41 +147,50 @@ function collectRefs(stage) {
           t.type = 'chrono';
           t.display = 'light';
           t.headlineFirst = false;
-          addChrono(t);
+          refs.addChrono(t);
           break;
 
         case 'pinnedTeaser':
           if (t.article.id_) {
             t.type = 'pinned';
             t.id = t.article.id_;
-            addPinned(t);
+            refs.addPinned(t);
           } else {
             t.type = 'chrono';
-            addChrono(t);
+            refs.addChrono(t);
           }
           break;
 
         case 'tagTeaser':
           t.type = 'tag';
           t.id = t.tag.slug;
-          addCls('tag', t);
+          refs.addCls('tag', t);
           break;
 
         case 'categoryTeaser':
           t.type = 'category';
           t.id = t.category.id_;
-          addCls('category', t);
+          refs.addCls('category', t);
           break;
 
         case 'collectionTeaser':
           t.type = 'collection';
           t.id = t.collection.id_;
-          addCls('collection', t);
+          refs.addCls('collection', t);
           break;
         }
       });
       break;
     }
+}
+
+
+function collectStageRefs(stage) {
+
+  var refs = createRefs();
+
+  stage.groups.forEach(function(group) {
+    collectGroupRefs(group, refs);
   });
   return refs;
 }
@@ -202,10 +227,11 @@ function loadCls(load, date, refsById, offset) {
 // merge
 //
 
-function mergeRefs(refs, docs, usedIds) {
+function mergeRefs(refs, docs, usedIds, noDuplicates) {
   var i, j = 0;
   var id;
   var duplicates = [];
+  var newRefs = [];
   // merge previously unused docs
   for (i = 0; i < docs.length && j < refs.length; ++i) {
     id = docs[i]._id;
@@ -217,10 +243,12 @@ function mergeRefs(refs, docs, usedIds) {
     usedIds[id] = true;
     ++j;
   }
-  // fill remaining empty refs with duplicates
-  for ( i = 0; i < duplicates.length && j < refs.length; ++i) {
-    refs[j].doc = duplicates[i];
-    ++j;
+  if (!noDuplicates) {
+    // fill remaining empty refs with duplicates
+    for ( i = 0; i < duplicates.length && j < refs.length; ++i) {
+      refs[j].doc = duplicates[i];
+      ++j;
+    }
   }
 }
 
@@ -231,7 +259,7 @@ function mergePinned(refs, docs, usedIds) {
 
 
 function mergeChrono(refs, docs, usedIds) {
-  mergeRefs(refs, docs, usedIds);
+  mergeRefs(refs, docs, usedIds, true);
 }
 
 
@@ -242,43 +270,93 @@ function mergeCls(refsById, docsById, usedIds) {
 }
 
 
+function setupStage(app, stage, date) {
 
-module.exports = function fillStage(app, stage) {
-  var refs = collectRefs(stage);
+  date = date || new Date().toISOString();
+
+  var refs = collectStageRefs(stage);
   var teasers = app.models.teasers;
-  var date = new Date().toISOString();
 
-  var offsetChrono = refs.pinned.length +
-        _.reduce(refs.tag, function(sum, t) {
-          return sum + t.length;
-        }, 0);
-
-  var order = [
-    { type: 'pinned',
-      promise: loadPinned(teasers.byIds, refs.pinned),
-      merge: mergePinned },
-    { type: 'tag',
-      promise: loadCls(teasers.byTag, date, refs.tag, 0),
-      merge: mergeCls },
-    { type: 'chrono',
-      promise: loadChrono(teasers.byClsDate, date, refs.chrono, offsetChrono),
-      merge: mergeChrono },
-    { type: 'collection',
-      promise: loadCls(teasers.byClsDate, date, refs.collection, 5),
-      merge: mergeCls },
-    { type: 'category',
-      promise: loadCls(teasers.byClsDate, date, refs.category, 5),
-      merge: mergeCls }
-  ];
+  var order = [];
+  if (refs.pinned.length > 0) {
+    order.push({ type: 'pinned',
+                 promise: loadPinned(teasers.byIds, refs.pinned),
+                 merge: mergePinned });
+  }
+  if (Object.keys(refs.tag).length > 0) {
+    order.push({ type: 'tag',
+                 promise: loadCls(teasers.byTag, date, refs.tag, 0),
+                 merge: mergeCls });
+  }
+  if (refs.chrono.length > 0) {
+    var offsetChrono = refs.pinned.length +
+          _.reduce(refs.tag, function(sum, t) {
+            return sum + t.length;
+          }, 0) + 1;
+    order.push({ type: 'chrono',
+                 promise: loadChrono(teasers.byClsDate, date, refs.chrono, offsetChrono),
+                 merge: mergeChrono });
+  }
+  if (Object.keys(refs.collection).length > 0) {
+    order.push({ type: 'collection',
+                 promise: loadCls(teasers.byClsDate, date, refs.collection, 5),
+                 merge: mergeCls });
+  }
+  if (Object.keys(refs.category).length > 0) {
+    order.push({ type: 'category',
+                 promise: loadCls(teasers.byClsDate, date, refs.category, 5),
+                 merge: mergeCls });
+  }
 
   return Q.all(order.map(function(o) { return o.promise; })).then(function(results) {
 
+    var chronoDocs = [];
+
+    // merge docs into refs
     var usedIds = {};
     order.forEach(function(o, i) {
+      if (o.type === 'chrono') {
+        chronoDocs = results[i];
+      }
       o.merge(refs[o.type], results[i], usedIds);
     });
+
+    // remove empty groups
+    for (var i = stage.groups.length - 1; i >= 0; --i) {
+      var isEmpty = stage.groups[i].teasers.lenght === 0;
+      if (!isEmpty) {
+        isEmpty = stage.groups[i].teasers.every(function(t) {
+          return !t.doc;
+        });
+      }
+      if (isEmpty) {
+        stage.groups.splice(i);
+      }
+    }
+
+    // check if there is a next page
+    if (chronoDocs.length > refs.chrono.length && refs.chrono[refs.chrono.length - 1].doc) {
+      // console.log('------- more more more');
+      var lastDocId = refs.chrono[refs.chrono.length - 1].doc._id;
+      var i = 0, nextDate;
+      while (!nextDate && i < chronoDocs.length) {
+        nextDate = chronoDocs[i]._id === lastDocId ? chronoDocs[i].date : null;
+        ++i;
+      }
+      console.log('------- nextDate', nextDate);
+      stage.nextDate = nextDate;
+    }
 
     //console.log('--------- stage', Util.inspect(stage, { depth: 4 }));
     return stage;
   });
+};
+
+
+
+module.exports = {
+  createTeaser: createTeaser,
+  createGroup: createGroup,
+
+  setupStage: setupStage
 };

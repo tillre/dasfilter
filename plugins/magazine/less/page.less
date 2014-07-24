@@ -6,8 +6,27 @@ main {
     margin-top: @header-height;
 }
 
-.generic-page main {
-    margin-bottom: @gutter * 2;
+
+.start-page, .start-page-continued, .generic-page {
+    #nav-bar .header-logo {
+        width: 206px;
+        .svg-logo-dark;
+    }
+}
+
+
+.start-page-continued {
+    .classifications-wrapper {
+        border-bottom: 1px solid @header-border-color;
+        margin-bottom: @gutter * 2;
+    }
+}
+
+
+.generic-page {
+    main {
+        margin-bottom: @gutter * 2;
+    }
 
     .classifications-wrapper {
         border-bottom: 1px solid @header-border-color;
@@ -18,13 +37,18 @@ main {
     }
 }
 
+
 .article-page {
     .classifications-wrapper {
         border-bottom: 1px solid @header-border-color;
     }
 }
 
+
 .chrono-page {
+    .teaser-group-wrapper:first-child {
+        padding-top: @gutter * 2;
+    }
     .teaser-meta-title {
         border-bottom: 0;
         margin-bottom: @gutter;

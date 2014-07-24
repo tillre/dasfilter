@@ -97,7 +97,7 @@ module.exports = function clsHandler(app) {
 
         var nextDate = '';
         if (docs.length > NUM_ARTICLES) {
-          nextDate = docs[docs.length - 2].date;
+          nextDate = docs[docs.length - 1].date;
           docs.pop();
         }
 
