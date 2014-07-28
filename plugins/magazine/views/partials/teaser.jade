@@ -35,13 +35,15 @@ mixin teaser(teaser)
       if teaser.title
         h2.teaser-meta-title= teaser.title
 
-      if !teaser.hideCategory
-        .category
-          a(href=urls.classification(teaser.doc.classification.category))= teaser.doc.classification.category.title
-
       if teaser.headlineFirst
         +teaser-info(teaser)
         +teaser-image(teaser)
       else
         +teaser-image(teaser)
         +teaser-info(teaser)
+
+      if !teaser.hideCategory
+        .category
+          a(href=urls.classification(teaser.doc.classification.category))= teaser.doc.classification.category.title
+
+        

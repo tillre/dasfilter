@@ -27,7 +27,8 @@ html(lang="de")
 
     main
       +header-categories(classifications, classification)
-      +layout-groups(stage.groups)
+      div 
+        +layout-groups(stage.groups)
 
       if stage.nextDate
         +more(urls.current() + '?date=' + stage.nextDate)

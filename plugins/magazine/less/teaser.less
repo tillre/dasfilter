@@ -76,8 +76,11 @@
     }
     .category a, .contributor {
         .size-label;
-        padding: @gutter * 0.3 0 @gutter * 0.25 0;
+        padding: @gutter * 0.3 0 @gutter * 0.15 0;
         background-color: transparent;
+    }
+    .category {
+        display: inline-block;
     }
     .category a {
         display: block;
@@ -85,11 +88,10 @@
         text-transform: uppercase;
         text-align: left;
         color: @fg-color;
-        border-top: 2px solid @extra-light-fg-color;
-        border-bottom: 1px solid @extra-light-fg-color;
+        border-bottom: 2px solid @extra-light-fg-color;
         &:hover {
             color: @df-color;
-            border-top: 2px solid @df-color;
+            border-bottom: 2px solid @df-color;
         }
     }
     .contributor {
@@ -235,6 +237,9 @@
         &.spaced {
             .row;
             .column;
+            &:first-child {
+                margin-top: @gutter;
+            }
             .teaser-group {
                 margin-left: -@gutter;
                 margin-right: -@gutter;
