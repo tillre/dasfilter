@@ -34,10 +34,10 @@ mixin header(classifications, cls, tag)
 
 
 mixin header-categories(classifications, cls)
-   //- .classifications-wrapper
-   //-   .classifications
-   //-     ul
-   //-       each item in classifications.categories
-   //-         li
-   //-           - var active = (cls && cls._id === item._id) ? 'active' : ''
-   //-           a(class=active, href=urls.classification(item))= item.title
+  .classifications-wrapper
+    .classifications
+      ul
+        each item in classifications.categories
+          li
+            - var active = (cls && cls._id === item._id) ? 'active' : ''
+            a(class=active, href=urls.classification(item))= item.title
