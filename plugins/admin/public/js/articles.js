@@ -122,24 +122,53 @@
 
     angular.extend($scope, angular.copy(config));
 
+    var changed = false;
+
     $scope.id = $routeParams.id;
     $scope.modelOptions = {
       buttons: [
         { title: 'View', event: 'article:view' }
       ]
     };
+
     $scope.$on('cr:model:saved', function(e, doc) {
+      changed = false;
       $location.path(config.path + '/' + doc._id);
     });
+
     $scope.$on('article:preview', function(e, doc) {
       dfMagazine.previewArticle(doc._id);
     });
+
     $scope.$on('article:view', function(e, doc) {
       dfMagazine.showArticle(doc._id);
     });
+
     $scope.$on('cr:model:destroy', function(e) {
-      $location.path(config.path);
+      changed = false;
+      $location.path('/');
     });
+
+    $scope.$on('cr:model:change', function(e, path) {
+      changed = true;
+    });
+
+    $scope.$on('$locationChangeStart', function(e) {
+      if (!changed) {
+        return;
+      }
+      var answer = window.confirm('Discard changes?');
+      if (!answer) {
+        e.preventDefault();
+      }
+    });
+
+    window.onbeforeunload = function (evt) {
+      if (!changed) {
+        return;
+      }
+      return 'Discard changes?';
+    };
   });
 
 })();
