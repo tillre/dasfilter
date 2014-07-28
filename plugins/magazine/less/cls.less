@@ -1,10 +1,4 @@
 
-.teaser.cls {
-    .category {
-        //display: none;
-    }
-}
-
 
 @media (min-width: @break-m-portrait) {
 
@@ -15,6 +9,7 @@
 
     .cls-main, .cls-aside {
         .column;
+        padding-top: @gutter;
     }
     .cls-aside {
         overflow: hidden;
@@ -46,14 +41,10 @@
 
     .teaser.cls:not(:first-child) {
         overflow: hidden;
-        // margin-left: -@gutter;
-        // margin-right: -@gutter;
 
         .category {
             float: right;
             width: 50%;
-            // margin: 0 @gutter;
-            // .box-sizing(border-box);
             .column;
             a {
                 border-bottom: 0;
@@ -74,14 +65,11 @@
         }
         .teaser-info-wrapper {
             .no-row;
-            // .column;
-
             padding-left: 0;
             float: right;
             width: 50%;
         }
         .teaser-info {
-            //.no-column;
             .title {
                 overflow: hidden;
                 border-top: 2px solid @fg-color;
@@ -121,7 +109,7 @@
     }
     .cls-aside-group {
         clear: both;
-        padding-top: @gutter * 3;
+        padding-top: @gutter * 2;
         &:first-child {
             padding-top: 0;
         }
