@@ -15,10 +15,20 @@
 .teaser {
     margin-bottom: @gutter * 2;
 
+    .teaser-image-wrapper {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+    }
+    
     .teaser-image {
         display: block;
-        position: relative;
-
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        
         img {
             display: block;
             width: 100%;
@@ -106,7 +116,7 @@
         .teaser-image {
             .label {
                 top: 0;
-                bottom: inherit;
+                bottom: initial;
             }
         }
         .teaser-inner {
@@ -128,35 +138,25 @@
         }
     }
 
+    
     .teaser.dark {
-        margin-top: 0;
-        .teaser-inner {
-            position: relative;
-        }
-        .teaser-image {
-            .label {
-                display: none;
-            }
-        }
-        .teaser-info {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 0 @gutter * 0.7;
-            .linear-gradient(left, rgba(0,0,0,.5) 0%, rgba(0,0,0,.1) 100%;);
-            background-color: rgba(0,0,0,0.5);
+        .teaser-info-wrapper {
+            .no-row;
+            margin-top: -@gutter * 2;
+            .linear-gradient(top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1.0) (@gutter * 2););
         }
         h1 {
             color: white;
-        }
-        h1, .contributor {
             text-shadow: rgba(0,0,0,.9) 0 0 3px;
         }
         .contributor {
             color: @light-fg-color;
+            padding-bottom: @gutter * 0.5;
         }
         .category {
+            display: none;
+        }
+        .label {
             display: none;
         }
     }
@@ -199,8 +199,13 @@
             }
             &.dark {
                 .teaser-info {
-                    bottom: 20%;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
                     text-align: center;
+                    .linear-gradient(left, rgba(0,0,0,.6) 0%, rgba(0,0,0,.1) 100%;);
+                    background-color: rgba(0,0,0,0.5);
                 }
                 .header-1 {
                     .font-teaser-title-huge;
@@ -221,7 +226,7 @@
             }
             &.dark {
                 .header-1 {
-                    .font-teaser-subtitle-smaller;
+                    .font-teaser-title-smaller;
                 }
                 .header-2 {
                     .font-teaser-subtitle-smaller;
@@ -231,6 +236,7 @@
     }
 
     .teaser-group-wrapper {
+        position: relative;
         margin-bottom: @gutter * 2;
 
         .teaser {
@@ -240,12 +246,6 @@
 
         .teaser-group {
             overflow: hidden;
-        }
-
-
-        // display variations
-        &.columnar {
-
         }
 
         // group display variations
@@ -269,20 +269,37 @@
                 }
             }
         }
+        &.clutched, &.clutched-wide {
+            .teaser-group {
+                background-color: black;
+            }
+            .teaser-meta-title {
+                .size-normal;
+            }
+            .span2, .span3 {
+                .teaser-info-wrapper {
+                    position: relative;
+                }
+            }
+        }
         &.clutched {
             .row;
             .column;
-            .teaser-meta-title {
-                .size-normal;
-            }
         }
         &.clutched-wide {
-            .teaser-meta-title {
-                .size-normal;
-            }
             .group-meta-title {
                 .row;
                 .column;
+            }
+            .span3 {
+                &:first-child .teaser-info {
+                    .row-left(1);
+                    padding-left: 0;
+                }
+                &:last-child .teaser-info {
+                    .row-right(1);
+                    padding-right: 0;
+                }
             }
         }
     }
@@ -291,14 +308,19 @@
 
 @media (min-width: @break-m-landscape) {
 
+    .teaser.dark {
+        .teaser-info-wrapper {
+            .no-row;
+            margin-top: -@gutter * 3;
+            .linear-gradient(top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,1.0) (@gutter * 3););
+        }
+    }
+    
     .teaser-group-wrapper {
         &.clutched-wide {
-            .teaser.span3 {
-                &:first-child .teaser-info {
-                    .row-left(1);
-                }
-                &:last-child .teaser-info {
-                    .row-right(1);
+            .teaser.span6 {
+                .teaser-info {
+                    bottom: 25%;
                 }
             }
         }
