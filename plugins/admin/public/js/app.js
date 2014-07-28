@@ -30,28 +30,23 @@
 
   // pages config values
   module.value('dfPages', [
+    // {
+    //   title: 'Home',
+    //   path: '/home',
+    //   isActive: true
+    // },
     {
-      title: 'Home',
-      path: '/home',
-      isActive: true
+      title: 'Published',
+      path: '/articles/published'
     },
     {
-      title: 'Articles',
-      children: [
-        {
-          title: 'Drafts',
-          path: '/articles/drafts'
-        },
-        {
-          title: 'Published',
-          path: '/articles/published'
-        }
-      ]
+      title: 'Drafts',
+      path: '/articles/drafts'
     },
-    {
-      title: 'Galleries',
-      path: '/galleries'
-    },
+    // {
+    //   title: 'Galleries',
+    //   path: '/galleries'
+    // },
     {
       title: 'Images',
       path: '/images'
@@ -64,10 +59,10 @@
       title: 'Collections',
       path: '/collections'
     },
-    {
-      title: 'Tags',
-      path: '/tags'
-    },
+    // {
+    //   title: 'Tags',
+    //   path: '/tags'
+    // },
     {
       title: 'Contributors',
       path: '/contributors'
@@ -113,7 +108,7 @@
     var routes = [
       { path: '/home', template: '/home', controller: 'HomeCtrl' },
 
-      { path: '/articles', redirectTo: '/articles/:published' },
+      { path: '/articles', redirectTo: '/articles/published' },
       { path: '/articles/published', template: '/resource-list', controller: 'ArticlesCtrl' },
       { path: '/articles/drafts', template: '/resource-list', controller: 'ArticlesCtrl' },
       { path: '/articles/new', template: '/resource', controller: 'ArticleCtrl' },
@@ -143,7 +138,7 @@
         templateUrl: route.template, controller: route.controller, resolve: resolve
       });
     });
-    $routeProvider.otherwise({ redirectTo: '/home' });
+    $routeProvider.otherwise({ redirectTo: '/articles/published' });
 
     //
     // api auth
