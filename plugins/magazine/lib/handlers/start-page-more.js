@@ -41,31 +41,6 @@ stageDraft.numArticles = _.reduce(stageDraft.layout, function(n, group) {
   return n + group.numArticles;
 }, 0);
 
-
-
-// module.exports = function startMoreHandler(app) {
-
-//   return function(request, reply) {
-//     var cls;
-//     var startDate = request.query.date;
-
-//     app.models.classifications.getAll().then(function(cs) {
-//       cls = cs;
-//       return Layout(app, _.cloneDeep(stageDraft), startDate);
-
-//     }).then(function(stage) {
-//       app.replyView(request, reply, 'start-page', {
-//         classifications: cls,
-//         stage: stage
-//       });
-
-//     }).fail(function(err) {
-//       reply(err);
-//     });
-//   };
-// };
-
-
 module.exports = function tagHandler(app) {
 
   return function(request, reply) {

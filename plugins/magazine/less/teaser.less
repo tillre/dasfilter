@@ -123,10 +123,9 @@
 
     .teaser-group-wrapper {
         position: relative;
+        margin-bottom: @gutter * 2;
 
         &.seperate {
-            margin-bottom: @gutter * 2;
-
             .teaser-group {
                 padding-bottom: @gutter;
                 border-bottom: 1px solid @extra-light-fg-color;
@@ -262,13 +261,18 @@
                 .column;
             }
             .span3 {
-                &:first-child .teaser-info {
-                    .row-left(1);
-                    padding-left: 0;
+                &:first-child {
+                    .teaser-info-wrapper {
+                        margin-right: 0;
+                    }
                 }
-                &:last-child .teaser-info {
-                    .row-right(1);
-                    padding-right: 0;
+                &:last-child {
+                    .teaser-info-wrapper {
+                        margin-left: 0;
+                    }
+                    .teaser-info {
+                        padding-left: 0;
+                    }
                 }
             }
         }
