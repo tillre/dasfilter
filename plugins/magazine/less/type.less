@@ -71,7 +71,7 @@
         .set-font-size(22; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(24; @l);
+        .set-font-size(22; @l);
     }
 }
 .size-teaser-title-smaller() {
@@ -83,19 +83,19 @@
         .set-font-size(19; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(22; @l);
+        .set-font-size(20; @l);
     }
 }
 .size-teaser-subtitle-smaller {
     @l: 0.85;
     @media (min-width: @break-m-portrait) {
-        .set-font-size(18; @l);
+        .set-font-size(17; @l);
     }
     @media (min-width: @break-m-landscape) {
         .set-font-size(18; @l);
     }
     @media (min-width: @break-l) {
-        .set-font-size(21; @l);
+        .set-font-size(19; @l);
     }
 }
 .size-teaser-title-larger() {
@@ -111,6 +111,30 @@
     }
 }
 .size-teaser-subtitle-larger {
+    @l: 0.85;
+    @media (min-width: @break-m-portrait) {
+        .set-font-size(22; @l);
+    }
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(26; @l);
+    }
+    @media (min-width: @break-l) {
+        .set-font-size(30; @l);
+    }
+}
+.size-teaser-title-huge {
+    @l: 0.85;
+    @media (min-width: @break-m-portrait) {
+        .set-font-size(24; @l);
+    }
+    @media (min-width: @break-m-landscape) {
+        .set-font-size(28; @l);
+    }
+    @media (min-width: @break-l) {
+        .set-font-size(32; @l);
+    }
+}
+.size-teaser-subtitle-huge {
     @l: 0.85;
     @media (min-width: @break-m-portrait) {
         .set-font-size(22; @l);
@@ -254,7 +278,8 @@ small {
 // teaser title
 //
 .font-teaser-title {
-    .type1-bold;
+    .type2-bold;
+    text-transform: uppercase;
     .size-teaser-title();
 }
 .font-teaser-subtitle {
@@ -262,7 +287,8 @@ small {
     .size-teaser-subtitle();
 }
 .font-teaser-title-smaller {
-    .type1-bold;
+    .type2-bold;
+    text-transform: uppercase;
     .size-teaser-title-smaller();
 }
 .font-teaser-subtitle-smaller {
@@ -270,20 +296,22 @@ small {
     .size-teaser-subtitle-smaller();
 }
 .font-teaser-title-larger {
-    .type1-bold;
+    .type2-bold;
+    text-transform: uppercase;
     .size-teaser-title-larger();
 }
 .font-teaser-subtitle-larger {
     .type1-light;
-    .size-teaser-subtitle-larger();
+    .size-teaser-subtitle();
 }
 .font-teaser-title-huge {
-    .type1-bold;
-    .size-article-title(0.9);
+    .type2-bold;
+    text-transform: uppercase;
+    .size-teaser-title-huge;
 }
 .font-teaser-subtitle-huge {
     .type1-light;
-    .size-article-subtitle(0.9);
+    .size-teaser-subtitle-huge;
 }
 
 .font-teaser-text {

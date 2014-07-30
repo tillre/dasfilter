@@ -23,7 +23,7 @@ function getPromotedSize(groupSize, i) {
   case 3: return [6, 3, 3][i];
   case 4: return [6, 2, 2, 2][i];
   case 5: return [3, 3, 2, 2, 2][i];
-  case 6: return [2, 2, 2, 2, 2, 2][i];
+  case 6: return [6, 3, 3, 2, 2, 2][i];
   default: return 2;
   }
 }
@@ -80,15 +80,17 @@ function createRefs() {
 
 function collectGroupRefs(group, refs) {
   var i, t;
+  var spans = 0;
   var getSize = getSpanSize;
 
   switch(group.type_) {
   case 'chrono':
-    group.teasers = group.teasers || [];
+    group.teasers = [];
     for (i = 0; i < group.numTeasers; ++i) {
+      spans = getSize(group.numTeasers, i);
       t = createTeaser('chrono',
                        getSize(group.numTeasers, i),
-                       'light',
+                       '',
                        group.teaserOptions);
       group.teasers.push(t);
       refs.addChrono(t);
@@ -99,7 +101,7 @@ function collectGroupRefs(group, refs) {
     group.teasers.forEach(function(t, i) {
       // add to chronos when id not set
       t.span = getSize(group.teasers.length, i);
-      t.display = 'dark';
+      t.display = '';
       if (t.article.id_) {
         t.type = 'pinned';
         t.id = t.article.id_;
@@ -116,7 +118,7 @@ function collectGroupRefs(group, refs) {
     for (i = 0; i < group.numTeasers; ++i) {
       t = createTeaser('tag',
                        getSize(group.numTeasers, i),
-                       'dark',
+                       '',
                        { id: group.tag.slug },
                        group.teaserOptions);
       group.teasers.push(t);
@@ -129,7 +131,7 @@ function collectGroupRefs(group, refs) {
     for (i = 0; i < group.numTeasers; ++i) {
       t = createTeaser('category',
                        getSize(group.numTeasers, i),
-                       'dark',
+                       '',
                        { id: group.category.id_ },
                        group.teaserOptions);
       group.teasers.push(t);
@@ -142,7 +144,7 @@ function collectGroupRefs(group, refs) {
     for (i = 0; i < group.numTeasers; ++i) {
       t = createTeaser('collection',
                        getSize(group.numTeasers, i),
-                       'dark',
+                       '',
                        { id: group.collection.id_ },
                        group.teaserOptions);
       group.teasers.push(t);
@@ -150,56 +152,53 @@ function collectGroupRefs(group, refs) {
     }
     break;
 
-  case 'mixed':
-    group.teasers.forEach(function(t, i) {
-      t.span = getSize(group.teasers.length, i);
-      // t.display = 'light mixed';
-      // t.headlineFirst = true;
+  // case 'mixed':
+  //   group.teasers.forEach(function(t, i) {
+  //     t.span = getSize(group.teasers.length, i);
 
-      switch(t.type_) {
-      case 'chronoTeaser':
-        t.type = 'chrono';
-        t.display = 'mixed light';
-        // t.headlineFirst = false;
-        refs.addChrono(t);
-        break;
+  //     switch(t.type_) {
+  //     case 'chronoTeaser':
+  //       t.type = 'chrono';
+  //       t.display = 'mixed';
+  //       refs.addChrono(t);
+  //       break;
 
-      case 'pinnedTeaser':
-        if (t.article.id_) {
-          t.type = 'pinned';
-          t.id = t.article.id_;
-          t.display = 'mixed dark';
-          refs.addPinned(t);
-        } else {
-          t.type = 'chrono';
-          t.display = 'mixed light';
-          refs.addChrono(t);
-        }
-        break;
+  //     case 'pinnedTeaser':
+  //       if (t.article.id_) {
+  //         t.type = 'pinned';
+  //         t.id = t.article.id_;
+  //         t.display = 'mixed';
+  //         refs.addPinned(t);
+  //       } else {
+  //         t.type = 'chrono';
+  //         t.display = 'mixed';
+  //         refs.addChrono(t);
+  //       }
+  //       break;
 
-      case 'tagTeaser':
-        t.type = 'tag';
-        t.id = t.tag.slug;
-        t.display = 'mixed dark';
-        refs.addCls('tag', t);
-        break;
+  //     case 'tagTeaser':
+  //       t.type = 'tag';
+  //       t.id = t.tag.slug;
+  //       t.display = 'mixed';
+  //       refs.addCls('tag', t);
+  //       break;
 
-      case 'categoryTeaser':
-        t.type = 'category';
-        t.id = t.category.id_;
-        t.display = 'mixed dark';
-        refs.addCls('category', t);
-        break;
+  //     case 'categoryTeaser':
+  //       t.type = 'category';
+  //       t.id = t.category.id_;
+  //       t.display = 'mixed';
+  //       refs.addCls('category', t);
+  //       break;
 
-      case 'collectionTeaser':
-        t.type = 'collection';
-        t.id = t.collection.id_;
-        t.display = 'mixed dark';
-        refs.addCls('collection', t);
-        break;
-      }
-    });
-    break;
+  //     case 'collectionTeaser':
+  //       t.type = 'collection';
+  //       t.id = t.collection.id_;
+  //       t.display = 'mixed';
+  //       refs.addCls('collection', t);
+  //       break;
+  //     }
+  //   });
+  //   break;
   }
 }
 
@@ -289,6 +288,47 @@ function mergeCls(refsById, docsById, usedIds) {
 }
 
 
+function createGroupRows(groups) {
+
+  var group, nextGroup;
+  var row = [];
+  var spans = 0;
+  var seperate;
+
+  for (var i = 0; i < groups.length; ++i) {
+    group = groups[i];
+    group.rows = [];
+    group.teasers.forEach(function(t) {
+      row.push(t);
+      spans += t.span;
+      if (spans >= 6) {
+        group.rows.push(row);
+        spans = 0;
+        row = [];
+      }
+    });
+    if (row.length && spans < 6) {
+      group.rows.push(row);
+    }
+
+    if (i < groups.length - 1) {
+      nextGroup = groups[i+1];
+      seperate = true;
+      // do not seperate chrono groups
+      if (nextGroup.type_ === 'chrono' && group.type_ === 'chrono') seperate = false;
+      // do not seperate this group has only one big teaser
+      if (group.teasers.length === 1 && group.teasers[0].span === 6) seperate = false;
+      // do not seperate when nextgroup has only one big teaser
+      if (nextGroup.teasers.length === 1 && nextGroup.teasers[0].span === 6) seperate = false;
+
+      if (seperate) {
+        group.display += ' seperate';
+      }
+    }
+  }
+}
+
+
 function setupStage(app, stage, date) {
 
   date = date || new Date().toISOString();
@@ -352,6 +392,10 @@ function setupStage(app, stage, date) {
         stage.groups.splice(i);
       }
     }
+
+
+    createGroupRows(stage.groups);
+
 
     // check if there is a next page
     if (chronoDocs.length > refs.chrono.length && refs.chrono[refs.chrono.length - 1].doc) {

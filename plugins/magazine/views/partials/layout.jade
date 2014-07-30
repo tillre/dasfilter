@@ -20,6 +20,7 @@ mixin layout-groups(groups)
           .group-meta-title
             h2.teaser-meta-title= group.title
         .teaser-group
-          each teaser in group.teasers
-            if teaser.doc
-              +teaser(teaser)
+          each row in group.rows
+            .teaser-row
+              each teaser in row
+                +teaser(teaser)
