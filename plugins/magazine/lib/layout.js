@@ -4,7 +4,7 @@ var _ = require('lodash');
 
 
 // get the span size of a teaser according to group size and index of teaser
-function getSpanSize(groupSize, i) {
+function getSize(groupSize, i) {
   switch(groupSize) {
   case 1: return [6][i];
   case 2: return [3, 3][i];
@@ -16,17 +16,17 @@ function getSpanSize(groupSize, i) {
   }
 }
 
-function getPromotedSize(groupSize, i) {
-  switch(groupSize) {
-  case 1: return [6][i];
-  case 2: return [4, 2][i];
-  case 3: return [6, 3, 3][i];
-  case 4: return [6, 2, 2, 2][i];
-  case 5: return [3, 3, 2, 2, 2][i];
-  case 6: return [6, 3, 3, 2, 2, 2][i];
-  default: return 2;
-  }
-}
+// function getPromotedSize(groupSize, i) {
+//   switch(groupSize) {
+//   case 1: return [6][i];
+//   case 2: return [4, 2][i];
+//   case 3: return [6, 3, 3][i];
+//   case 4: return [6, 2, 2, 2][i];
+//   case 5: return [3, 3, 2, 2, 2][i];
+//   case 6: return [6, 3, 3, 2, 2, 2][i];
+//   default: return 2;
+//   }
+// }
 
 
 
@@ -81,7 +81,6 @@ function createRefs() {
 function collectGroupRefs(group, refs) {
   var i, t;
   var spans = 0;
-  var getSize = getSpanSize;
 
   switch(group.type_) {
   case 'chrono':
@@ -288,16 +287,24 @@ function mergeCls(refsById, docsById, usedIds) {
 }
 
 
+function filterGroups(groups) {
+  return groups.filter(function(g) {
+    g.teasers = g.teasers.filter(function(t) {
+      return t.doc;
+    });
+    return g.teasers.length > 0;
+  });
+}
+
+
 function createGroupRows(groups) {
 
-  var group, nextGroup;
-  var row = [];
-  var spans = 0;
-  var seperate;
+  groups.forEach(function(group, i) {
 
-  for (var i = 0; i < groups.length; ++i) {
-    group = groups[i];
     group.rows = [];
+    var row = [];
+    var spans = 0;
+
     group.teasers.forEach(function(t) {
       row.push(t);
       spans += t.span;
@@ -307,13 +314,14 @@ function createGroupRows(groups) {
         row = [];
       }
     });
+    // add last row
     if (row.length && spans < 6) {
       group.rows.push(row);
     }
 
-    if (i < groups.length - 1) {
-      nextGroup = groups[i+1];
-      seperate = true;
+    if (i < groups.length - 1 && !group.hasOwnProperty('seperate')) {
+      var nextGroup = groups[i+1];
+      var seperate = true;
       // do not seperate chrono groups
       if (nextGroup.type_ === 'chrono' && group.type_ === 'chrono') seperate = false;
       // do not seperate this group has only one big teaser
@@ -325,6 +333,23 @@ function createGroupRows(groups) {
         group.display += ' seperate';
       }
     }
+  });
+}
+
+
+function getNextDate(refs, chronoDocs) {
+  // check if there is a next page
+  if (chronoDocs.length > refs.chrono.length && refs.chrono[refs.chrono.length - 1].doc) {
+    // console.log('------- more more more');
+    var lastDocId = refs.chrono[refs.chrono.length - 1].doc._id;
+    var i = 0, nextDate;
+    while (!nextDate && i < chronoDocs.length) {
+      nextDate = chronoDocs[i]._id === lastDocId ? chronoDocs[i].date : null;
+      ++i;
+    }
+    //console.log('------- nextDate', nextDate);
+    //stage.nextDate = nextDate;
+    return nextDate;
   }
 }
 
@@ -380,35 +405,10 @@ function setupStage(app, stage, date) {
       o.merge(refs[o.type], results[i], usedIds);
     });
 
-    // remove empty groups
-    for (var i = stage.groups.length - 1; i >= 0; --i) {
-      var isEmpty = stage.groups[i].teasers.lenght === 0;
-      if (!isEmpty) {
-        isEmpty = stage.groups[i].teasers.every(function(t) {
-          return !t.doc;
-        });
-      }
-      if (isEmpty) {
-        stage.groups.splice(i);
-      }
-    }
-
-
+    stage.groups = filterGroups(stage.groups);
     createGroupRows(stage.groups);
 
-
-    // check if there is a next page
-    if (chronoDocs.length > refs.chrono.length && refs.chrono[refs.chrono.length - 1].doc) {
-      // console.log('------- more more more');
-      var lastDocId = refs.chrono[refs.chrono.length - 1].doc._id;
-      var i = 0, nextDate;
-      while (!nextDate && i < chronoDocs.length) {
-        nextDate = chronoDocs[i]._id === lastDocId ? chronoDocs[i].date : null;
-        ++i;
-      }
-      console.log('------- nextDate', nextDate);
-      stage.nextDate = nextDate;
-    }
+    stage.nextDate = getNextDate(refs, chronoDocs);
 
     //console.log('--------- stage', Util.inspect(stage, { depth: 4 }));
     return stage;

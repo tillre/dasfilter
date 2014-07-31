@@ -1,28 +1,25 @@
 include image
 
 mixin teaser-image(teaser)
-  .teaser-image-wrapper
-    a.teaser-image(href=urls.article(teaser.doc.classification.category, teaser.doc))
+  .image-wrapper
+    a.image(href=urls.article(teaser.doc.classification.category, teaser.doc))
       +image(teaser.doc.header.image, teaserType)
-
-      if teaser.doc.classification.label
-        h4.label= teaser.doc.classification.label
 
 
 mixin teaser-info(teaser)
-  .teaser-info-wrapper
-    .teaser-info
+  .info-wrapper
+    .info
       a.title(href=urls.article(teaser.doc.classification.category, teaser.doc))
         h1
           span.header-1= teaser.doc.title
           span.header-2= teaser.doc.subtitle
 
       .byline
+        h4.category
+          a(href=urls.classification(teaser.doc.classification.category)) #{teaser.doc.classification.category.title} &nbsp•&nbsp;
         if teaser.doc.contributors.length > 0
           - var contributor = teaser.doc.contributors[0].contributor
-          h4.contributor von #{contributor.firstname} #{contributor.lastname}&nbsp•&nbsp;
-        h4.category in&nbsp;
-          a(href=urls.classification(teaser.doc.classification.category))= teaser.doc.classification.category.title
+          h4.contributor von #{contributor.firstname} #{contributor.lastname}
 
       if teaser.showText
         .text!= markdown(teaser.doc.teaser)
@@ -33,14 +30,10 @@ mixin teaser(teaser)
   - if (teaser.display) classes.push(teaser.display)
   - if (teaser.span) classes.push('span' + teaser.span)
 
-  article.teaser(class=classes)
+  article.teaser(class="span#{teaser.span}")
     .teaser-inner
       if teaser.title
         h2.teaser-meta-title= teaser.title
 
-      if teaser.headlineFirst
-        +teaser-info(teaser)
-        +teaser-image(teaser)
-      else
-        +teaser-image(teaser)
-        +teaser-info(teaser)
+      +teaser-image(teaser)
+      +teaser-info(teaser)

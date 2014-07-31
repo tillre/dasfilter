@@ -14,15 +14,11 @@ module.exports = function tagHandler(app) {
     app.models.classifications.getAll().then(function(cs) {
       classes = cs;
 
-      var stage = { groups: [] };
+      var stage = { groups: [
+        Layout.createGroup('tag', 'spaced', { numTeasers: 2, tag: { slug: slug }, seperate: false }),
+        Layout.createGroup('tag', 'spaced', { numTeasers: 15, tag: { slug: slug } })
+      ] };
 
-      for (var i = 0; i < 6; ++i) {
-        stage.groups.push(Layout.createGroup('tag', 'spaced', {
-          numTeasers: 3,
-          tag: { slug: slug },
-          teaserOptions: { span: 2, display: 'light'}
-        }));
-      }
       return Layout.setupStage(app, stage);
 
     }).then(function(stage) {
@@ -34,8 +30,6 @@ module.exports = function tagHandler(app) {
           tag = t;
         }
       });
-
-      stage.groups[0].title = tag.name;
 
       app.replyView(request, reply, 'chrono-page', {
         title: tag.name,
