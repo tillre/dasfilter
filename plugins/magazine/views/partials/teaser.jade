@@ -11,8 +11,8 @@ mixin teaser-info(teaser)
     .info
       a.title(href=urls.article(teaser.doc.classification.category, teaser.doc))
         h1
-          span.header-1= teaser.doc.title
-          span.header-2= teaser.doc.subtitle
+          span.header-1.balance-text= teaser.doc.title
+          span.header-2.balance-text= teaser.doc.subtitle
 
       .byline
         h4.category
