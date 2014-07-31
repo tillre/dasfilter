@@ -1,7 +1,7 @@
 
 
 .teaser-meta-title {
-    .type1-bold;
+    .type2-regular-i;
     .size-normal;
     color: @fg-color;
     padding: @gutter * 0.3 0 @gutter * 0.25 0;
@@ -127,9 +127,20 @@
         &.seperate {
             margin-bottom: @gutter * 2;
             .teaser-group {
-                border-bottom: 1px solid @extra-light-fg-color;
+                &:after {
+                    content: '';
+                    display: block;
+                    height: 1px;
+                    background-color: @extra-light-fg-color;
+                }
             }
         }
+        &.pull-up {
+            .span6 {
+                margin-bottom: @gutter;
+            }
+        }
+
         .teaser-row {
             overflow: hidden;
         }
@@ -252,6 +263,14 @@
             .column;
         }
         &.clutched-wide {
+            &.seperate {
+                .teaser-group {
+                    &:after {
+                        .row-left(1);
+                        .row-right(1);
+                    }
+                }
+            }
             .group-meta-title {
                 .row;
                 .column;

@@ -319,11 +319,19 @@ function createGroupRows(groups) {
       group.rows.push(row);
     }
 
+    // set classes for margins/lines between groups
     if (i < groups.length - 1 && !group.hasOwnProperty('seperate')) {
       var nextGroup = groups[i+1];
       var seperate = true;
+      var pullUp = false;
+
       // do not seperate chrono groups
-      if (nextGroup.type_ === 'chrono' && group.type_ === 'chrono') seperate = false;
+      if (nextGroup.type_ === 'chrono' && group.type_ === 'chrono') {
+        seperate = false;
+        if (group.teasers.length === 1 && group.teasers[0].span === 6) {
+          pullUp = true;
+        }
+      }
       // do not seperate this group has only one big teaser
       if (group.teasers.length === 1 && group.teasers[0].span === 6) seperate = false;
       // do not seperate when nextgroup has only one big teaser
@@ -331,6 +339,9 @@ function createGroupRows(groups) {
 
       if (seperate) {
         group.display += ' seperate';
+      }
+      if (pullUp) {
+        group.display += ' pull-up';
       }
     }
   });
