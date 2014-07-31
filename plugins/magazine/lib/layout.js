@@ -303,11 +303,11 @@ function createGroupRows(groups) {
     group.rows = [];
     var row = [];
     var spans = 0;
-    var isTextonly = group.display.indexOf('textonly') !== -1;
+    var textonly = group.display.indexOf('textonly') !== -1;
 
     // build rows with max span size of 6
     group.teasers.forEach(function(t) {
-      if (isTextonly) {
+      if (textonly) {
         t.textonly = true;
       }
       row.push(t);
@@ -336,8 +336,12 @@ function createGroupRows(groups) {
           pullUp = true;
         }
       }
-      // do not seperate this group has only one big teaser
-      if (group.teasers.length === 1 && group.teasers[0].span === 6) seperate = false;
+
+      // do not seperate if this group has only one big teaser and is not textonly
+      if (group.teasers.length === 1 &&
+          group.teasers[0].span === 6 &&
+          !textonly) seperate = false;
+
       // do not seperate when nextgroup has only one big teaser and no title
       if (nextGroup.teasers.length === 1 &&
           nextGroup.teasers[0].span === 6 &&
