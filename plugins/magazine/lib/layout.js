@@ -100,7 +100,6 @@ function collectGroupRefs(group, refs) {
     group.teasers.forEach(function(t, i) {
       // add to chronos when id not set
       t.span = getSize(group.teasers.length, i);
-      t.display = '';
       if (t.article.id_) {
         t.type = 'pinned';
         t.id = t.article.id_;
@@ -304,8 +303,13 @@ function createGroupRows(groups) {
     group.rows = [];
     var row = [];
     var spans = 0;
+    var isTextonly = group.display.indexOf('textonly') !== -1;
 
+    // build rows with max span size of 6
     group.teasers.forEach(function(t) {
+      if (isTextonly) {
+        t.textonly = true;
+      }
       row.push(t);
       spans += t.span;
       if (spans >= 6) {
@@ -334,8 +338,10 @@ function createGroupRows(groups) {
       }
       // do not seperate this group has only one big teaser
       if (group.teasers.length === 1 && group.teasers[0].span === 6) seperate = false;
-      // do not seperate when nextgroup has only one big teaser
-      if (nextGroup.teasers.length === 1 && nextGroup.teasers[0].span === 6) seperate = false;
+      // do not seperate when nextgroup has only one big teaser and no title
+      if (nextGroup.teasers.length === 1 &&
+          nextGroup.teasers[0].span === 6 &&
+          !nextGroup.title) seperate = false;
 
       if (seperate) {
         group.display += ' seperate';

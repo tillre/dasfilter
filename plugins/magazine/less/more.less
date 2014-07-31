@@ -1,16 +1,21 @@
 
-.more-outer {
+.more-wrapper {
     .row;
-    padding-top: @gutter * 2;
-    padding-bottom: @gutter * 2;
-}
-
-.more-inner {
     .column;
     text-align: center;
+
+    &:before {
+        content: '';
+        display: block;
+        height: 1px;
+        background-color: @extra-light-fg-color;
+    }
 }
 
 .more-button {
+    display: inline-block;
+    margin-top: @gutter * 2;
+    margin-bottom: @gutter * 2;
     text-decoration: none;
     text-transform: uppercase;
     .type2-bold;

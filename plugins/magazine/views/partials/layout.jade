@@ -24,4 +24,4 @@ mixin layout-groups(groups)
             .teaser-row
               each teaser in row
                 if teaser.doc
-                  +teaser(teaser)
+                  +teaser(teaser, group)
