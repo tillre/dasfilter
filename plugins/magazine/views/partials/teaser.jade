@@ -1,9 +1,8 @@
 include image
 
 mixin teaser-image(teaser)
-  .image-wrapper
-    a.image(href=urls.article(teaser.doc.classification.category, teaser.doc))
-      +image(teaser.doc.header.image, teaserType)
+  a.image-wrapper(href=urls.article(teaser.doc.classification.category, teaser.doc))
+    +image(teaser.doc.header.image, teaserType)
 
 
 mixin teaser-info(teaser)

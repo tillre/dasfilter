@@ -13,25 +13,26 @@
 
     .image-wrapper {
         position: relative;
-    }
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%;
+        overflow: hidden;
 
-    .image {
         display: block;
+        color: @fg-color;
+        text-decoration: none;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
 
         img {
             display: block;
             width: 100%;
-        }
-        a, img {
-            color: @fg-color;
-            text-decoration: none;
-        }
-        .label {
-            position: absolute;
-            bottom: 0;
-            .label-base;
-            color: white;
-            background-color: @label-color;
         }
     }
 
@@ -226,15 +227,35 @@
                 .info-wrapper {
                     .no-row;
                 }
+            }
+        }
+        &.clutched-wide-halfsize {
+            .span6 {
+                .teaser-inner {
+                    position: relative;
+                }
+                .image-wrapper {
+                    padding-bottom: 56.25% * 0.575;
+                    img {
+                        .transform(translate(0, -100% * 0.275));
+                    }
+                }
+                .info-wrapper {
+                    position: absolute;
+                    bottom: 0;
+                    .linear-gradient(left, rgba(0,0,0,.6) 0%, rgba(0,0,0,.1) 100%;);
+                    background-color: rgba(0,0,0,0.5);
+                }
                 .info {
-                    padding-left: 1px;
+                    padding-top: @gutter * 0.5;
+                    padding-bottom: @gutter * 0.5;
+                    h1 {
+                        color: white;
+                    }
                 }
             }
         }
         &.clutched, &.clutched-wide {
-            .teaser-group {
-                position: relative;
-            }
             .span6 {
                 .teaser-inner {
                     position: relative;
@@ -259,7 +280,7 @@
                 }
             }
         }
-        &.clutched-wide {
+        &.clutched-wide, &.clutched-wide-halfsize {
             &.seperate {
                 .teaser-group {
                     &:after {
@@ -290,9 +311,6 @@
         }
         &.textonly {
             .teaser {
-                .image-wrapper {
-                    display: none;
-                }
                 .info-wrapper {
                     margin-top: 0;
                     background: transparent;
