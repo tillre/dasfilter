@@ -16,20 +16,6 @@ function getSize(groupSize, i) {
   }
 }
 
-// function getPromotedSize(groupSize, i) {
-//   switch(groupSize) {
-//   case 1: return [6][i];
-//   case 2: return [4, 2][i];
-//   case 3: return [6, 3, 3][i];
-//   case 4: return [6, 2, 2, 2][i];
-//   case 5: return [3, 3, 2, 2, 2][i];
-//   case 6: return [6, 3, 3, 2, 2, 2][i];
-//   default: return 2;
-//   }
-// }
-
-
-
 
 function createGroup(type, display, options) {
   return _.merge({
@@ -131,57 +117,9 @@ function buildGroup(stageGroup, refs) {
       t = createTeaser('collection',
                        getSize(stageGroup.numTeasers, i));
       layoutGroup.teasers.push(t);
-      refs.addCls('collection', stageGroup.collection.id_ || stageGroup.category._id, t);
+      refs.addCls('collection', stageGroup.collection.id_ || stageGroup.collection._id, t);
     }
     break;
-
-  // case 'mixed':
-  //   group.teasers.forEach(function(t, i) {
-  //     t.span = getSize(group.teasers.length, i);
-
-  //     switch(t.type_) {
-  //     case 'chronoTeaser':
-  //       t.type = 'chrono';
-  //       t.display = 'mixed';
-  //       refs.addChrono(t);
-  //       break;
-
-  //     case 'pinnedTeaser':
-  //       if (t.article.id_) {
-  //         t.type = 'pinned';
-  //         t.id = t.article.id_;
-  //         t.display = 'mixed';
-  //         refs.addPinned(t);
-  //       } else {
-  //         t.type = 'chrono';
-  //         t.display = 'mixed';
-  //         refs.addChrono(t);
-  //       }
-  //       break;
-
-  //     case 'tagTeaser':
-  //       t.type = 'tag';
-  //       t.id = t.tag.slug;
-  //       t.display = 'mixed';
-  //       refs.addCls('tag', t);
-  //       break;
-
-  //     case 'categoryTeaser':
-  //       t.type = 'category';
-  //       t.id = t.category.id_;
-  //       t.display = 'mixed';
-  //       refs.addCls('category', t);
-  //       break;
-
-  //     case 'collectionTeaser':
-  //       t.type = 'collection';
-  //       t.id = t.collection.id_;
-  //       t.display = 'mixed';
-  //       refs.addCls('collection', t);
-  //       break;
-  //     }
-  //   });
-  //   break;
   }
   return layoutGroup;
 }
