@@ -25,3 +25,7 @@ mixin layout-groups(groups)
               each teaser in row
                 if teaser.doc
                   +teaser(teaser, group)
+
+mixin layout(layout, nextDate)
+  div
+    +layout-groups(layout.groups)

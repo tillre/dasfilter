@@ -19,24 +19,28 @@ module.exports = function tagHandler(app) {
         Layout.createGroup('tag', 'spaced', { numTeasers: 15, tag: { slug: slug } })
       ] };
 
-      return Layout.setupStage(app, stage);
+      return Layout.build(app, stage, startDate);
 
-    }).then(function(stage) {
+    }).then(function(layout) {
 
-      // get complete tag from first teasers doc
-      var tag;
-      stage.groups[0].teasers[0].doc.classification.tags.forEach(function(t) {
-        if (t.slug === slug) {
-          tag = t;
-        }
-      });
+      // get name of tag from first teasers
+      var tag = { slug: slug, name: slug };
+      if (layout.groups.length && layout.groups[0].teasers.length) {
+        layout.groups[0].teasers[0].doc.classification.tags.forEach(function(t) {
+          if (t.slug === slug) {
+            tag.name = t.name;
+          }
+        });
+      }
+
+      var nextDate = layout.refs.tag[slug].nextDate;
 
       app.replyView(request, reply, 'chrono-page', {
         title: tag.name,
-        stage: stage,
+        layout: layout,
         tag: tag,
         classifications: classes,
-        isFirstPage: !startDate
+        nextDate: nextDate
       });
 
     }).fail(function(err) {

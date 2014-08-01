@@ -12,12 +12,17 @@ module.exports = function startHandler(app) {
       return app.models.stages.getStartStage();
 
     }).then(function(stage) {
-      return Layout.setupStage(app, stage);
+      return Layout.build(app, stage);
 
-    }).then(function(stage) {
+    }).then(function(layout) {
+
+      var nextDate = layout.refs.chrono.nextDate;
+      console.log('nextDate', nextDate);
+
       app.replyView(request, reply, 'start-page', {
         classifications: cls,
-        stage: stage
+        layout: layout,
+        nextDate: nextDate
       });
 
     }).fail(function(err) {

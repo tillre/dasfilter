@@ -19,16 +19,18 @@ module.exports = function tagHandler(app) {
         Layout.createGroup('chrono', 'spaced', { numTeasers: 15 })
       ] };
 
-      return Layout.setupStage(app, stage, startDate);
+      return Layout.build(app, stage, startDate);
 
-    }).then(function(stage) {
+    }).then(function(layout) {
+
+      var nextDate = layout.refs.chrono.nextDate;
 
       app.replyView(request, reply, 'chrono-page', {
         title: 'Alle',
-        stage: stage,
+        layout: layout,
         classifications: classes,
-        isFirstPage: !startDate,
-        pageType: 'start-page-continued'
+        pageType: 'start-page-continued',
+        nextDate: nextDate
       });
 
     }).fail(function(err) {

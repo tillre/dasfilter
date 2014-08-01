@@ -30,20 +30,20 @@ function getSize(groupSize, i) {
 
 
 
-function createTeaser(type, span, display, options, groupOptions) {
-  return _.merge({
-    type: type,
-    span: span,
-    display: display || ''
-  }, options, groupOptions);
-}
-
 
 function createGroup(type, display, options) {
   return _.merge({
     type_: type,
     display: display || '',
     teasers: []
+  }, options);
+}
+
+
+function createTeaser(type, span, options) {
+  return _.merge({
+    type: type,
+    span: span
   }, options);
 }
 
@@ -66,40 +66,36 @@ function createRefs() {
       refs.pinned.push(r);
     },
 
-    addCls: function(type, r) {
-      if (!refs[type][r.id]) {
-        refs[type][r.id] = [r];
+    addCls: function(type, id, ref) {
+      if (!refs[type][id]) {
+        refs[type][id] = [ref];
       }
       else {
-        refs[type][r.id].push(r);
+        refs[type][id].push(ref);
       }
     }
   });
 }
 
 
-function collectGroupRefs(group, refs) {
+function buildGroup(stageGroup, refs) {
   var i, t;
-  var spans = 0;
+  var layoutGroup = _.clone(stageGroup);
+  layoutGroup.teasers = layoutGroup.teasers || [];
 
-  switch(group.type_) {
+  switch(stageGroup.type_) {
   case 'chrono':
-    group.teasers = [];
-    for (i = 0; i < group.numTeasers; ++i) {
-      spans = getSize(group.numTeasers, i);
+    for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('chrono',
-                       getSize(group.numTeasers, i),
-                       '',
-                       group.teaserOptions);
-      group.teasers.push(t);
+                       getSize(stageGroup.numTeasers, i));
+      layoutGroup.teasers.push(t);
       refs.addChrono(t);
     }
     break;
 
   case 'pinned':
-    group.teasers.forEach(function(t, i) {
-      // add to chronos when id not set
-      t.span = getSize(group.teasers.length, i);
+    layoutGroup.teasers = stageGroup.teasers.map(function(t, i) {
+      t.span = getSize(stageGroup.teasers.length, i);
       if (t.article.id_) {
         t.type = 'pinned';
         t.id = t.article.id_;
@@ -108,45 +104,34 @@ function collectGroupRefs(group, refs) {
         t.type = 'chrono';
         refs.addChrono(t);
       }
+      return t;
     });
     break;
 
   case 'tag':
-    group.teasers = [];
-    for (i = 0; i < group.numTeasers; ++i) {
+    for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('tag',
-                       getSize(group.numTeasers, i),
-                       '',
-                       { id: group.tag.slug },
-                       group.teaserOptions);
-      group.teasers.push(t);
-      refs.addCls('tag', t);
+                       getSize(stageGroup.numTeasers, i));
+      layoutGroup.teasers.push(t);
+      refs.addCls('tag', stageGroup.tag.slug, t);
     }
     break;
 
   case 'category':
-    group.teasers = [];
-    for (i = 0; i < group.numTeasers; ++i) {
+    for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('category',
-                       getSize(group.numTeasers, i),
-                       '',
-                       { id: group.category.id_ },
-                       group.teaserOptions);
-      group.teasers.push(t);
-      refs.addCls('category', t);
+                       getSize(stageGroup.numTeasers, i));
+      layoutGroup.teasers.push(t);
+      refs.addCls('category', stageGroup.category.id_ || stageGroup.category._id, t);
     }
     break;
 
   case 'collection':
-    group.teasers = [];
-    for (i = 0; i < group.numTeasers; ++i) {
+    for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('collection',
-                       getSize(group.numTeasers, i),
-                       '',
-                       { id: group.collection.id_ },
-                       group.teaserOptions);
-      group.teasers.push(t);
-      refs.addCls('collection', t);
+                       getSize(stageGroup.numTeasers, i));
+      layoutGroup.teasers.push(t);
+      refs.addCls('collection', stageGroup.collection.id_ || stageGroup.category._id, t);
     }
     break;
 
@@ -198,17 +183,21 @@ function collectGroupRefs(group, refs) {
   //   });
   //   break;
   }
+  return layoutGroup;
 }
 
 
-function collectStageRefs(stage) {
+function createLayout(stage) {
 
-  var refs = createRefs();
+  var layout = {
+    refs: createRefs()
+  };
 
-  stage.groups.forEach(function(group) {
-    collectGroupRefs(group, refs);
+  layout.groups = stage.groups.map(function(group) {
+    return buildGroup(group, layout.refs);
   });
-  return refs;
+
+  return layout;
 }
 
 
@@ -259,13 +248,18 @@ function mergeRefs(refs, docs, usedIds, noDuplicates) {
     usedIds[id] = true;
     ++j;
   }
-  if (!noDuplicates) {
-    // fill remaining empty refs with duplicates
-    for ( i = 0; i < duplicates.length && j < refs.length; ++i) {
-      refs[j].doc = duplicates[i];
-      ++j;
-    }
+
+  // add nextdate if we have not run out of docs
+  if (j === refs.length && docs.length > refs.length) {
+    refs.nextDate = docs[refs.length - 1].date;
   }
+  // else if (j < refs.length && !noDuplicates) {
+  //   // fill remaining empty refs with duplicates
+  //   for ( i = 0; i < duplicates.length && j < refs.length; ++i) {
+  //     refs[j].doc = duplicates[i];
+  //     ++j;
+  //   }
+  // }
 }
 
 
@@ -286,7 +280,7 @@ function mergeCls(refsById, docsById, usedIds) {
 }
 
 
-function filterGroups(groups) {
+function filterEmpty(groups) {
   return groups.filter(function(g) {
     g.teasers = g.teasers.filter(function(t) {
       return t.doc;
@@ -358,81 +352,60 @@ function createGroupRows(groups) {
 }
 
 
-function getNextDate(refs, chronoDocs) {
-  // check if there is a next page
-  if (chronoDocs.length > refs.chrono.length && refs.chrono[refs.chrono.length - 1].doc) {
-    // console.log('------- more more more');
-    var lastDocId = refs.chrono[refs.chrono.length - 1].doc._id;
-    var i = 0, nextDate;
-    while (!nextDate && i < chronoDocs.length) {
-      nextDate = chronoDocs[i]._id === lastDocId ? chronoDocs[i].date : null;
-      ++i;
-    }
-    //console.log('------- nextDate', nextDate);
-    //stage.nextDate = nextDate;
-    return nextDate;
-  }
-}
-
-
-function setupStage(app, stage, date) {
+function setupLayout(app, stage, date) {
 
   date = date || new Date().toISOString();
 
-  var refs = collectStageRefs(stage);
+  //var refs = collectStageRefs(stage);
+  var layout = createLayout(stage);
   var teasers = app.models.teasers;
 
   var order = [];
-  if (refs.pinned.length > 0) {
+  if (layout.refs.pinned.length > 0) {
     order.push({ type: 'pinned',
-                 promise: loadPinned(teasers.byIds, refs.pinned),
+                 promise: loadPinned(teasers.byIds, layout.refs.pinned),
                  merge: mergePinned });
   }
-  if (Object.keys(refs.tag).length > 0) {
+  if (Object.keys(layout.refs.tag).length > 0) {
     order.push({ type: 'tag',
-                 promise: loadCls(teasers.byTag, date, refs.tag, 0),
+                 promise: loadCls(teasers.byTag, date, layout.refs.tag, 1),
                  merge: mergeCls });
   }
-  if (refs.chrono.length > 0) {
-    var offsetChrono = refs.pinned.length +
-          _.reduce(refs.tag, function(sum, t) {
+  if (layout.refs.chrono.length > 0) {
+    var offsetChrono = layout.refs.pinned.length +
+          _.reduce(layout.refs.tag, function(sum, t) {
             return sum + t.length;
           }, 0) + 1;
     order.push({ type: 'chrono',
-                 promise: loadChrono(teasers.byClsDate, date, refs.chrono, offsetChrono),
+                 promise: loadChrono(teasers.byClsDate, date, layout.refs.chrono, offsetChrono),
                  merge: mergeChrono });
   }
-  if (Object.keys(refs.collection).length > 0) {
+  if (Object.keys(layout.refs.collection).length > 0) {
     order.push({ type: 'collection',
-                 promise: loadCls(teasers.byClsDate, date, refs.collection, 5),
+                 promise: loadCls(teasers.byClsDate, date, layout.refs.collection, 5),
                  merge: mergeCls });
   }
-  if (Object.keys(refs.category).length > 0) {
+  if (Object.keys(layout.refs.category).length > 0) {
     order.push({ type: 'category',
-                 promise: loadCls(teasers.byClsDate, date, refs.category, 5),
+                 promise: loadCls(teasers.byClsDate, date, layout.refs.category, 5),
                  merge: mergeCls });
   }
 
-  return Q.all(order.map(function(o) { return o.promise; })).then(function(results) {
+  var promises = order.map(function(o) { return o.promise; });
 
-    var chronoDocs = [];
+  return Q.all(promises).then(function(results) {
 
     // merge docs into refs
     var usedIds = {};
     order.forEach(function(o, i) {
-      if (o.type === 'chrono') {
-        chronoDocs = results[i];
-      }
-      o.merge(refs[o.type], results[i], usedIds);
+      o.merge(layout.refs[o.type], results[i], usedIds);
     });
 
-    stage.groups = filterGroups(stage.groups);
-    createGroupRows(stage.groups);
+    // remove empty groups and docs and create rows in each group for the rendering
+    layout.groups = filterEmpty(layout.groups);
+    createGroupRows(layout.groups);
 
-    stage.nextDate = getNextDate(refs, chronoDocs);
-
-    //console.log('--------- stage', Util.inspect(stage, { depth: 4 }));
-    return stage;
+    return layout;
   });
 };
 
@@ -442,5 +415,5 @@ module.exports = {
   createTeaser: createTeaser,
   createGroup: createGroup,
 
-  setupStage: setupStage
+  build: setupLayout
 };

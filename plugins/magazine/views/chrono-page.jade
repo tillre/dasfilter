@@ -26,12 +26,9 @@ html(lang="de")
     +header(classifications, classification, tag)
 
     main
-      +header-categories(classifications)
-      div
-        +layout-groups(stage.groups)
-
-      if stage.nextDate
-        +more(urls.current() + '?date=' + stage.nextDate)
+      +header-categories(classifications, classification)
+      +layout(layout)
+      +more(nextDate)
 
     +footer(classifications)
     +body-end
