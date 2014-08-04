@@ -18,7 +18,6 @@ mixin footer(classifications, cls, isStartPage)
                 - var active = (cls && cls._id === item._id) ? 'active' : ''
                 a(class=active, href=urls.classification(item))= item.title
 
-      .footer-list-group.right
         .footer-list
           h4 Allgemeines
           ul
