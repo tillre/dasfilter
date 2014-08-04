@@ -1,5 +1,19 @@
 
 
+
+.meta-title-wrapper {
+    .row(1, 1);
+}
+
+
+.meta-title {
+    .type2-regular-i;
+    color: @fg-color;
+    .size-teaser-title-larger;
+    padding: 0 0 @gutter * 0.5 0;
+}
+
+
 .teaser-group-wrapper.seperate {
     margin-bottom: @gutter * 2;
 
@@ -14,17 +28,10 @@
     }
 }
 
-
-.meta-title-wrapper {
-    .row(1, 1);
-}
-
-
-.meta-title {
-    .type2-regular-i;
-    color: @fg-color;
-    .size-teaser-title-larger;
-    padding: 0 0 @gutter * 0.5 0;
+.teaser-group-wrapper:first-child {
+    .meta-title-wrapper {
+        padding-top: @gutter;
+    }
 }
 
 
