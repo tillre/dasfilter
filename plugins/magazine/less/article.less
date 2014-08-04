@@ -113,17 +113,9 @@
 
 
 .article-related {
-    .article-related-threeway {
-        margin-top: @gutter;
-    }
-}
-.article-related-title-outer {
-    .row;
-}
-.article-related-title-inner {
-    .column;
-    h4 {
-        .related-title;
+    margin-top: @gutter;
+    .meta-title-wrapper {
+        border-top: 2px solid @fg-color;
     }
 }
 
@@ -154,10 +146,9 @@
         }
     }
 
-    .article-related .teaser {
-        margin-top: @gutter;
-        .category {
-            display: none;
+    .article-related {
+        .teaser {
+            margin-bottom: @gutter;
         }
     }
 }

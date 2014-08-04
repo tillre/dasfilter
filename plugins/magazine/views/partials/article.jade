@@ -120,5 +120,6 @@ mixin article(article)
           .meta-title-wrapper
             h4.meta-title Weitere Geschichten
           .teaser-group
-            each teaser in related
-              +teaser(teaser)
+            .teaser-row
+              each teaser in related
+                +teaser(teaser)
