@@ -16,8 +16,7 @@
 
 
 .meta-title-wrapper {
-    .row;
-    .column;
+    .row(1, 1);
 }
 
 
@@ -186,6 +185,14 @@
                 }
             }
         }
+        &.spaced, &.clutched, &.textonly {
+            &.seperate .teaser-group:after {
+                margin: 0;
+            }
+            .meta-title-wrapper {
+                margin: 0;
+            }
+        }
         &.spaced {
             .span6 {
                 position: relative;
@@ -238,8 +245,6 @@
                     padding-left: 0;
                 }
             }
-        }
-        &.clutched {
             .span6 {
                 .info {
                     padding-left: 0;
