@@ -71,8 +71,8 @@ mixin article(article)
 
     .article-footer-outer
       .article-footer-inner
-        .article-footer-items-outer
-          .article-footer-items-inner.article-social-items
+        .article-footer-items-wrapper
+          .article-footer-items.article-social-items
 
             h4.items-title Teilen:
             - var shareUrl = encodeURIComponent(urls.full())
@@ -97,7 +97,7 @@ mixin article(article)
                 target="_blank"
               title="Google+")
 
-          .article-footer-items-inner.article-cls-items
+          .article-footer-items.article-cls-items
             if article.classification.collections.length > 0
               h4.items-title In:
               ul

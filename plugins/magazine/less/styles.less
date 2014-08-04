@@ -174,31 +174,6 @@ a {
 
 @title-vert-padding: 8px;
 
-.label-base {
-    .type2-regular-i;
-    .size-label;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: @gutter * 0.25 @title-vert-padding @gutter * 0.2;
-}
-
-.related-title {
-    .font-aside-title;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: @gutter;
-    border-top: 3px solid @fg-color;
-    border-bottom: 1px solid @light-fg-color;
-    padding: @gutter * 0.25 @gutter;
-    text-align: center;
-    &:before {
-        content: '• ';
-    }
-    &:after {
-        content: ' •';
-    }
-}
-
 @media (min-width: @break-xl) {
     main {
         max-width: @max-page-width;

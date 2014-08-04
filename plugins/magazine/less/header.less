@@ -1,9 +1,5 @@
 
 
-
-
-
-
 #header {
     position: fixed;
     z-index: 99;
@@ -69,8 +65,8 @@
     .header-cls {
         display: block;
         float: left;
-        .font-cls-title;
-        font-size: 18px;
+        .type2-regular-i;
+        .set-font-size(19);
         padding: 11px 16px 0;
         text-transform: uppercase;
         height: @header-height;
@@ -129,10 +125,13 @@
         list-style-type: none;
     }
     h4 {
-        .box-sizing(border-box);
-        .font-list-title;
-        display: inline-block;
+        .type2-regular;
+        .set-font-size(16);
+        letter-spacing: 0.05em;
         text-transform: uppercase;
+
+        display: inline-block;
+        .box-sizing(border-box);
         padding: @gutter * 0.25 0 0;
         margin: @gutter * 0.5 @gutter * 0.5 0;
         color: @extra-light-fg-color;
@@ -142,13 +141,16 @@
         }
     }
     a {
-        .font-list-item;
+        .type2-regular;
+        .set-font-size(18);
+        letter-spacing: 0.05em;
+        text-decoration: none;
+
         display: block;
         .box-sizing(border-box);
         margin: @gutter * 0.5;
-        text-decoration: none;
-        color: @fg-color;
 
+        color: @fg-color;
         &:visited, &:active {
         }
         &:hover {
@@ -222,7 +224,7 @@
             border-right: 1px solid @extra-extra-light-fg-color;
 
             a {
-                .type2-regular-i;
+                .type2-regular;
                 .size-label;
                 letter-spacing: 0.05em;
                 text-transform: uppercase;

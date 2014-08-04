@@ -23,21 +23,27 @@
         line-height: @gutter * 1.2;
     }
     h4 {
-        .font-list-title;
         .type2-bold;
-        display: inline-block;
+        .set-font-size(16);
+        letter-spacing: 0.05em;
         text-transform: uppercase;
+
+        display: inline-block;
         margin-bottom: @gutter * 0.25;
         padding-top: @gutter * 0.25;
     }
     a {
-        .font-list-item;
         .type2-regular;
         .size-small();
-        text-decoration: none;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+
         color: @fg-color;
         &:visited, &:active {
             color: @fg-color;
+        }
+        &.active {
+            color: @df-color;
         }
         &:hover {
             color: @df-color;
@@ -46,7 +52,6 @@
 }
 
 .footer-copyright {
-    .font-list-item;
     .type2-regular;
     .size-small();
     text-transform: uppercase;

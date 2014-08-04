@@ -1,4 +1,11 @@
 
+.label-base {
+    .type2-regular-i;
+    .size-label;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: @gutter * 0.25 @title-vert-padding @gutter * 0.2;
+}
 
 .article-media {
     position: relative;
@@ -18,13 +25,13 @@
     text-align: center;
 }
 
-.article-footer-items-outer {
+.article-footer-items-wrapper {
     display: inline-block;
     text-align: left;
     padding-top: @gutter;
 }
 
-.article-footer-items-inner {
+.article-footer-items {
     overflow: hidden;
     padding: @gutter * 0.5 0;
 
@@ -49,6 +56,7 @@
     ul {
         list-style: none;
         overflow: hidden;
+        display: inline;
     }
     li {
         float: left;
