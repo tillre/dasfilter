@@ -117,8 +117,8 @@ mixin article(article)
     if related.length > 0
       .article-related
         .teaser-group-wrapper.spaced
-          .group-meta-title
-            h4.teaser-meta-title Weitere Geschichten
+          .meta-title-wrapper
+            h4.meta-title Weitere Geschichten
           .teaser-group
             each teaser in related
               +teaser(teaser)

@@ -1,64 +1,60 @@
 mixin footer(classifications, cls, isStartPage)
-  footer(id="footer")
-    .classifications-wrapper
-      .classifications
-        ul
-          each item in classifications.categories
+  footer#footer
+    .footer-lists-wrapper
+      .footer-list-group
+        .footer-list
+          h4 Kategorien
+          ul
+            each item in classifications.categories
+              li
+                - var active = (cls && cls._id === item._id) ? 'active' : ''
+                a(class=active, href=urls.classification(item))= item.title
+
+        .footer-list
+          h4 Sammlungen
+          ul
+            each item in classifications.collections
+              li
+                - var active = (cls && cls._id === item._id) ? 'active' : ''
+                a(class=active, href=urls.classification(item))= item.title
+
+      .footer-list-group.right
+        .footer-list
+          h4 Allgemeines
+          ul
+            if !isStartPage
+              li
+                a(href="/") Start
             li
-              - var active = (cls && cls._id === item._id) ? 'active' : ''
-              a(class=active, href=urls.classification(item))= item.title
-
-        ul
-          each item in classifications.collections
+              a(href="/s/ueber-uns") Über uns
             li
-              - var active = (cls && cls._id === item._id) ? 'active' : ''
-              a(class=active, href=urls.classification(item))= item.title
-
-    .footer-outer
-      .footer-inner
-        .footer-links
-          .footer-list-group
-            .footer-list
-              ul
-                if !isStartPage
-                  li
-                    a(href="/") Start
-                li
-                  a(href="/s/ueber-uns") Über uns
-                li
-                  a(href="/s/newsletter") Newsletter
-                li
-                  a(href="/s/kontakt") Kontakt
-
-            .footer-list
-              ul
-                li
-                  a(href="https://twitter.com/dasfilter", target="_blank") Twitter
-                li
-                  a(href="https://facebook.com/dasfilter", target="_blank") Facebook
-                li
-                  a(href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank") Google+
-
-            .footer-list
-              ul
-                li
-                  a(href="https://mixcloud.com/dasfilter", target="_blank") Mixcloud
-                li
-                  a(href="https://soundcloud.com/dasfilter", target="_blank") Soundcloud
-                li
-                  a(href="https://vimeo.com/user9631725", target="_blank") Vimeo
-                li
-                  a(href="http://www.youtube.com/channel/UCOQ_fJyuKcM6d_36mBr6apg", target="_blank") Youtube
+              a(href="/s/newsletter") Newsletter
+            li
+              a(href="/s/kontakt") Kontakt
+            li
+              a(href="/s/impressum") Impressum
+            li
+              a(href="/s/datenschutz") Datenschutz
+            li
+              a(href="/s/marketing") Marketing
 
 
-          .footer-list-group.right
-            .footer-list
-              ul
-                li
-                  a(href="/s/impressum") Impressum
-                li
-                  a(href="/s/datenschutz") Datenschutz
-                li
-                  a(href="/s/marketing") Marketing
+        .footer-list
+          h4 Anderswo
+          ul
+            li
+              a(href="https://twitter.com/dasfilter", target="_blank") Twitter
+            li
+              a(href="https://facebook.com/dasfilter", target="_blank") Facebook
+            li
+              a(href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank") Google+
+            li
+              a(href="https://mixcloud.com/dasfilter", target="_blank") Mixcloud
+            li
+              a(href="https://soundcloud.com/dasfilter", target="_blank") Soundcloud
+            li
+              a(href="https://vimeo.com/user9631725", target="_blank") Vimeo
+            li
+              a(href="http://www.youtube.com/channel/UCOQ_fJyuKcM6d_36mBr6apg", target="_blank") Youtube
 
-        small.footer-copyright &copy; Das Filter
+    small.footer-copyright &copy; Das Filter

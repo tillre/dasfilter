@@ -17,8 +17,8 @@ mixin layout-groups(groups)
     if group.teasers.length > 0
       .teaser-group-wrapper(class=[group.type_, group.display])
         if group.title
-          .group-meta-title
-            h2.teaser-meta-title= group.title
+          .meta-title-wrapper
+            h2.meta-title= group.title
         .teaser-group
           each row in group.rows
             .teaser-row

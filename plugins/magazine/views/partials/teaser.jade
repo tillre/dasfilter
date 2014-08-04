@@ -28,7 +28,7 @@ mixin teaser(teaser, group)
   article.teaser(class="span#{teaser.span}")
     .teaser-inner
       if teaser.title
-        h2.teaser-meta-title= teaser.title
+        h2.meta-title= teaser.title
 
       if !teaser.textonly
         +teaser-image(teaser)

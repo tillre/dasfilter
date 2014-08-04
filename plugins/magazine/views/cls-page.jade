@@ -8,7 +8,7 @@ include partials/body-end
 
 mixin cls-aside-article-collection(c)
   .cls-aside-group
-    h2(class="teaser-meta-title")= c.title
+    h2(class="meta-title")= c.title
     each article in c.articles
       +teaser(article)
 
