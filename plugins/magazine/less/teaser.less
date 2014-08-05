@@ -255,23 +255,11 @@
                     padding-left: 0;
                 }
             }
-            .span6 {
-                .info {
-                    padding-left: 0;
-                    .row-left(1);
-                }
-            }
         }
-        &.clutched-wide-halfsize {
+        &.clutched, &.clutched-wide, &.clutched-wide-halfsize {
             .span6 {
                 .teaser-inner {
                     position: relative;
-                }
-                .image-wrapper {
-                    padding-bottom: 56.25% * 0.575;
-                    img {
-                        .transform(translate(0, -100% * 0.275));
-                    }
                 }
                 .info-wrapper {
                     position: absolute;
@@ -288,26 +276,23 @@
                 }
             }
         }
+        &.clutched-wide-halfsize {
+            .span6 {
+                .image-wrapper {
+                    padding-bottom: 56.25% * 0.575;
+                    img {
+                        .transform(translate(0, -100% * 0.275));
+                    }
+                }
+            }
+        }
         &.clutched, &.clutched-wide {
             .span6 {
-                .teaser-inner {
-                    position: relative;
-                }
                 .info-wrapper {
                     position: absolute;
                     left: 0;
                     bottom: 50%;
                     .transform(translate(0, 50%));
-                    .linear-gradient(left, rgba(0,0,0,.6) 0%, rgba(0,0,0,.1) 100%;);
-                    background-color: rgba(0,0,0,0.5);
-                    margin: 0;
-                }
-                .info {
-                    padding-top: @gutter * 0.5;
-                    padding-bottom: @gutter * 0.5;
-                    h1 {
-                        color: white;
-                    }
                 }
             }
         }
@@ -354,7 +339,7 @@
 @media (min-width: @break-xl) {
 
     .teaser-group-wrapper {
-        &.clutched-wide {
+        &.clutched-wide, &.clutched-wide-halfsize {
             .row;
             .column;
             .meta-title-wrapper {

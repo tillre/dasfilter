@@ -1,9 +1,6 @@
 
-main {
-    position: relative;
-    left: 0;
-    .transition(left 250ms ease-out);
-    margin-top: @header-height;
+body {
+    padding-top: @header-height;
 }
 
 
@@ -41,5 +38,14 @@ main {
     .meta-title {
         border-bottom: 0;
         margin-bottom: @gutter;
+    }
+}
+
+
+@media (min-width: @break-xl) {
+    main {
+        max-width: @max-page-width;
+        margin-left: auto;
+        margin-right: auto;
     }
 }

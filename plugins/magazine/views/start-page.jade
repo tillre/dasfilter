@@ -24,9 +24,9 @@ html(lang="de")
 
   body.start-page
     +header(classifications, classification, null, 'start')
+    +header-categories(classifications, classification)
 
     main
-      +header-categories(classifications, classification)
       +layout(layout)
       +more(nextDate)
 

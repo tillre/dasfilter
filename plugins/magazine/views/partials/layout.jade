@@ -15,7 +15,7 @@ mixin layout-mixed-group(group)
 mixin layout-groups(groups)
   each group in groups
     if group.teasers.length > 0
-      .teaser-group-wrapper(class=[group.type_, group.display])
+      section.teaser-group-wrapper(class=[group.type_, group.display])
         if group.title
           .meta-title-wrapper
             h2.meta-title= group.title
