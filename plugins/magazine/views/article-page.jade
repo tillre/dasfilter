@@ -24,9 +24,11 @@ html(lang="de")
 
   body.article-page
     +header(classifications, classification)
+    +header-categories(classifications, classification)
+
     main
-      +header-categories(classifications, classification)
       +article(article)
       +comments
+
     +footer(classifications)
     +body-end

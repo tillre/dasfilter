@@ -163,7 +163,7 @@
 }
 
 
-.classifications-wrapper {
+.cls-nav-wrapper {
     display: none;
 }
 
@@ -191,25 +191,13 @@
     }
 
 
-    .classifications-wrapper {
+    .cls-nav-wrapper {
         display: block;
         padding: @gutter * 0.3 0 @gutter * 0.35;
         border-bottom: 1px solid @header-border-color;
-
-        footer & {
-            background-color: @fg-color;
-            li {
-                a {
-                    color: white;
-                }
-                a.active {
-                    color: @light-fg-color;
-                }
-            }
-        }
     }
 
-    .classifications {
+    .cls-nav {
         .row;
         .column;
 
@@ -273,7 +261,7 @@
         margin: 0 auto;
         .column;
     }
-    .classifications {
+    .cls-nav {
         max-width: @max-page-width;
         margin: 0 auto;
         .column;
