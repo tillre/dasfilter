@@ -6,17 +6,15 @@ mixin image-node(data, size, delayLoad)
     img(src=urls.image(data, size), alt="#{data.title}")
 
 
-mixin image(data, type, delayLoad)
+mixin image-teaser(data, span, delayLoad)
+  case span
+    when 2: +image-node(data, 'm', delayLoad)
+    when 6: +image-node(data, 'x', delayLoad)
+    default: +image-node(data, 'l', delayLoad)
+
+
+mixin image-content(data, type, delayLoad)
   case type
-    when "teaser-oneway":        +image-node(data, 'x', delayLoad)
-    when "teaser-twoway":        +image-node(data, 'l', delayLoad)
-    when "teaser-threeway":      +image-node(data, 'm', delayLoad)
-
-    when "teaser-cls-first":       +image-node(data, 'm', delayLoad)
-    when "teaser-cls":             +image-node(data, 'm', delayLoad)
-    when "teaser-cls-aside":       +image-node(data, 'm', delayLoad)
-    when "teaser-article-related": +image-node(data, 'm', delayLoad)
-
     when "article-header": +image-node(data, 'x', delayLoad)
 
     when "content-oneway-default":      +image-node(data, 'x', delayLoad)
@@ -34,6 +32,11 @@ mixin image(data, type, delayLoad)
     when "content-threeway-inside-right": +image-node(data, 's', delayLoad)
     when "content-threeway-full":         +image-node(data, 'm', delayLoad)
 
+    default: +image-node(data, 'l', delayLoad)
+
+
+mixin image-slideshow(data, type, delayLoad)
+  case type
     when "slideshow-oneway-default":      +image-node(data, 'tl', delayLoad)
     when "slideshow-oneway-inside-left":  +image-node(data, 'tl', delayLoad)
     when "slideshow-oneway-inside-right": +image-node(data, 'tl', delayLoad)
@@ -53,4 +56,4 @@ mixin image(data, type, delayLoad)
 
     when "slideshow-header": +image-node(data, 'tx', delayLoad)
 
-    default: +image-node(data)
+    default: +image-node(data, 'l', delayLoad)

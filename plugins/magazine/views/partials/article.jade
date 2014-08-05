@@ -57,9 +57,9 @@ mixin article(article)
           .media-outer
             .media-inner
               if hasAltImage
-                +image(article.header.altImage, 'article-header')
+                +image-content(article.header.altImage, 'article-header')
               else
-                +image(article.header.image, 'article-header')
+                +image-content(article.header.image, 'article-header')
 
       if article.header.caption
         .caption-outer

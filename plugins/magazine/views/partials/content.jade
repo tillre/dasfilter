@@ -17,7 +17,7 @@ mixin content-image(data, sectionType)
   figure(class="content-entity content-image #{data.display}")
     .content-outer
       .content-inner
-        +image(data.image, 'content-' + sectionType + '-' + data.display)
+        +image-content(data.image, 'content-' + sectionType + '-' + data.display)
         if data.caption
           .caption-outer
             .caption-inner

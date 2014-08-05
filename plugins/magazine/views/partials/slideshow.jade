@@ -6,7 +6,7 @@ mixin slideshow(images, thumbType)
     .thumbs
       each image in images
         a(class="thumb", href="#")
-          +image(image.image, thumbType)
+          +image-slideshow(image.image, thumbType)
 
     if images.length
       .modal
@@ -15,7 +15,7 @@ mixin slideshow(images, thumbType)
             .slide-image
               each image in images
                 - console.log('image', image);
-                +image(image.image, 'slideshow-full', true)
+                +image-slideshow(image.image, 'slideshow-full', true)
             .slide-caption
               each image in images
                 small!= markdown(image.caption)
