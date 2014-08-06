@@ -1,6 +1,26 @@
 
 body {
     padding-top: @header-height;
+
+}
+
+
+main, #menu-bar, #off-canvas-menu {
+    .transition(transform 250ms ease-out);
+}
+#content-cloak {
+    .transition(opacity 250ms ease-out);
+}
+body.open-off-canvas {
+    main, #menu-bar, #off-canvas-menu {
+        .transform(translate3d(@off-canvas-width, 0, 0));
+    }
+    #content-cloak {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 1;
+    }
 }
 
 

@@ -1,6 +1,6 @@
 
 
-#header {
+#menu-bar {
     position: fixed;
     z-index: 99;
     top: 0;
@@ -13,22 +13,13 @@
 }
 
 
-#header-cloak {
+#content-cloak {
     position: fixed;
     z-index: 87;
     top: 0;
     left: -99999px;
     background-color: rgba(255, 255, 255, 0.75);
     opacity: 0;
-
-    .transition(opacity 250ms ease-out);
-
-    &.visible {
-        left: 0;
-        right: 0;
-        bottom: 0;
-        opacity: 1;
-    }
 }
 
 
@@ -80,7 +71,7 @@
         }
     }
 
-    .drawer-btn {
+    .menu-btn {
         display: block;
         position: relative;
         float: left;
@@ -95,12 +86,13 @@
     }
 }
 
-#nav-drawer {
+#off-canvas-menu {
     position: fixed;
-    top: @header-height;
-    left: -@drawer-width;
+    top: 0;
+    left: -@off-canvas-width;
     bottom: 0;
-    width: @drawer-width;
+    width: @off-canvas-width;
+    z-index: 99;
 
     overflow-x: hidden;
     overflow-y: scroll;
@@ -109,13 +101,7 @@
     background-color: white;
     border-top: 3px solid @df-color;
 
-    &.open {
-        left: 0;
-    }
-
-    .transition(left 250ms ease-out);
-
-    .drawer-inner {
+    .off-canvas-inner {
         height: 100%;
         padding-bottom: @gutter;
         border-right: 1px solid @extra-extra-light-fg-color;
@@ -125,7 +111,7 @@
         list-style-type: none;
     }
     h4 {
-        .type2-regular;
+        .type2-bold;
         .set-font-size(16);
         letter-spacing: 0.05em;
         text-transform: uppercase;
@@ -134,7 +120,7 @@
         .box-sizing(border-box);
         padding: @gutter * 0.25 0 0;
         margin: @gutter * 0.5 @gutter * 0.5 0;
-        color: @extra-light-fg-color;
+        color: @fg-color;
 
         &:first-child {
             margin-top: @gutter * 0.25;

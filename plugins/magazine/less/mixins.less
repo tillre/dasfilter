@@ -23,6 +23,7 @@
 
 .transition(@args) {
     -webkit-transition: @args;
+    transition: ~"-webkit-@{args}";
     transition: @args;
 }
 
