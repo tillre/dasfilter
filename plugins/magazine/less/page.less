@@ -5,6 +5,7 @@ body {
 }
 
 
+// off canvas menu animation
 .wrapper, #menu-bar, #off-canvas-menu {
     .transition(transform 250ms ease-out);
 }
@@ -12,6 +13,8 @@ body {
     .transition(opacity 250ms ease-out);
 }
 body.open-off-canvas {
+    overflow: hidden;
+
     .wrapper, #menu-bar, #off-canvas-menu {
         .transform(translate3d(@off-canvas-width, 0, 0));
     }
