@@ -17,10 +17,15 @@
 }
 a.meta-title {
     h2:after {
-        content: '➤';
+        content: '';
         display: inline-block;
-        .type2-regular;
-        margin-left: @gutter * 0.2;
+        margin-left: 7px;
+        width: 19px;
+        height: 20px;
+        .svg-arrow-right;
+        background-size: contain;
+        background-position: center center;
+        opacity: 0.222;
     }
     &:hover {
         cursor: pointer;
@@ -28,7 +33,8 @@ a.meta-title {
         h2 {
             color: @df-color;
             &:after {
-                color: @df-color;
+                .svg-arrow-right-hover;
+                opacity: 1.0;
             }
         }
     }

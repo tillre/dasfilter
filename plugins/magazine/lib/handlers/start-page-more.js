@@ -19,7 +19,7 @@ module.exports = function tagHandler(app) {
         Layout.createGroup('chrono', 'spaced', { numTeasers: 15 })
       ] };
 
-      return Layout.build(app, stage, startDate);
+      return Layout.build(app, classes, stage, startDate);
 
     }).then(function(layout) {
 

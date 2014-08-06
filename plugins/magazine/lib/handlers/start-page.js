@@ -5,14 +5,14 @@ var Layout = require('../layout.js');
 module.exports = function startHandler(app) {
 
   return function(request, reply) {
-    var cls;
+    var classes;
 
     app.models.classifications.getAll().then(function(cs) {
-      cls = cs;
+      classes = cs;
       return app.models.stages.getStartStage();
 
     }).then(function(stage) {
-      return Layout.build(app, stage);
+      return Layout.build(app, classes, stage);
 
     }).then(function(layout) {
 
@@ -20,7 +20,7 @@ module.exports = function startHandler(app) {
       console.log('nextDate', nextDate);
 
       app.replyView(request, reply, 'start-page', {
-        classifications: cls,
+        classifications: classes,
         layout: layout,
         nextDate: nextDate
       });

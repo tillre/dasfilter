@@ -13,7 +13,7 @@ module.exports = function clsHandler(app) {
 
     app.models.classifications.getAll().then(function(cs) {
       var classes = cs;
-      var cls = classes.allBySlug[request.params.classification];
+      var cls = classes.bySlug[request.params.classification];
       if (!cls) {
         var err = new Error('Category or Collection not found: ' + request.params.classification);
         err.code = 404;
@@ -36,7 +36,7 @@ module.exports = function clsHandler(app) {
         ];
       }
 
-      return Layout.build(app, stage, startDate).then(function(layout) {
+      return Layout.build(app, classes, stage, startDate).then(function(layout) {
 
         var nextDate = layout.refs[type][cls._id].nextDate;
 

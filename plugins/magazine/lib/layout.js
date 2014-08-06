@@ -64,8 +64,8 @@ function createRefs() {
 }
 
 
-function buildGroup(stageGroup, refs) {
-  var i, t;
+function buildGroup(app, classes, stageGroup, refs) {
+  var i, t, id;
   var layoutGroup = _.clone(stageGroup);
   layoutGroup.teasers = layoutGroup.teasers || [];
 
@@ -95,6 +95,7 @@ function buildGroup(stageGroup, refs) {
     break;
 
   case 'tag':
+    layoutGroup.link = app.urls.tag(stageGroup.tag);
     for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('tag',
                        getSize(stageGroup.numTeasers, i));
@@ -104,20 +105,24 @@ function buildGroup(stageGroup, refs) {
     break;
 
   case 'category':
+    id = stageGroup.category.id_ || stageGroup.category._id;
+    layoutGroup.link = app.urls.classification(classes.byId[id]);
     for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('category',
                        getSize(stageGroup.numTeasers, i));
       layoutGroup.teasers.push(t);
-      refs.addCls('category', stageGroup.category.id_ || stageGroup.category._id, t);
+      refs.addCls('category', id, t);
     }
     break;
 
   case 'collection':
+    id = stageGroup.collection.id_ || stageGroup.collection._id;
+    layoutGroup.link = app.urls.classification(classes.byId[id]);
     for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('collection',
                        getSize(stageGroup.numTeasers, i));
       layoutGroup.teasers.push(t);
-      refs.addCls('collection', stageGroup.collection.id_ || stageGroup.collection._id, t);
+      refs.addCls('collection', id, t);
     }
     break;
   }
@@ -125,14 +130,14 @@ function buildGroup(stageGroup, refs) {
 }
 
 
-function createLayout(stage) {
+function createLayout(app, classes, stage) {
 
   var layout = {
     refs: createRefs()
   };
 
   layout.groups = stage.groups.map(function(group) {
-    return buildGroup(group, layout.refs);
+    return buildGroup(app, classes, group, layout.refs);
   });
 
   return layout;
@@ -170,16 +175,14 @@ function loadCls(load, date, refsById, offset) {
 // merge
 //
 
-function mergeRefs(refs, docs, usedIds, noDuplicates) {
+function mergeRefs(refs, docs, usedIds) {
   var i, j = 0;
   var id;
-  var duplicates = [];
   var newRefs = [];
   // merge previously unused docs
   for (i = 0; i < docs.length && j < refs.length; ++i) {
     id = docs[i]._id;
     if (usedIds[id]) {
-      duplicates.push(docs[i]);
       continue;
     }
     refs[j].doc = docs[i];
@@ -191,13 +194,6 @@ function mergeRefs(refs, docs, usedIds, noDuplicates) {
   if (j === refs.length && docs.length > refs.length) {
     refs.nextDate = docs[refs.length - 1].date;
   }
-  // else if (j < refs.length && !noDuplicates) {
-  //   // fill remaining empty refs with duplicates
-  //   for ( i = 0; i < duplicates.length && j < refs.length; ++i) {
-  //     refs[j].doc = duplicates[i];
-  //     ++j;
-  //   }
-  // }
 }
 
 
@@ -290,12 +286,13 @@ function createGroupRows(groups) {
 }
 
 
-function setupLayout(app, stage, date, usedIds) {
+
+function buildLayout(app, classes, stage, date, usedIds) {
 
   date = date || new Date().toISOString();
   usedIds = usedIds || {};
 
-  var layout = createLayout(stage);
+  var layout = createLayout(app, classes, stage);
   var teasers = app.models.teasers;
 
   var order = [];
@@ -338,8 +335,9 @@ function setupLayout(app, stage, date, usedIds) {
       o.merge(layout.refs[o.type], results[i], usedIds);
     });
 
-    // remove empty groups and docs and create rows in each group for the rendering
+    // remove empty groups and docs
     layout.groups = filterEmpty(layout.groups);
+    // partition teasers into rows
     createGroupRows(layout.groups);
 
     return layout;
@@ -352,5 +350,5 @@ module.exports = {
   createTeaser: createTeaser,
   createGroup: createGroup,
 
-  build: setupLayout
+  build: buildLayout
 };

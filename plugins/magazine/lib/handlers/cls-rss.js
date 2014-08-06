@@ -5,7 +5,7 @@ module.exports = function clsRssHandler(app) {
 
     app.models.classifications.getAll().then(function(classes) {
 
-      var cls = classes.allBySlug[request.params.classification];
+      var cls = classes.bySlug[request.params.classification];
       if (!cls) {
         var err = new Error('Category or Collection not found: ' + request.params.classification);
         err.code = 404;

@@ -19,7 +19,7 @@ module.exports = function tagHandler(app) {
         Layout.createGroup('tag', 'spaced', { numTeasers: 15, tag: { slug: slug } })
       ] };
 
-      return Layout.build(app, stage, startDate);
+      return Layout.build(app, classes, stage, startDate);
 
     }).then(function(layout) {
 

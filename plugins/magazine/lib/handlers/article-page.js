@@ -48,7 +48,7 @@ module.exports = function(app) {
 
     }).then(function(d) {
       doc = d;
-      cls = classes.allBySlug[request.params.classification];
+      cls = classes.bySlug[request.params.classification];
 
       if (!articleBelongsToClassification(doc, cls._id, cls.type_)) {
         reply('You are being redirected').redirect(
@@ -63,29 +63,29 @@ module.exports = function(app) {
         var tag = doc.classification.relatedTag;
         relatedStage.groups.push(Layout.createGroup('tag', 'spaced', {
           numTeasers: 3, tag: tag, seperate: false,
-          title: 'Zum Thema ' + tag.name,
-          link: app.urls.tag(tag)
+          title: 'Zum Thema ' + tag.name
+          //link: app.urls.tag(tag)
         }));
       }
 
       doc.classification.collections.forEach(function(c) {
         relatedStage.groups.push(Layout.createGroup('collection', 'spaced', {
           numTeasers: 3, collection: c, seperate: false,
-          title: 'Aus der Sammlung ' + c.title,
-          link: app.urls.classification(c)
+          title: 'Aus der Sammlung ' + c.title
+          // link: app.urls.classification(c)
         }));
       });
 
       relatedStage.groups.push(Layout.createGroup('category', 'spaced', {
         numTeasers: 3, category: cls, seperate: false,
-        title: 'Aus der Kategorie ' + cls.title,
-        link: app.urls.classification(cls)
+        title: 'Aus der Kategorie ' + cls.title
+        // link: app.urls.classification(cls)
       }));
 
       var usedIds = {};
       usedIds[doc._id] = true;
 
-      return Layout.build(app, relatedStage, doc.date, usedIds);
+      return Layout.build(app, classes, relatedStage, doc.date, usedIds);
 
     }).then(function(relatedLayout) {
 

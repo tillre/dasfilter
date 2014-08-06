@@ -19,16 +19,21 @@
     text-decoration: none;
     text-transform: uppercase;
     .type2-bold;
-    .set-font-size(18);
+    .set-font-size(21);
     letter-spacing: 0.05em;
     padding: @gutter * 0.25 @gutter * 0.25 @gutter * 0.25 @gutter * 0.5;
     color: @fg-color;
     border-top: 3px solid @fg-color;
 
     &:after {
-        content: '➤';
+        content: '';
         display: inline-block;
-        margin-left: @gutter * 0.2;
+        margin-left: 5px;
+        width: 16px;
+        height: 15px;
+        .svg-arrow-right;
+        background-size: contain;
+        background-position: center 1px;
     }
 
     &:visited, &:active {
@@ -37,5 +42,8 @@
     &:hover {
         color: @df-color;
         border-top: 3px solid @df-color;
+        &:after {
+            .svg-arrow-right-hover;
+        }
     }
 }

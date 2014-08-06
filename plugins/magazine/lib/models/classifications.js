@@ -1,13 +1,4 @@
 
-function filterByType(rows, type) {
-  return rows.filter(function(row) {
-    return row.doc.type_ === type;
-  }).map(function(row) {
-    return row.doc;
-  });
-};
-
-
 module.exports = function(resources) {
 
   return {
@@ -18,12 +9,14 @@ module.exports = function(resources) {
         { include_docs: true }
 
       ).then(function(result) {
-        var allBySlug = {};
+        var bySlug = {};
+        var byId = {};
         var categories = [];
         var collections = [];
 
         result.rows.forEach(function(row) {
-          allBySlug[row.doc.slug] = row.doc;
+          bySlug[row.doc.slug] = row.doc;
+          byId[row.doc._id] = row.doc;
           if (row.doc.type_ === 'Category') {
             categories.push(row.doc);
           }
@@ -33,7 +26,8 @@ module.exports = function(resources) {
         });
 
         return {
-          allBySlug: allBySlug,
+          bySlug: bySlug,
+          byId: byId,
           categories: categories,
           collections: collections
         };
