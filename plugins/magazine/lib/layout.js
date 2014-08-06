@@ -290,11 +290,11 @@ function createGroupRows(groups) {
 }
 
 
-function setupLayout(app, stage, date) {
+function setupLayout(app, stage, date, usedIds) {
 
   date = date || new Date().toISOString();
+  usedIds = usedIds || {};
 
-  //var refs = collectStageRefs(stage);
   var layout = createLayout(stage);
   var teasers = app.models.teasers;
 
@@ -334,7 +334,6 @@ function setupLayout(app, stage, date) {
   return Q.all(promises).then(function(results) {
 
     // merge docs into refs
-    var usedIds = {};
     order.forEach(function(o, i) {
       o.merge(layout.refs[o.type], results[i], usedIds);
     });

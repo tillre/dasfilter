@@ -69,8 +69,8 @@ mixin article(article)
 
     +content(article.sections)
 
-    .article-footer-outer
-      .article-footer-inner
+    .article-footer-wrapper
+      .article-footer
         .article-footer-items-wrapper
           .article-footer-items.article-social-items
 
@@ -98,28 +98,9 @@ mixin article(article)
               title="Google+")
 
           .article-footer-items.article-cls-items
-            if article.classification.collections.length > 0
-              h4.items-title In:
-              ul
-                each item in article.classification.collections
-                  li
-                    a(href=urls.classification(item))= item.title
-
-
             if article.classification.tags.length > 0
               h4.items-title Tags:
               ul
                 each item in article.classification.tags
                   li
                     a(href=urls.tag(item))= item.name
-
-
-    if related.length > 0
-      .article-related
-        .teaser-group-wrapper.spaced
-          .meta-title-wrapper
-            h4.meta-title Weitere Geschichten
-          .teaser-group
-            .teaser-row
-              each teaser in related
-                +teaser(teaser)

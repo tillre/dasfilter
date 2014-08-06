@@ -1,6 +1,7 @@
 include partials/head
 include partials/header
 include partials/article
+include partials/layout
 include partials/comments
 include partials/footer
 include partials/body-end
@@ -28,6 +29,7 @@ html(lang="de")
 
     main
       +article(article)
+      +layout(relatedLayout)
       +comments
 
     +footer(classifications)

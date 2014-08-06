@@ -26,15 +26,9 @@
     border-top: 3px solid @fg-color;
 
     &:after {
-        content: '';
+        content: '➤';
         display: inline-block;
-        margin-left: 5px;
-        margin-top: 1px;
-        width: 11px;
-        height: 16px;
-        .svg-arrow-right;
-        background-size: contain;
-        background-position: center 1px;
+        margin-left: @gutter * 0.2;
     }
 
     &:visited, &:active {
@@ -43,8 +37,5 @@
     &:hover {
         color: @df-color;
         border-top: 3px solid @df-color;
-        &:after {
-            .svg-arrow-right-hover;
-        }
     }
 }

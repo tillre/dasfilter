@@ -18,7 +18,12 @@ mixin layout-groups(groups)
       section.teaser-group-wrapper(class=[group.type_, group.display])
         if group.title
           .meta-title-wrapper
-            h2.meta-title= group.title
+            if group.link
+              a.meta-title(href=group.link)
+                h2= group.title
+            else
+              .meta-title
+                h2= group.title
         .teaser-group
           each row in group.rows
             .teaser-row

@@ -7,10 +7,31 @@
 
 
 .meta-title {
-    .type2-regular-i;
-    color: @fg-color;
-    .size-teaser-title-larger;
-    padding: 0 0 @gutter * 0.5 0;
+    display: inline-block;
+    h2 {
+        .type2-regular-i;
+        color: @fg-color;
+        .size-teaser-title-larger;
+        padding: 0 0 @gutter * 0.5 0;
+    }
+}
+a.meta-title {
+    h2:after {
+        content: '➤';
+        display: inline-block;
+        .type2-regular;
+        margin-left: @gutter * 0.2;
+    }
+    &:hover {
+        cursor: pointer;
+        color: @df-color;
+        h2 {
+            color: @df-color;
+            &:after {
+                color: @df-color;
+            }
+        }
+    }
 }
 
 

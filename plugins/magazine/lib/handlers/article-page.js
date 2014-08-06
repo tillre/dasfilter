@@ -1,4 +1,5 @@
 var Util = require('util');
+var Layout = require('../layout.js');
 
 
 function articleBelongsToClassification(doc, clsId, clsType) {
@@ -39,46 +40,62 @@ module.exports = function(app) {
 
   return function articleHandler(request, reply) {
 
-    app.models.classifications.getAll().then(function(classes) {
-      var cls = classes.allBySlug[request.params.classification];
+    var classes, cls, doc;
 
-      if (!cls) {
-        var err = new Error('Category or Collection not found: ' + request.params.classification);
-        err.code = 404;
-        throw err;
+    app.models.classifications.getAll().then(function(cs) {
+      classes = cs;
+      return app.models.articles.bySlug(request.params.article);
+
+    }).then(function(d) {
+      doc = d;
+      cls = classes.allBySlug[request.params.classification];
+
+      if (!articleBelongsToClassification(doc, cls._id, cls.type_)) {
+        reply('You are being redirected').redirect(
+          app.urls.article(doc.classification.category, doc)
+        );
+        return;
       }
 
-      return app.models.articles.bySlug(request.params.article).then(function(doc) {
+      var relatedStage = { groups: [] };
 
-        // get related teaser
-        return app.models.teasers.byClsDate(
-          doc.classification.category._id,
-          doc.date,
-          3
+      if (doc.classification.relatedTag) {
+        var tag = doc.classification.relatedTag;
+        relatedStage.groups.push(Layout.createGroup('tag', 'spaced', {
+          numTeasers: 3, tag: tag, seperate: false,
+          title: 'Zum Thema ' + tag.name,
+          link: app.urls.tag(tag)
+        }));
+      }
 
-        ).then(function(docs) {
-          var teaser = docs.map(function(doc) {
-            return {
-              display: 'light',
-              span: 2,
-              doc: doc
-            };
-          });
-          if (articleBelongsToClassification(doc, cls._id, cls.type_)) {
-            app.replyView(request, reply, 'article-page', {
-              article: prepareArticle(app, doc),
-              classification: cls,
-              classifications: classes,
-              related: teaser
-            });
-          }
-          else {
-            reply('You are being redirected').redirect(
-              app.urls.article(doc.classification.category, doc)
-            );
-          }
-        });
+      doc.classification.collections.forEach(function(c) {
+        relatedStage.groups.push(Layout.createGroup('collection', 'spaced', {
+          numTeasers: 3, collection: c, seperate: false,
+          title: 'Aus der Sammlung ' + c.title,
+          link: app.urls.classification(c)
+        }));
       });
+
+      relatedStage.groups.push(Layout.createGroup('category', 'spaced', {
+        numTeasers: 3, category: cls, seperate: false,
+        title: 'Aus der Kategorie ' + cls.title,
+        link: app.urls.classification(cls)
+      }));
+
+      var usedIds = {};
+      usedIds[doc._id] = true;
+
+      return Layout.build(app, relatedStage, doc.date, usedIds);
+
+    }).then(function(relatedLayout) {
+
+      app.replyView(request, reply, 'article-page', {
+        article: prepareArticle(app, doc),
+        classification: cls,
+        classifications: classes,
+        relatedLayout: relatedLayout
+      });
+
 
     }).fail(function(err) {
       reply(err);
