@@ -24,11 +24,12 @@ html(lang="de")
 
   body.start-page
     +header(classifications, classification, null, 'start')
-    +header-categories(classifications, classification)
+    .wrapper
+      +header-categories(classifications, classification)
 
-    main
-      +layout(layout)
-      +more(nextDate)
+      main
+        +layout(layout)
+        +more(nextDate)
 
-    +footer(classifications, classification, true)
+      +footer(classifications, classification, true)
     +body-end

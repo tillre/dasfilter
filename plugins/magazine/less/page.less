@@ -5,14 +5,14 @@ body {
 }
 
 
-main, #menu-bar, #off-canvas-menu {
+.wrapper, #menu-bar, #off-canvas-menu {
     .transition(transform 250ms ease-out);
 }
 #content-cloak {
     .transition(opacity 250ms ease-out);
 }
 body.open-off-canvas {
-    main, #menu-bar, #off-canvas-menu {
+    .wrapper, #menu-bar, #off-canvas-menu {
         .transform(translate3d(@off-canvas-width, 0, 0));
     }
     #content-cloak {
@@ -25,7 +25,7 @@ body.open-off-canvas {
 
 
 .start-page, .start-page-continued, .generic-page {
-    #nav-bar .header-logo {
+    #nav-bar .logo {
         width: 206px;
         .svg-logo-dark;
     }

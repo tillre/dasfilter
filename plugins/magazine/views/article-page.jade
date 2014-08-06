@@ -25,12 +25,13 @@ html(lang="de")
 
   body.article-page
     +header(classifications, classification)
-    +header-categories(classifications, classification)
+    .wrapper
+      +header-categories(classifications, classification)
 
-    main
-      +article(article)
-      +layout(relatedLayout)
-      +comments
+      main
+        +article(article)
+        +layout(relatedLayout)
+        +comments
 
-    +footer(classifications)
+      +footer(classifications)
     +body-end

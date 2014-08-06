@@ -24,11 +24,12 @@ html(lang="de")
 
   body.chrono-page(class=pageType)
     +header(classifications, classification, tag)
-    +header-categories(classifications, classification)
+    .wrapper
+      +header-categories(classifications, classification)
 
-    main
-      +layout(layout)
-      +more(nextDate)
+      main
+        +layout(layout)
+        +more(nextDate)
 
-    +footer(classifications, classification)
+      +footer(classifications, classification)
     +body-end
