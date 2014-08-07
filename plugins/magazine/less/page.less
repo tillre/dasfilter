@@ -13,8 +13,6 @@ body {
     .transition(opacity 250ms ease-out);
 }
 body.open-off-canvas {
-    overflow: hidden;
-
     .wrapper, #menu-bar, #off-canvas-menu {
         .transform(translate3d(@off-canvas-width, 0, 0));
     }
@@ -24,6 +22,9 @@ body.open-off-canvas {
         bottom: 0;
         opacity: 1;
     }
+}
+body.no-scroll {
+    overflow: hidden;
 }
 
 

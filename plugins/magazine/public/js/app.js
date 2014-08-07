@@ -13,10 +13,14 @@
           return;
         }
       }
-      $('body').toggleClass('open-off-canvas', !open);
       open = !open;
-    }
 
+      $('body').toggleClass('no-scroll', open);
+      // delay to avoid transition bug in FF when overflow on parent is changed
+      setTimeout(function() {
+        $('body').toggleClass('open-off-canvas', open);
+      }, 16);
+    }
     $drawerBtn.on('click', function(e) {
       e.preventDefault();
       toggleMenu();
