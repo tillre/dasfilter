@@ -11,7 +11,7 @@
     h2 {
         .type2-regular-i;
         color: @fg-color;
-        .set-font-size(32; 0.85);
+        .size-meta-title;
         border-top: 2px solid @fg-color;
         padding: @gutter * 0.5 0;
     }
@@ -90,11 +90,13 @@ a.meta-title {
     h1 {
         .size-normal;
         .header-1 {
-            display: block;
             .font-teaser-title;
+            &:after {
+                content: '\A';
+                white-space: pre;
+            }
         }
         .header-2 {
-            display: block;
             .font-teaser-subtitle;
         }
         &:hover {
@@ -136,20 +138,22 @@ a.meta-title {
 
 @media (min-width: @break-m-portrait) {
 
-    .meta-title h2 {
+    .meta-title {
         display: inline-block;
-        padding: 0 0 @gutter * 0.5 0;
-        border-top: 0;
+        h2 {
+            padding: 0 0 @gutter * 0.5 0;
+            border-top: 0;
+        }
     }
 
     .teaser {
         &.span6 {
             width: 100%;
             .header-1 {
-                .font-teaser-title-huge;
+                .font-teaser-title-larger;
             }
             .header-2 {
-                .font-teaser-subtitle-huge;
+                .font-teaser-subtitle-larger;
             }
         }
         &.span3 {
@@ -243,7 +247,6 @@ a.meta-title {
                     padding-bottom: 0;
                 }
                 .header-1, .header-2 {
-                    display: inline;
                     background: white;
                     box-shadow: 14px 0 0 white, -14px 0 0 white;
                     line-height: 1.25em;
