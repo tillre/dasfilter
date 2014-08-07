@@ -12,6 +12,14 @@ html(lang="de")
       title #{page.title} &ndash; #{page.subtitle} | Das Filter
     else
       title #{page.title} | Das Filter
+    meta(name="description", content=pageDescription)
+
+    meta(property="og:title", content=pageTitle)
+    meta(property="og:description", content=pageDescription)
+    meta(property="og:url", content=urls.full())
+    meta(property="og:type", content="website")
+    meta(property="og:image", content=urls.asset('img/df_logo_3d.jpg'))
+
     +head
 
   body.generic-page

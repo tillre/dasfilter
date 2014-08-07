@@ -1,0 +1,24 @@
+mixin share-links
+  - var shareTitle = encodeURIComponent(pageTitle)
+  - var shareUrl = encodeURIComponent(urls.full())
+  .share-links
+    h4 Teilen
+    ul
+      li
+        a.social-link.facebook(
+          href="https://facebook.com/sharer.php?u=#{shareUrl}",
+          target="_blank",
+          onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
+          title="Facebook")
+      li
+        a.social-link.twitter(
+          href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
+          target="_blank",
+          onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
+          title="Twitter")
+      //- li
+      //-   a.social-link.google-plus(
+      //-     href="https://plus.google.com/share?url=#{shareUrl}",
+      //-     onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
+      //-     target="_blank"
+      //-     title="Google+")

@@ -1,3 +1,4 @@
+var Util = require('util');
 
 module.exports = function(resources) {
 
@@ -10,10 +11,6 @@ module.exports = function(resources) {
     // the view emits the article itself plus dependent resources
     // these will be put together again from the resulting rows
 
-    var ROW_ARTICLE = 0;
-    var ROW_IMAGE = 1;
-    var ROW_CATEGORY = 2;
-    var ROW_CONTRIBUTOR = 3;
     var NUM_PARTS = 4;
 
     // extend the limit times each resource part
@@ -32,31 +29,31 @@ module.exports = function(resources) {
     }
 
     return resources.Article.view(view, qs).then(function(result) {
-      var docs = [];
-      if (result.rows.length === 0) {
-        return docs;
-      }
-      var image, category, contributor;
-      var sortIndex = result.rows[0].key.length - 1;
+      var teasers = [];
+      var assets = {};
 
       result.rows.forEach(function(row) {
-        switch(row.key[sortIndex]) {
-        case ROW_CONTRIBUTOR: contributor = row.value ? row.doc : null; break;
-        case ROW_CATEGORY:    category = row.doc; break;
-        case ROW_IMAGE:       image = row.doc; break;
-        case ROW_ARTICLE:
-          // article doc has to be the last part for all parts of an article
-          if (contributor) {
-            row.doc.contributors[0].contributor = contributor;
-          }
-          row.doc.classification.category = category;
-          row.doc.header.image = image;
-          docs.push(row.doc);
-          contributor = null;
-          break;
+        if (!assets[row.id]) {
+          assets[row.id] = {};
+        }
+        if (row.doc.type_ === 'Article') {
+          teasers.push(row.doc);
+        }
+        else {
+          assets[row.id][row.doc.type_] = row.doc;
         }
       });
-      return docs;
+
+      teasers.forEach(function(t) {
+        var as = assets[t._id];
+        if (as.Contributor) {
+          t.contributors[0].contributor = as.Contributor;
+        }
+        t.classification.category = as.Category;
+        t.header.image = as.Image;
+      });
+
+      return teasers;
     });
   }
 
@@ -69,13 +66,24 @@ module.exports = function(resources) {
       });
     },
 
-    byClsDate: function(clsKey, startDate, limit) {
+    byClsDate: function(clsKey, startDate, limit, reverse) {
+      var startkey = ['published', clsKey, startDate];
+      var endkey = ['published', clsKey];
+      var descending = true;
+
+      if (reverse) {
+        // var t = startkey;
+        // startkey = endkey; endkey = t;
+        endkey.push({});
+        descending = false;
+      }
+
       return getTeasers('teaser_by_state_cls_date', {
         include_docs: true,
-        descending: true,
+        descending: descending,
 		    limit: limit,
-		    endkey: ['published', clsKey],
-		    startkey: ['published', clsKey, startDate]
+		    startkey: startkey,
+		    endkey: endkey
       });
     },
 

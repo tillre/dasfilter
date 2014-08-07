@@ -1,3 +1,5 @@
+include share
+
 mixin cls-list(items, cls)
    ul
      each item in items
@@ -17,9 +19,13 @@ mixin header(classifications, cls, tag)
         if tag
           a.cls(href=urls.tag(tag), title=tag.name)= tag.name
 
-        a.social-link.google-plus(href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank", title="Das Filter auf Google+")
-        a.social-link.facebook(href="https://facebook.com/dasfilter", title="Das Filter auf Facebook")
-        a.social-link.twitter(href="https://twitter.com/dasfilter", title="Das Filter auf Twitter")
+        if nextArticle
+          a.next(href=urls.article(nextArticle.classification.category, nextArticle)) Nächster Artikel
+        if article
+          +share-links
+
+        if prevArticle
+         a.prev(href=urls.article(prevArticle.classification.category, prevArticle)) Voheriger Artikel
 
   nav(id="off-canvas-menu")
     .off-canvas-inner

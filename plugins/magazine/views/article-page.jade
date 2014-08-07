@@ -10,11 +10,11 @@ include partials/body-end
 doctype html
 html(lang="de")
   head
-    title #{article.title} &ndash; #{article.subtitle} | Das Filter
-    meta(name="description", content=article.teaser)
+    title #{pageTitle} | Das Filter
+    meta(name="description", content=pageDescription)
 
-    meta(property="og:title", content="#{article.title} - #{article.subtitle}")
-    meta(property="og:description", content=article.teaser)
+    meta(property="og:title", content="#{pageTitle}")
+    meta(property="og:description", content=pageDescription)
     meta(property="og:url", content=urls.full())
     meta(property="og:type", content="article")
     meta(property="og:image", content=urls.image(article.header.image, 'x'))
@@ -24,7 +24,7 @@ html(lang="de")
     +head
 
   body.article-page
-    +header(classifications, classification)
+    +header(classifications)
     .wrapper
       +header-categories(classifications, classification)
 

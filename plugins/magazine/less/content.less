@@ -44,16 +44,23 @@
     }
     .byline {
         display: block;
-        color: @light-fg-color;
 
-        .date {
-            .type2-regular-i;
+        .date, .category, .divider {
+            .type2-regular;
             .size-small();
             display: inline-block;
+            color: @fg-color;
+        }
+        .category {
+            text-transform: uppercase;
+            &:hover {
+                color: @df-color;
+            }
         }
         .contributors {
             .type2-regular-i;
             .size-small();
+            color: @fg-color;
         }
     }
 

@@ -20,6 +20,8 @@ module.exports = function startHandler(app) {
       console.log('nextDate', nextDate);
 
       app.replyView(request, reply, 'start-page', {
+        pageTitle: 'Das Filter - Medium für Gegenwart',
+        pageDescription: 'Medien, Kultur, Technik, Diskurse und Stil. Geschichten, die unser Leben schreibt.',
         classifications: classes,
         layout: layout,
         nextDate: nextDate

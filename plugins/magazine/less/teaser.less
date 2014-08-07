@@ -90,13 +90,11 @@ a.meta-title {
     h1 {
         .size-normal;
         .header-1 {
+            display: block;
             .font-teaser-title;
-            &:after {
-                content: '\A';
-                white-space: pre;
-            }
         }
         .header-2 {
+            display: block;
             .font-teaser-subtitle;
         }
         &:hover {
@@ -247,6 +245,7 @@ a.meta-title {
                     padding-bottom: 0;
                 }
                 .header-1, .header-2 {
+                    display: inline;
                     background: white;
                     box-shadow: 14px 0 0 white, -14px 0 0 white;
                     line-height: 1.25em;

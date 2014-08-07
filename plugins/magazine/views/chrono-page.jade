@@ -9,11 +9,11 @@ include partials/body-end
 doctype html
 html(lang="de")
   head
-    title #{title} | Das Filter
-    meta(name="description", content="#{title}")
+    title #{pageTitle} | Das Filter
+    meta(name="description", content=pageDescription)
 
-    meta(property="og:title", content="Das Filter")
-    meta(property="og:description", content="#{title}")
+    meta(property="og:title", content=pageTitle)
+    meta(property="og:description", content=pageDescription)
     meta(property="og:url", content=urls.full())
     meta(property="og:type", content="website")
     meta(property="og:image", content=urls.asset('img/df_logo_3d.jpg'))

@@ -10,6 +10,8 @@ module.exports = function(app) {
 
     }).then(function(page) {
       app.replyView(request, reply, 'generic-page', {
+        pageTitle: page.title + (page.subTitle || ''),
+        pageDescription: page.description || '',
         page: page,
         classifications: cls
       });

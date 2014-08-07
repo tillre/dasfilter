@@ -26,7 +26,8 @@ module.exports = function tagHandler(app) {
       var nextDate = layout.refs.chrono.nextDate;
 
       app.replyView(request, reply, 'chrono-page', {
-        title: 'Alle',
+        pageTitle: 'Alle Artikel',
+        pageDescription: 'Medien, Kultur, Technik, Diskurse und Stil. Geschichten, die unser Leben schreibt.',
         layout: layout,
         classifications: classes,
         pageType: 'start-page-continued',

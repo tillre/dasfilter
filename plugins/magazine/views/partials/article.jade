@@ -2,6 +2,8 @@ include image
 include content
 include slideshow
 include teaser
+include share
+
 
 
 mixin contributors(contributors)
@@ -9,17 +11,18 @@ mixin contributors(contributors)
     if index > 0
       | ,&nbsp
     if c.field
-      span.field #{c.field}:
-        | &nbsp;
-    span.name #{c.contributor.firstname} #{c.contributor.lastname}
+      | #{c.field}:&nbsp;
+    | #{c.contributor.firstname} #{c.contributor.lastname}
 
 
 mixin article-byline(contributors, date)
   small.byline
     span.date= formatDate(date)
+    span.divider &nbsp;/&nbsp;
+    a.category(href=urls.classification(article.classification.category))= article.classification.category.title
     if contributors.length > 0
+      span.divider &nbsp;&ndash;&nbsp;
       span.contributors
-        span.divider &nbsp;&ndash;&nbsp;
         +contributors(contributors)
 
 
@@ -71,34 +74,9 @@ mixin article(article)
 
     .article-footer-wrapper
       .article-footer
-        .article-footer-items-wrapper
-          .article-footer-items.article-social-items
-
-            h4.items-title Teilen:
-            - var shareUrl = encodeURIComponent(urls.full())
-            - var shareTitle = encodeURIComponent(article.title + ' - ' + article.subtitle)
-            ul
-              li
-                a.article-social-link.twitter(
-                  href="https://twitter.com/share?url=#{shareUrl}&text=#{shareTitle}",
-                  target="_blank",
-                  onclick="ga('send', 'event', 'twitter', 'share', '#{urls.full()}');"
-                  title="Twitter")
-              li
-                a.article-social-link.facebook(
-                  href="https://facebook.com/sharer.php?u=#{shareUrl}",
-                  target="_blank",
-                  onclick="ga('send', 'event', 'facebook', 'share', '#{urls.full()}');"
-                  title="Facebook")
-              li
-                a.article-social-link.google-plus(
-                  href="https://plus.google.com/share?url=#{shareUrl}",
-                  onclick="ga('send', 'event', 'gplus', 'share', '#{urls.full()}');"
-                target="_blank"
-              title="Google+")
-
-          .article-footer-items.article-cls-items
-            if article.classification.tags.length > 0
+        if article.classification.tags.length > 0
+          .article-footer-items-wrapper
+            .article-footer-items.article-cls-items
               h4.items-title Tags:
               ul
                 each item in article.classification.tags
