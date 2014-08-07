@@ -137,6 +137,7 @@ a.meta-title {
 @media (min-width: @break-m-portrait) {
 
     .meta-title h2 {
+        display: inline-block;
         padding: 0 0 @gutter * 0.5 0;
         border-top: 0;
     }
@@ -233,9 +234,10 @@ a.meta-title {
                 position: relative;
                 .info-wrapper {
                     position: absolute;
-                    left: @gutter * 2;
+                    left: @gutter * 3;
                     right: 30%;
-                    bottom: @gutter * 4;
+                    bottom: 25%;
+                    .transform(translate(0, 50%));
                 }
                 .title {
                     padding-bottom: 0;
@@ -301,6 +303,26 @@ a.meta-title {
                 }
             }
         }
+        &.clutched, &.clutched-wide {
+            .span6 {
+                .info-wrapper {
+                    position: absolute;
+                    left: 0;
+                    bottom: 25%;
+                    .transform(translate(0, 50%));
+                }
+            }
+        }
+        &.clutched-wide {
+            .span6 {
+                .info-wrapper {
+                    margin-left: 0;
+                    .info {
+                        .row-left();
+                    }
+                }
+            }
+        }
         &.clutched-wide-halfsize {
             .span6 {
                 .image-wrapper {
@@ -309,15 +331,8 @@ a.meta-title {
                         .transform(translate(0, -100% * 0.275));
                     }
                 }
-            }
-        }
-        &.clutched, &.clutched-wide {
-            .span6 {
                 .info-wrapper {
-                    position: absolute;
-                    left: 0;
-                    bottom: 50%;
-                    .transform(translate(0, 50%));
+                    left: @gutter;
                 }
             }
         }
@@ -370,6 +385,13 @@ a.meta-title {
             .meta-title-wrapper {
                 .no-row;
                 .no-column;
+            }
+        }
+        &.clutched-wide-halfsize {
+            .span6 {
+                .info-wrapper {
+                    left: 0;
+                }
             }
         }
     }
