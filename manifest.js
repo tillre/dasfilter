@@ -12,7 +12,10 @@ module.exports = function(cores, definitions) {
           labels: ['api'],
           cors: true,
           payload: {
-            maxBytes: 12 * 1024 * 1024
+            maxBytes: 99 * 1024 * 1024
+          },
+          timeout: {
+            client: false
           }
         }
       },
