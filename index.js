@@ -10,16 +10,14 @@ if (process.env.NODE_ENV !== 'production') {
 
 console.log(Util.inspect(manifest));
 
-var composer = new Hapi.Composer(manifest);
-
-composer.compose(function(err) {
+Hapi.Pack.compose(manifest, { relativeTo: __dirname }, function(err, pack) {
   if (err) {
     console.log(err);
     console.log(err.stack);
     return;
   }
 
-  composer.start(function() {
+  pack.start(function() {
     console.log('admin server started');
   });
 });

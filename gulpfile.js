@@ -10,7 +10,8 @@ var paths = {
   mainLess: './plugins/admin/less/main.less',
   vendorCss: ['./plugins/admin/bower_components/bootstrap/dist/css/bootstrap.css',
         './plugins/admin/bower_components/cores-ng/css/cores.css',
-        './plugins/admin/bower_components/eonasdan-datetimepicker/build/css/bootstrap-datetimepicker.min.css'],
+              './plugins/admin/bower_components/eonasdan-datetimepicker/build/css/bootstrap-datetimepicker.min.css'],
+  fonts: './plugins/admin/bower_components/bootstrap/fonts/*.*',
   scripts: ['./plugins/admin/bower_components/jquery/dist/jquery.js',
             './plugins/admin/bower_components/angular/angular.js',
             './plugins/admin/bower_components/angular-route/angular-route.js',
@@ -28,6 +29,11 @@ gulp.task('vendor-css', function() {
   gulp.src(paths.vendorCss)
     .pipe(concat('vendor.css'))
     .pipe(gulp.dest('./static/assets/css/'));
+});
+
+
+gulp.task('fonts', function() {
+  gulp.src(paths.fonts).pipe(gulp.dest('./static/assets/fonts/'));
 });
 
 
@@ -51,7 +57,7 @@ gulp.task('images', function() {
 });
 
 
-gulp.task('build', ['less', 'vendor-css', 'scripts', 'images'], function() {});
+gulp.task('build', ['less', 'vendor-css', 'scripts', 'fonts', 'images'], function() {});
 
 
 gulp.task('watch', function() {

@@ -14,7 +14,7 @@
   "author": "Till Reitemeyer",
   "dependencies": {
     "kew": "~0.4.x",
-    "hapi": "~5.x.x",
+    "hapi": "~6.x.x",
     "hapi-auth-cookie": "~1.x.x",
     "good": "~2.x.x",
     "lodash": "~2.4.1",

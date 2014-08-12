@@ -4,7 +4,7 @@ var Request = require('request');
 var Api = require('df-api-client');
 
 
-module.exports.register = function(plugin, options, next) {
+exports.register = function(plugin, options, next) {
 
   plugin.log(['admin'], 'register');
 
@@ -45,7 +45,7 @@ module.exports.register = function(plugin, options, next) {
 
   // configure views
   plugin.views({
-    path: 'views',
+    path: __dirname + '/views',
     engines: {
       'jade': { module: require('jade') }
     },
@@ -127,4 +127,9 @@ module.exports.register = function(plugin, options, next) {
   catch (e) {
     next(e);
   }
+};
+
+
+exports.register.attributes = {
+  name: 'df-admin'
 };
