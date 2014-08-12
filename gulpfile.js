@@ -38,8 +38,9 @@ function svg2css(cssPrefix) {
 
     file.path = gutil.replaceExtension(file.path, '.css');
     file.contents = new Buffer(css);
+    this.push(file);
 
-    cb(null, file);
+    cb();
   });
 }
 
@@ -55,7 +56,7 @@ var paths = {
 
 
 gulp.task('svg2less', function() {
-  gulp.src(paths.icons)
+  return gulp.src(paths.icons)
     .pipe(svg2css('.svg-'))
     .pipe(concat('svg.generated.less'))
     .pipe(gulp.dest('./plugins/magazine/less'));
@@ -63,21 +64,21 @@ gulp.task('svg2less', function() {
 
 
 gulp.task('styles', ['svg2less'], function() {
-  gulp.src(paths.mainLess)
+  return gulp.src(paths.mainLess)
     .pipe(less())
     .pipe(gulp.dest('./static/assets/css/'));
 });
 
 
 gulp.task('scripts', function() {
-  gulp.src(paths.scripts)
+  return gulp.src(paths.scripts)
     .pipe(concat('main.js'))
     .pipe(gulp.dest('./static/assets/scripts'));
 });
 
 
 gulp.task('images', function() {
-  gulp.src(paths.images)
+  return gulp.src(paths.images)
     .pipe(gulp.dest('./static/assets/images'));
 });
 
