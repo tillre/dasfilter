@@ -22,16 +22,14 @@ Resources(dbUrl, context, sync).then(function(res) {
 
   console.log(Util.inspect(manifest, { depth: 5 }));
 
-  var composer = new Hapi.Composer(manifest);
-
-  composer.compose(function(err) {
+  Hapi.Pack.compose(manifest, { relativeTo: __dirname }, function(err, pack) {
     if (err) {
       console.log(err);
       console.log(err.stack);
       return;
     }
 
-    composer.start(function() {
+    pack.start(function() {
       console.log('api server started');
     });
   });

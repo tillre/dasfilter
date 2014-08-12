@@ -1,7 +1,7 @@
 var Path = require('path');
 
 
-module.exports.register = function(plugin, options, next) {
+exports.register = function(plugin, options, next) {
 
   plugin.log(['static'], 'register');
 
@@ -24,4 +24,9 @@ module.exports.register = function(plugin, options, next) {
   catch (e) {
     next(e);
   }
+};
+
+
+exports.register.attributes = {
+  name: 'df-static'
 };

@@ -14,10 +14,10 @@
   "author": "Till Reitemeyer",
   "dependencies": {
     "kew": "~0.4.x",
-    "hapi": "~5.x.x",
+    "hapi": "~6.x.x",
     "hapi-auth-basic": "~1.x.x",
     "good": "~2.x.x",
-    "cores-hapi": "~0.10.x",
+    "cores-hapi": "~0.11.x",
     "lodash": "~2.4.1",
     "df-resources": "git+ssh://git@bitbucket.org:skoni/df-resources.git",
     "longjohn": "~0.2.4"

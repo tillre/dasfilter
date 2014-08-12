@@ -8,7 +8,7 @@ var Account = require('./lib/account.js');
 var SyncStages = require('./lib/sync-stages.js');
 
 
-module.exports.register = function(plugin, options, next) {
+exports.register = function(plugin, options, next) {
 
   plugin.log(['api'], 'register');
 
@@ -89,4 +89,9 @@ module.exports.register = function(plugin, options, next) {
     console.log(err);
     console.log(err.stack);
   });
+};
+
+
+exports.register.attributes = {
+  name: 'df-api'
 };
