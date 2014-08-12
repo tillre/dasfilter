@@ -18,7 +18,7 @@ mixin contributors(contributors)
 mixin article-byline(contributors, date)
   small.byline
     span.date= formatDate(date)
-    span.divider &nbsp;/&nbsp;
+    span.divider &nbsp;|&nbsp;
     a.category(href=urls.classification(article.classification.category))= article.classification.category.title
     if contributors.length > 0
       span.divider &nbsp;&ndash;&nbsp;

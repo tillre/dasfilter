@@ -14,10 +14,10 @@ var CreateUrlHelper = require('./lib/url-helper.js');
 function init(plugin, options, api, definitions, resources, next) {
 
   plugin.views({
-    path: 'views',
     engines: {
       'jade': { module: require('jade') }
     },
+    path: __dirname + '/views',
     isCached: !options.debug
   });
 
@@ -201,9 +201,7 @@ function init(plugin, options, api, definitions, resources, next) {
   }
 }
 
-
-
-module.exports.register = function(plugin, options, next) {
+exports.register = function(plugin, options, next) {
 
   plugin.log(['magazine'], 'register');
 
@@ -217,4 +215,8 @@ module.exports.register = function(plugin, options, next) {
     console.log(err.stack);
     next(err);
   });
+};
+
+exports.register.attributes = {
+  name: 'df-magazine'
 };
