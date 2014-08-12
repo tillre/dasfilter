@@ -26,33 +26,33 @@ var paths = {
 
 
 gulp.task('vendor-css', function() {
-  gulp.src(paths.vendorCss)
+  return gulp.src(paths.vendorCss)
     .pipe(concat('vendor.css'))
     .pipe(gulp.dest('./static/assets/css/'));
 });
 
 
 gulp.task('fonts', function() {
-  gulp.src(paths.fonts).pipe(gulp.dest('./static/assets/fonts/'));
+  return gulp.src(paths.fonts).pipe(gulp.dest('./static/assets/fonts/'));
 });
 
 
 gulp.task('less', function() {
-  gulp.src(paths.mainLess)
+  return gulp.src(paths.mainLess)
     .pipe(less())
     .pipe(gulp.dest('./static/assets/css/'));
 });
 
 
 gulp.task('scripts', function() {
-  gulp.src(paths.scripts)
+  return gulp.src(paths.scripts)
     .pipe(concat('main.js'))
     .pipe(gulp.dest('./static/assets/scripts'));
 });
 
 
 gulp.task('images', function() {
-  gulp.src(paths.images)
+  return gulp.src(paths.images)
     .pipe(gulp.dest('./static/assets/images'));
 });
 
