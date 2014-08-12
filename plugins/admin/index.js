@@ -71,7 +71,6 @@ exports.register = function(plugin, options, next) {
       method: 'GET',
       path: '/login',
       config: {
-        auth: { mode: 'try', strategy: 'admin-session' },
         handler: handlers.loginGet
       }
     },
@@ -79,7 +78,6 @@ exports.register = function(plugin, options, next) {
       method: 'POST',
       path: '/login',
       config: {
-        auth: { mode: 'try', strategy: 'admin-session' },
         handler: handlers.loginPost
       }
     },
