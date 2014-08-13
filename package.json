@@ -1,6 +1,6 @@
 {
   "name": "df-resources",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "resource definitions",
   "main": "index.js",
   "private": true,
