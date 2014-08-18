@@ -72,8 +72,7 @@ function buildGroup(app, classes, stageGroup, refs) {
   switch(stageGroup.type_) {
   case 'chrono':
     for (i = 0; i < stageGroup.numTeasers; ++i) {
-      t = createTeaser('chrono',
-                       getSize(stageGroup.numTeasers, i));
+      t = createTeaser('chrono', getSize(stageGroup.numTeasers, i));
       layoutGroup.teasers.push(t);
       refs.addChrono(t);
     }
@@ -95,21 +94,22 @@ function buildGroup(app, classes, stageGroup, refs) {
     break;
 
   case 'tag':
+    id = stageGroup.tag ? stageGroup.tag.slug : null;
+    if (!id) break;
     layoutGroup.link = app.urls.tag(stageGroup.tag);
     for (i = 0; i < stageGroup.numTeasers; ++i) {
-      t = createTeaser('tag',
-                       getSize(stageGroup.numTeasers, i));
+      t = createTeaser('tag', getSize(stageGroup.numTeasers, i));
       layoutGroup.teasers.push(t);
-      refs.addCls('tag', stageGroup.tag.slug, t);
+      refs.addCls('tag', id, t);
     }
     break;
 
   case 'category':
     id = stageGroup.category.id_ || stageGroup.category._id;
+    if (!id) break;
     layoutGroup.link = app.urls.classification(classes.byId[id]);
     for (i = 0; i < stageGroup.numTeasers; ++i) {
-      t = createTeaser('category',
-                       getSize(stageGroup.numTeasers, i));
+      t = createTeaser('category', getSize(stageGroup.numTeasers, i));
       layoutGroup.teasers.push(t);
       refs.addCls('category', id, t);
     }
@@ -117,10 +117,10 @@ function buildGroup(app, classes, stageGroup, refs) {
 
   case 'collection':
     id = stageGroup.collection.id_ || stageGroup.collection._id;
+    if (!id) break;
     layoutGroup.link = app.urls.classification(classes.byId[id]);
     for (i = 0; i < stageGroup.numTeasers; ++i) {
-      t = createTeaser('collection',
-                       getSize(stageGroup.numTeasers, i));
+      t = createTeaser('collection', getSize(stageGroup.numTeasers, i));
       layoutGroup.teasers.push(t);
       refs.addCls('collection', id, t);
     }
