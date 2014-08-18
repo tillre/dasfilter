@@ -266,14 +266,14 @@ function createGroupRows(groups) {
       }
 
       // do not seperate if this group has only one big teaser and is not textonly
-      if (group.teasers.length === 1 &&
-          group.teasers[0].span === 6 &&
-          !textonly) seperate = false;
+      // if (group.teasers.length === 1 &&
+      //     group.teasers[0].span === 6 &&
+      //     !textonly) seperate = false;
 
       // do not seperate when nextgroup has only one big teaser and no title
-      if (nextGroup.teasers.length === 1 &&
-          nextGroup.teasers[0].span === 6 &&
-          !nextGroup.title) seperate = false;
+      // if (nextGroup.teasers.length === 1 &&
+      //     nextGroup.teasers[0].span === 6 &&
+      //     !nextGroup.title) seperate = false;
 
       if (seperate) {
         group.display += ' seperate';
