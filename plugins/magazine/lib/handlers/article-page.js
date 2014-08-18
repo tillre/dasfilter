@@ -70,6 +70,10 @@ module.exports = function(app) {
       if (result[0].length > 1) {
         // here we take the second, because the first is the current article
         prevDoc = result[0][1];
+        if (new Date(prevDoc.date) > new Date()) {
+          // do not show unreleased articles
+          prevDoc = null;
+        }
       }
       if (result[1].length > 0) {
         nextDoc = result[1][0];
