@@ -96,6 +96,7 @@ function buildGroup(app, classes, stageGroup, refs) {
   case 'tag':
     id = stageGroup.tag ? stageGroup.tag.slug : null;
     if (!id) break;
+    layoutGroup.id = id;
     layoutGroup.link = app.urls.tag(stageGroup.tag);
     for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('tag', getSize(stageGroup.numTeasers, i));
@@ -107,6 +108,7 @@ function buildGroup(app, classes, stageGroup, refs) {
   case 'category':
     id = stageGroup.category.id_ || stageGroup.category._id;
     if (!id) break;
+    layoutGroup.id = id;
     layoutGroup.link = app.urls.classification(classes.byId[id]);
     for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('category', getSize(stageGroup.numTeasers, i));
@@ -118,6 +120,7 @@ function buildGroup(app, classes, stageGroup, refs) {
   case 'collection':
     id = stageGroup.collection.id_ || stageGroup.collection._id;
     if (!id) break;
+    layoutGroup.id = id;
     layoutGroup.link = app.urls.classification(classes.byId[id]);
     for (i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('collection', getSize(stageGroup.numTeasers, i));
@@ -263,6 +266,16 @@ function createGroupRows(groups) {
         if (group.teasers.length === 1 && group.teasers[0].span === 6) {
           pullUp = true;
         }
+      }
+
+      // do not seperate cls groups of same type and with same id
+      if (group.id && nextGroup.type_ === group.type_ && nextGroup.id === group.id) {
+        seperate = false;
+      }
+
+      // do not seperate pinned groups when next has no title
+      if (group.type_ === 'pinned' && nextGroup.type_ === 'pinned' && !nextGroup.title) {
+        seperate = false;
       }
 
       if (seperate) {
