@@ -36,6 +36,7 @@ module.exports = function tagHandler(app) {
       var nextDate = layout.refs.tag[slug].nextDate;
 
       app.replyView(request, reply, 'chrono-page', {
+        pageType: 'cls-page',
         pageTitle: tag.name,
         pageDescription: 'Artikel zum Thema ' + tag.name,
         layout: layout,

@@ -41,6 +41,7 @@ module.exports = function clsHandler(app) {
         var nextDate = layout.refs[type][cls._id].nextDate;
 
         app.replyView(request, reply, 'chrono-page', {
+          pageType: 'cls-page',
           pageTitle: cls.title,
           pageDescription: 'Artikel zum Thema ' + cls.title,
           layout: layout,
