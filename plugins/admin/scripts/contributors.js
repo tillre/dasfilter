@@ -18,7 +18,7 @@
     angular.extend($scope, angular.copy(config));
     $scope.list = {
       columns: [{ path: 'lastname' }, { path: 'firstname' }],
-      paginator: crPagination.createViewPaginator(crResources.get(config.type), 'all')
+      paginator: crPagination.createViewPaginator(crResources.get(config.type), 'by_name')
     };
 
     $scope.$on('cr:list:select', function(e, id) {
