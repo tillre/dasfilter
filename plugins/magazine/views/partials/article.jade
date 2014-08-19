@@ -16,14 +16,16 @@ mixin contributors(contributors)
 
 
 mixin article-byline(contributors, date)
+  span.seperator
   small.byline
     span.date= formatDate(date)
-    span.divider &nbsp;|&nbsp;
+    span.divider &nbsp;•&nbsp;
     a.category(href=urls.classification(article.classification.category))= article.classification.category.title
     if contributors.length > 0
       span.divider &nbsp;&ndash;&nbsp;
       span.contributors
         +contributors(contributors)
+
 
 
 //- main mixin
@@ -39,9 +41,8 @@ mixin article(article)
         .title-inner
           .title
             h1
-              span.header-1= article.title
-              span.header-2= article.subtitle
-            span.seperator
+              span.header-1.balance-text= article.title
+              span.header-2.balance-text= article.subtitle
             +article-byline(article.contributors, article.date)
 
       if hasEmbed
@@ -68,7 +69,6 @@ mixin article(article)
         .caption-outer
           .caption-inner
             div!= markdown(article.header.caption)
-
 
     +content(article.sections)
 
