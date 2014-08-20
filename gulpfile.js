@@ -72,7 +72,7 @@ gulp.task('serve', ['build', 'watch'], function () {
   nodemon({
     script: 'index.js',
     ext: 'js',
-    watch: ['plugins/admin/index.js', 'plugins/admin/lib/**'],
+    watch: ['plugins/admin/index.js', 'plugins/admin/lib/**/*.js'],
     env: {
       'NODE_ENV': 'development'
     }
