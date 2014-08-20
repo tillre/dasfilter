@@ -24,7 +24,7 @@ html(lang="de")
     +head
 
   body.article-page
-    +header(classifications)
+    +header(classifications, headerTitle, headerTitleUrl)
     .wrapper
       +header-categories(classifications, classification)
 
@@ -32,6 +32,11 @@ html(lang="de")
         +article(article)
         +layout(relatedLayout)
         +comments
+
+        if nextArticle
+          a.article-next(href=urls.article(nextArticle.classification.category, nextArticle))
+        if prevArticle
+          a.article-prev(href=urls.article(prevArticle.classification.category, prevArticle))
 
       +footer(classifications)
     +body-end

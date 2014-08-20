@@ -11,7 +11,7 @@ module.exports = function(resources) {
 
       ).then(function(result) {
         if (result.rows.length === 0) {
-          var err = new Error('Article not found');
+          var err = new Error('Article not found ' + slug);
           err.code = 404;
           throw err;
         }

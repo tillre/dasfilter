@@ -8,6 +8,8 @@ module.exports = function(app) {
     tag: require('./tag-page.js')(app),
     article: require('./article-page.js')(app),
     page: require('./generic-page.js')(app),
+    contributors: require('./contributors-page.js')(app),
+    contributor: require('./contributor-page.js')(app),
 
     mainRss: require('./main-rss.js')(app),
     clsRss: require('./cls-rss.js')(app)

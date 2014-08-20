@@ -14,7 +14,7 @@ mixin layout-mixed-group(group)
 
 mixin layout-groups(groups)
   each group in groups
-    if group.teasers.length > 0
+    if group.rows.length > 0
       section.teaser-group-wrapper(class=[group.type_, group.display])
         if group.title
           .meta-title-wrapper

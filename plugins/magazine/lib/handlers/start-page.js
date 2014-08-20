@@ -17,7 +17,6 @@ module.exports = function startHandler(app) {
     }).then(function(layout) {
 
       var nextDate = layout.refs.chrono.nextDate;
-      console.log('nextDate', nextDate);
 
       app.replyView(request, reply, 'start-page', {
         pageTitle: 'Das Filter - Medium für Gegenwart',

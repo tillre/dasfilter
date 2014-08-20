@@ -72,8 +72,6 @@ module.exports = function(resources) {
       var descending = true;
 
       if (reverse) {
-        // var t = startkey;
-        // startkey = endkey; endkey = t;
         endkey.push({});
         descending = false;
       }
@@ -94,6 +92,16 @@ module.exports = function(resources) {
         limit: limit,
         endkey: ['published', tagSlug],
         startkey: ['published', tagSlug, startDate]
+      });
+    },
+
+    byContributorDate: function(contributorId, startDate, limit) {
+      return getTeasers('teaser_by_state_contributor_date', {
+        include_docs: true,
+        descending: true,
+        limit: limit,
+        endkey: ['published', contributorId],
+        startkey: ['published', contributorId, startDate]
       });
     }
   };

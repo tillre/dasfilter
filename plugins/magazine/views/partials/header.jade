@@ -7,25 +7,29 @@ mixin cls-list(items, cls)
          - var active = (cls && cls._id === item._id) ? 'active' : ''
          a(class=active, href=urls.classification(item))= item.title
 
-mixin header(classifications, cls, tag)
+mixin header(classifications, title, titleUrl)
   header(id="menu-bar", class="#{headerClass}")
     nav(id="nav-bar")
       a.menu-btn(href="#nav-drawer", title="Menu")
       .inner-bar
         a.logo(href=urls.start(), title="Startseite")
 
-        if cls
-          a.cls(href=urls.classification(cls), title=cls.title)= cls.title
-        if tag
-          a.cls(href=urls.tag(tag), title=tag.name)= tag.name
+        if title && titleUrl
+          a.cls(href=titleUrl)= headerTitle
+        else if title
+          .cls= headerTitle
 
-        if nextArticle
-          a.next(href=urls.article(nextArticle.classification.category, nextArticle)) Nächster Artikel
         if article
           +share-links
 
-        if prevArticle
-         a.prev(href=urls.article(prevArticle.classification.category, prevArticle)) Voheriger Artikel
+        .social-links
+          ul
+            li
+              a.facebook(href="https://facebook.com/dasfilter", title="Das Filter auf Facebook")
+            li
+              a.twitter(href="https://twitter.com/dasfilter", title="Das Filter auf Twitter")
+            li
+              a.google-plus(href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank", title="Das Filter auf Google+")
 
   nav(id="off-canvas-menu")
     .off-canvas-inner

@@ -62,21 +62,20 @@ module.exports = function(app) {
       // get next and prev article
       return Q.all([
         app.models.teasers.byClsDate('*', doc.date, 2, true),
-        app.models.teasers.byClsDate('*', doc.date, 1)
+        app.models.teasers.byClsDate('*', doc.date, 2)
       ]);
 
     }).then(function(result) {
 
       if (result[0].length > 1) {
-        // here we take the second, because the first is the current article
         prevDoc = result[0][1];
         if (new Date(prevDoc.date) > new Date()) {
           // do not show unreleased articles
           prevDoc = null;
         }
       }
-      if (result[1].length > 0) {
-        nextDoc = result[1][0];
+      if (result[1].length > 1) {
+        nextDoc = result[1][1];
       }
 
       // create realted stage
@@ -86,21 +85,21 @@ module.exports = function(app) {
         var tag = doc.classification.relatedTag;
         relatedStage.groups.push(Layout.createGroup('tag', 'spaced', {
           numTeasers: 3, tag: tag, seperate: false,
-          title: 'Zum Thema ' + tag.name
+          title: 'Mehr zum Thema ' + tag.name.toUpperCase()
         }));
       }
+
+      relatedStage.groups.push(Layout.createGroup('category', 'spaced', {
+        numTeasers: 3, category: cls, seperate: false,
+        title: 'Mehr aus ' + cls.title.toUpperCase()
+      }));
 
       doc.classification.collections.forEach(function(c) {
         relatedStage.groups.push(Layout.createGroup('collection', 'spaced', {
           numTeasers: 3, collection: c, seperate: false,
-          title: 'Aus der Sammlung ' + c.title
+          title: 'Weitere ' + c.title.toUpperCase()
         }));
       });
-
-      relatedStage.groups.push(Layout.createGroup('category', 'spaced', {
-        numTeasers: 3, category: cls, seperate: false,
-        title: 'Aus der Kategorie ' + cls.title
-      }));
 
       var usedIds = {};
       usedIds[doc._id] = true;

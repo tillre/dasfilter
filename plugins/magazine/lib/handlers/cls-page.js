@@ -25,13 +25,13 @@ module.exports = function clsHandler(app) {
       var stage = {};
       if (type === 'category') {
         stage.groups = [
-          Layout.createGroup(type, 'spaced', { numTeasers: 2, category: cls, seperate: false }),
+          Layout.createGroup(type, 'spaced', { numTeasers: 2, category: cls }),
           Layout.createGroup(type, 'spaced', { numTeasers: 15, category: cls })
         ];
       }
       else {
         stage.groups = [
-          Layout.createGroup(type, 'spaced', { numTeasers: 2, collection: cls, seperate: false }),
+          Layout.createGroup(type, 'spaced', { numTeasers: 2, collection: cls }),
           Layout.createGroup(type, 'spaced', { numTeasers: 15, collection: cls })
         ];
       }
@@ -44,6 +44,8 @@ module.exports = function clsHandler(app) {
           pageType: 'cls-page',
           pageTitle: cls.title,
           pageDescription: 'Artikel zum Thema ' + cls.title,
+          headerTitle: cls.title,
+          headerTitleUrl: app.urls.classification(cls),
           layout: layout,
           classification: cls,
           classifications: classes,

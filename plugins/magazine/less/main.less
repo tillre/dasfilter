@@ -149,7 +149,12 @@
 a {
     text-decoration: none;
     color: @link-color;
-    &:visited, &:active, &:hover { color: @link-color; }
+    &:visited, &:active {
+        color: @link-color;
+    }
+    &:hover {
+        color: @df-color;
+    }
 }
 
 @import "type.less";
@@ -161,9 +166,9 @@ a {
 @import "teaser.less";
 @import "slideshow.less";
 @import "more.less";
-
 @import "content.less";
 @import "page.less";
 @import "article.less";
+@import "contributors.less";
 
 @title-vert-padding: 8px;

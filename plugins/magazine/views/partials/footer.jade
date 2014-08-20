@@ -1,4 +1,4 @@
-mixin footer(classifications, cls, isStartPage)
+mixin footer(classifications, cls)
   footer#footer
     .footer-lists-wrapper
       .footer-list-group
@@ -21,21 +21,27 @@ mixin footer(classifications, cls, isStartPage)
         .footer-list
           h4 Allgemeines
           ul
-            //- if !isStartPage
-            //-   li
-            //-     a(href="/") Start
             li
-              a(href="/s/ueber-uns") Über uns
+              - var active = urls.isCurrent('/s/ueber-uns') ? 'active' : ''
+              a(class=active, href="/s/ueber-uns") Über uns
             li
-              a(href="/s/newsletter") Newsletter
+              - var active = urls.isCurrent('/autoren') ? 'active' : ''
+              a(class=active, href="/autoren") Autoren & Mitwirkende
             li
-              a(href="/s/kontakt") Kontakt
+              - var active = urls.isCurrent('/s/newsletter') ? 'active' : ''
+              a(class=active, href="/s/newsletter") Newsletter
             li
-              a(href="/s/impressum") Impressum
+              - var active = urls.isCurrent('/s/kontakt') ? 'active' : ''
+              a(class=active, href="/s/kontakt") Kontakt
             li
-              a(href="/s/datenschutz") Datenschutz
+              - var active = urls.isCurrent('/s/impressum') ? 'active' : ''
+              a(class=active, href="/s/impressum") Impressum
             li
-              a(href="/s/marketing") Marketing
+              - var active = urls.isCurrent('/s/datenschutz') ? 'active' : ''
+              a(class=active, href="/s/datenschutz") Datenschutz
+            li
+              - var active = urls.isCurrent('/s/marketing') ? 'active' : ''
+              a(class=active, href="/s/marketing") Marketing
 
 
         .footer-list

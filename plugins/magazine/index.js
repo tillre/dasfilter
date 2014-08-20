@@ -129,6 +129,18 @@ function init(plugin, options, api, definitions, resources, next) {
       }
     },
 
+    // contributors
+    {
+      method: 'GET',
+      path: '/autoren',
+      handler: handlers.contributors
+    },
+    {
+      method: 'GET',
+      path: '/autoren/{contributor}',
+      handler: handlers.contributor
+    },
+
     // main rss
     {
       method: 'GET',

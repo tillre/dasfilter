@@ -23,10 +23,11 @@ html(lang="de")
     +head
 
   body.generic-page
-    +header(classifications)
+    +header(classifications, headerTitle, headerTitleUrl)
     .wrapper
       main
-        +header-categories(classifications)
+        +header-categories(classifications, classification)
+
         article
           header.content-header
             .title-outer

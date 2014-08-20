@@ -23,11 +23,19 @@ html(lang="de")
     +head
 
   body.chrono-page(class=pageType)
-    +header(classifications, classification, tag)
+    +header(classifications, headerTitle, headerTitleUrl)
     .wrapper
       +header-categories(classifications, classification)
 
       main
+        header.content-header
+          if mainTitle
+            .title-outer
+              .title-inner
+                .title
+                  h1
+                    span.header-2= mainTitle
+
         +layout(layout)
         +more(nextDate)
 

@@ -15,7 +15,7 @@ module.exports = function tagHandler(app) {
       classes = cs;
 
       var stage = { groups: [
-        Layout.createGroup('tag', 'spaced', { numTeasers: 2, tag: { slug: slug }, seperate: false }),
+        Layout.createGroup('tag', 'spaced', { numTeasers: 2, tag: { slug: slug } }),
         Layout.createGroup('tag', 'spaced', { numTeasers: 15, tag: { slug: slug } })
       ] };
 
@@ -39,6 +39,8 @@ module.exports = function tagHandler(app) {
         pageType: 'cls-page',
         pageTitle: tag.name,
         pageDescription: 'Artikel zum Thema ' + tag.name,
+        headerTitle: tag.name,
+        headerTitleUrl: app.urls.tag(tag),
         layout: layout,
         tag: tag,
         classifications: classes,

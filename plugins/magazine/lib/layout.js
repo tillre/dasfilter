@@ -40,7 +40,8 @@ function createRefs() {
     pinned: [],
     tag: {},
     category: {},
-    collection: {}
+    collection: {},
+    contributor: {}
   };
 
   return _.merge(refs, {
@@ -63,6 +64,19 @@ function createRefs() {
   });
 }
 
+
+function addGroup(type, id, url, stageGroup, layoutGroup, refs) {
+  if (!id) return;
+  layoutGroup.id = id;
+  if (url) {
+    layoutGroup.link = url;
+  }
+  for (var i = 0; i < stageGroup.numTeasers; ++i) {
+    var t = createTeaser(type, getSize(stageGroup.numTeasers, i));
+    layoutGroup.teasers.push(t);
+    refs.addCls(type, id, t);
+  }
+}
 
 function buildGroup(app, classes, stageGroup, refs) {
   var i, t, id;
@@ -95,38 +109,28 @@ function buildGroup(app, classes, stageGroup, refs) {
 
   case 'tag':
     id = stageGroup.tag ? stageGroup.tag.slug : null;
-    if (!id) break;
-    layoutGroup.id = id;
-    layoutGroup.link = app.urls.tag(stageGroup.tag);
-    for (i = 0; i < stageGroup.numTeasers; ++i) {
-      t = createTeaser('tag', getSize(stageGroup.numTeasers, i));
-      layoutGroup.teasers.push(t);
-      refs.addCls('tag', id, t);
-    }
+    addGroup('tag', id,
+             app.urls.tag(stageGroup.tag),
+             stageGroup, layoutGroup, refs);
     break;
 
   case 'category':
     id = stageGroup.category.id_ || stageGroup.category._id;
-    if (!id) break;
-    layoutGroup.id = id;
-    layoutGroup.link = app.urls.classification(classes.byId[id]);
-    for (i = 0; i < stageGroup.numTeasers; ++i) {
-      t = createTeaser('category', getSize(stageGroup.numTeasers, i));
-      layoutGroup.teasers.push(t);
-      refs.addCls('category', id, t);
-    }
+    addGroup('category', id,
+             app.urls.classification(classes.byId[id]),
+             stageGroup, layoutGroup, refs);
     break;
 
   case 'collection':
     id = stageGroup.collection.id_ || stageGroup.collection._id;
-    if (!id) break;
-    layoutGroup.id = id;
-    layoutGroup.link = app.urls.classification(classes.byId[id]);
-    for (i = 0; i < stageGroup.numTeasers; ++i) {
-      t = createTeaser('collection', getSize(stageGroup.numTeasers, i));
-      layoutGroup.teasers.push(t);
-      refs.addCls('collection', id, t);
-    }
+    addGroup('collection', id,
+             app.urls.classification(classes.byId[id]),
+             stageGroup, layoutGroup, refs);
+    break;
+
+  case 'contributor':
+    id = stageGroup.contributor.id_ || stageGroup.contributor._id;
+    addGroup('contributor', id, '', stageGroup, layoutGroup, refs);
     break;
   }
   return layoutGroup;
@@ -134,7 +138,6 @@ function buildGroup(app, classes, stageGroup, refs) {
 
 
 function createLayout(app, classes, stage) {
-
   var layout = {
     refs: createRefs()
   };
@@ -197,16 +200,6 @@ function mergeRefs(refs, docs, usedIds) {
   if (j === refs.length && docs.length > refs.length) {
     refs.nextDate = docs[refs.length - 1].date;
   }
-}
-
-
-function mergePinned(refs, docs, usedIds) {
-  mergeRefs(refs, docs, usedIds);
-}
-
-
-function mergeChrono(refs, docs, usedIds) {
-  mergeRefs(refs, docs, usedIds, true);
 }
 
 
@@ -295,37 +288,42 @@ function buildLayout(app, classes, stage, date, usedIds) {
   date = date || new Date().toISOString();
   usedIds = usedIds || {};
 
-  var layout = createLayout(app, classes, stage);
+  var l = createLayout(app, classes, stage);
   var teasers = app.models.teasers;
 
   var order = [];
-  if (layout.refs.pinned.length > 0) {
+  if (l.refs.pinned.length > 0) {
     order.push({ type: 'pinned',
-                 promise: loadPinned(teasers.byIds, layout.refs.pinned),
-                 merge: mergePinned });
+                 promise: loadPinned(teasers.byIds, l.refs.pinned),
+                 merge: mergeRefs });
   }
-  if (Object.keys(layout.refs.tag).length > 0) {
+  if (Object.keys(l.refs.tag).length > 0) {
     order.push({ type: 'tag',
-                 promise: loadCls(teasers.byTag, date, layout.refs.tag, 1),
+                 promise: loadCls(teasers.byTag, date, l.refs.tag, 1),
                  merge: mergeCls });
   }
-  if (layout.refs.chrono.length > 0) {
-    var offsetChrono = layout.refs.pinned.length +
-          _.reduce(layout.refs.tag, function(sum, t) {
+  if (l.refs.chrono.length > 0) {
+    var offsetChrono = l.refs.pinned.length +
+          _.reduce(l.refs.tag, function(sum, t) {
             return sum + t.length;
           }, 0) + 1;
     order.push({ type: 'chrono',
-                 promise: loadChrono(teasers.byClsDate, date, layout.refs.chrono, offsetChrono),
-                 merge: mergeChrono });
+                 promise: loadChrono(teasers.byClsDate, date, l.refs.chrono, offsetChrono),
+                 merge: mergeRefs });
   }
-  if (Object.keys(layout.refs.collection).length > 0) {
-    order.push({ type: 'collection',
-                 promise: loadCls(teasers.byClsDate, date, layout.refs.collection, 5),
+  if (Object.keys(l.refs.contributor).length > 0) {
+    order.push({ type: 'contributor',
+                 promise: loadCls(teasers.byContributorDate, date, l.refs.contributor, 1),
                  merge: mergeCls });
   }
-  if (Object.keys(layout.refs.category).length > 0) {
+  if (Object.keys(l.refs.collection).length > 0) {
+    order.push({ type: 'collection',
+                 promise: loadCls(teasers.byClsDate, date, l.refs.collection, 5),
+                 merge: mergeCls });
+  }
+  if (Object.keys(l.refs.category).length > 0) {
     order.push({ type: 'category',
-                 promise: loadCls(teasers.byClsDate, date, layout.refs.category, 5),
+                 promise: loadCls(teasers.byClsDate, date, l.refs.category, 5),
                  merge: mergeCls });
   }
 
@@ -335,15 +333,15 @@ function buildLayout(app, classes, stage, date, usedIds) {
 
     // merge docs into refs
     order.forEach(function(o, i) {
-      o.merge(layout.refs[o.type], results[i], usedIds);
+      o.merge(l.refs[o.type], results[i], usedIds);
     });
 
     // remove empty groups and docs
-    layout.groups = filterEmpty(layout.groups);
+    l.groups = filterEmpty(l.groups);
     // partition teasers into rows
-    createGroupRows(layout.groups);
+    createGroupRows(l.groups);
 
-    return layout;
+    return l;
   });
 };
 

@@ -15,6 +15,9 @@ module.exports = function(urls, request) {
     article: function(cls, article) {
       return '/' + cls.slug + '/' + article.slug;
     },
+    contributor: function(con) {
+      return '/autoren/' + con.slug;
+    },
     image: function(image, size) {
       if (!image.file) return '';
       var imgUrl = image.file.url;
@@ -35,6 +38,9 @@ module.exports = function(urls, request) {
   if (request) {
     helper.current = function() {
       return request.path;
+    };
+    helper.isCurrent = function(path) {
+      return path === request.path;
     };
     helper.full = function() {
       return urls.magazine + request.path;
