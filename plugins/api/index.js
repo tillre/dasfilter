@@ -49,7 +49,9 @@ exports.register = function(plugin, options, next) {
   require('./lib/resource-handlers/category-handler.js')(coresHapi, syncStages);
   require('./lib/resource-handlers/collection-handler.js')(coresHapi, syncStages);
   require('./lib/resource-handlers/tags-handler.js')(coresHapi);
+  require('./lib/resource-handlers/contributor-handler.js')(coresHapi);
   require('./lib/resource-handlers/generic-handlers.js')(coresHapi);
+
 
   // create image upload dir
   File.mkdirRec(options.imagesDir).then(function() {
