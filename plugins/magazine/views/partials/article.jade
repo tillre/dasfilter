@@ -12,7 +12,8 @@ mixin contributors(contributors)
       | ,&nbsp
     if c.field
       | #{c.field}:&nbsp;
-    | #{c.contributor.firstname} #{c.contributor.lastname}
+    a(href=urls.contributor(c.contributor)) #{c.contributor.firstname} #{c.contributor.lastname}
+
 
 
 mixin article-byline(contributors, date)
@@ -37,13 +38,12 @@ mixin article(article)
     - var hasGallery = article.header.gallery && article.header.gallery.id_;
 
     header.content-header
-      .title-outer
-        .title-inner
-          .title
-            h1
-              span.header-1.balance-text= article.title
-              span.header-2.balance-text= article.subtitle
-            +article-byline(article.contributors, article.date)
+      .title-wrapper
+        .title
+          h1
+            span.header-1.balance-text= article.title
+            span.header-2.balance-text= article.subtitle
+          +article-byline(article.contributors, article.date)
 
       if hasEmbed
         .article-media(class="#{article.header.embed.type}")

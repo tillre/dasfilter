@@ -32,6 +32,7 @@ module.exports = function contributorHandler(app) {
       var name = contributor.firstname + ' ' + contributor.lastname;
 
       app.replyView(request, reply, 'chrono-page', {
+        pageType: 'contributor-page',
         pageTitle: name,
         mainTitle: 'Artikel von ' + name,
         headerTitleUrl: app.urls.contributor(contributor),

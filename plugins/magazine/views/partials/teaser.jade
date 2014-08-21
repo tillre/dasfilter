@@ -18,7 +18,8 @@ mixin teaser-info(teaser)
           a(href=urls.classification(teaser.doc.classification.category)) #{teaser.doc.classification.category.title}
         if teaser.doc.contributors.length > 0
           - var contributor = teaser.doc.contributors[0].contributor
-          h4.contributor &nbsp;&ndash;&nbsp;von #{contributor.firstname} #{contributor.lastname}
+          h4.contributor &nbsp;&ndash;&nbsp;von&nbsp;
+            a(href=urls.contributor(contributor)) #{contributor.firstname} #{contributor.lastname}
 
       if teaser.showText
         .text!= markdown(teaser.doc.teaser)

@@ -30,14 +30,13 @@ html(lang="de")
 
         article
           header.content-header
-            .title-outer
-              .title-inner
-                .title
-                  h1
-                    span.header-1= page.title
-                    if page.subtitle
-                      span.header-2= page.subtitle
-                  span.seperator
+            .title-wrapper
+              .title
+                h1
+                  span.header-1= page.title
+                  if page.subtitle
+                    span.header-2= page.subtitle
+                span.seperator
 
         div
           +content(page.sections)

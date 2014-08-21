@@ -27,15 +27,11 @@ html(lang="de")
     .wrapper
       +header-categories(classifications, classification)
 
+      if mainTitle
+        header.meta-title-wrapper
+          .meta-title
+            h1= mainTitle
       main
-        header.content-header
-          if mainTitle
-            .title-outer
-              .title-inner
-                .title
-                  h1
-                    span.header-2= mainTitle
-
         +layout(layout)
         +more(nextDate)
 
