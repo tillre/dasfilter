@@ -65,9 +65,10 @@ function createRefs() {
 }
 
 
-function addGroup(type, id, url, stageGroup, layoutGroup, refs) {
-  if (!id) return;
+function addGroup(type, id, url, stageGroup, refs) {
+  var layoutGroup = _.clone(stageGroup);
   layoutGroup.id = id;
+  layoutGroup.teasers = layoutGroup.teasers || [];
   if (url) {
     layoutGroup.link = url;
   }
@@ -76,16 +77,18 @@ function addGroup(type, id, url, stageGroup, layoutGroup, refs) {
     layoutGroup.teasers.push(t);
     refs.addCls(type, id, t);
   }
+  return layoutGroup;
 }
 
 function buildGroup(app, classes, stageGroup, refs) {
-  var i, t, id;
-  var layoutGroup = _.clone(stageGroup);
-  layoutGroup.teasers = layoutGroup.teasers || [];
+  var id;
+  var layoutGroup;
 
   switch(stageGroup.type_) {
   case 'chrono':
-    for (i = 0; i < stageGroup.numTeasers; ++i) {
+    layoutGroup = _.clone(stageGroup);
+    layoutGroup.teasers = [];
+    for (var t, i = 0; i < stageGroup.numTeasers; ++i) {
       t = createTeaser('chrono', getSize(stageGroup.numTeasers, i));
       layoutGroup.teasers.push(t);
       refs.addChrono(t);
@@ -93,6 +96,7 @@ function buildGroup(app, classes, stageGroup, refs) {
     break;
 
   case 'pinned':
+    layoutGroup = _.clone(stageGroup);
     layoutGroup.teasers = stageGroup.teasers.map(function(t, i) {
       t.span = getSize(stageGroup.teasers.length, i);
       if (t.article.id_) {
@@ -109,28 +113,32 @@ function buildGroup(app, classes, stageGroup, refs) {
 
   case 'tag':
     id = stageGroup.tag ? stageGroup.tag.slug : null;
-    addGroup('tag', id,
-             app.urls.tag(stageGroup.tag),
-             stageGroup, layoutGroup, refs);
+    if (!id) break;
+    layoutGroup = addGroup('tag', id,
+                           app.urls.tag(stageGroup.tag),
+                           stageGroup, refs);
     break;
 
   case 'category':
     id = stageGroup.category.id_ || stageGroup.category._id;
-    addGroup('category', id,
-             app.urls.classification(classes.byId[id]),
-             stageGroup, layoutGroup, refs);
+    if (!id) break;
+    layoutGroup = addGroup('category', id,
+                           app.urls.classification(classes.byId[id]),
+                           stageGroup, refs);
     break;
 
   case 'collection':
     id = stageGroup.collection.id_ || stageGroup.collection._id;
-    addGroup('collection', id,
-             app.urls.classification(classes.byId[id]),
-             stageGroup, layoutGroup, refs);
+    if (!id) break;
+    layoutGroup = addGroup('collection', id,
+                           app.urls.classification(classes.byId[id]),
+                           stageGroup, refs);
     break;
 
   case 'contributor':
     id = stageGroup.contributor.id_ || stageGroup.contributor._id;
-    addGroup('contributor', id, '', stageGroup, layoutGroup, refs);
+    if (!id) break;
+    layoutGroup = addGroup('contributor', id, '', stageGroup, refs);
     break;
   }
   return layoutGroup;
@@ -142,9 +150,11 @@ function createLayout(app, classes, stage) {
     refs: createRefs()
   };
 
-  layout.groups = stage.groups.map(function(group) {
-    return buildGroup(app, classes, group, layout.refs);
-  });
+  layout.groups = stage.groups.reduce(function(acc, group) {
+    var g = buildGroup(app, classes, group, layout.refs);
+    if (g) acc.push(g);
+    return acc;
+  }, []);
 
   return layout;
 }
