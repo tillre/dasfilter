@@ -42,7 +42,7 @@ mixin article(article)
         .title
           h1
             span.header-1.balance-text= article.title
-            span.header-2.balance-text= article.subtitle
+            span.header-2= article.subtitle
           +article-byline(article.contributors, article.date)
 
       if hasEmbed
