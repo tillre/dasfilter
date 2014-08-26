@@ -34,9 +34,9 @@ module.exports = function contributorHandler(app) {
       app.replyView(request, reply, 'chrono-page', {
         pageType: 'contributor-page',
         pageTitle: name,
-        mainTitle: 'Artikel von ' + name,
+        mainTitle: 'Beiträge von ' + name,
         headerTitleUrl: app.urls.contributor(contributor),
-        pageDescription: 'Artikel von ' + name,
+        pageDescription: 'Beiträge von ' + name,
         layout: layout,
         classifications: classes,
         nextDate: nextDate

@@ -91,7 +91,7 @@ module.exports = function(app) {
 
       relatedStage.groups.push(Layout.createGroup('category', 'spaced', {
         numTeasers: 3, category: cls, seperate: false,
-        title: 'Mehr aus ' + cls.title.toUpperCase()
+        title: 'Mehr ' + cls.title.toUpperCase()
       }));
 
       doc.classification.collections.forEach(function(c) {
