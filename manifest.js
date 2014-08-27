@@ -47,14 +47,16 @@ module.exports = function(cores, definitions) {
         cores: cores,
         definitions: definitions,
         staticDir: Path.join('static'),
-        imagesDir: Path.join('static/images'),
-        apiKey: env.DF_API_KEY || 'api-key'
-      },
+        apiKey: env.DF_API_KEY || 'api-key',
+        s3Key: env.DF_S3_KEY || 'AKIAI7N2MQ6LGWWZGWEQ',
+        s3Secret: env.DF_S3_SECRET || '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',
+        s3Bucket: env.DF_S3_BUCKET || 'static.dev.dasfilter.com'
+      }// ,
 
-      './plugins/static': {
-        debug: true,
-        staticDir: Path.resolve('static')
-      }
+      // './plugins/static': {
+      //   debug: true,
+      //   staticDir: Path.resolve('static')
+      // }
     }
   };
 

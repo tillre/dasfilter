@@ -45,9 +45,8 @@ var imageSizes = {
 };
 
 
-module.exports = function(api, imagesDir) {
+module.exports = function(api, statics) {
 
-  var statics = Statics(imagesDir);
   var resources = api.cores.resources;
 
 
@@ -159,16 +158,14 @@ module.exports = function(api, imagesDir) {
         'file.url'
 
       ).then(function() {
+        console.log('oldDoc', oldDoc);
         return statics.renameImage(
-          oldDoc.slug,
-          doc.slug,
-          getExt(oldDoc),
+          oldDoc,
+          doc,
           sizes
         );
 
-      }).then(function(urls) {
-        doc.file.url = urls[0];
-        doc.file.sizes = urls.slice(1);
+      }).then(function() {
         return updateImageMaybe();
       });
     });

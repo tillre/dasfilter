@@ -2,6 +2,7 @@ var Hapi = require('hapi');
 var Path = require('path');
 var Q = require('kew');
 var _ = require('lodash');
+var AWS = require('aws-sdk');
 var Resources = require('df-resources');
 var File = require('./lib/file.js');
 var Account = require('./lib/account.js');
@@ -41,9 +42,18 @@ exports.register = function(plugin, options, next) {
     }
   });
 
+  AWS.config.update({
+    accessKeyId: options.s3Key,
+    secretAccessKey: options.s3Secret,
+    region: 'eu-west-1',
+    logger: process.stdout
+  });
+
+  var statics = require('./lib/statics.js')(options.s3Bucket);
+
   // load api handlers
   require('./lib/resource-handlers/user-handler.js')(coresHapi);
-  require('./lib/resource-handlers/image-handler.js')(coresHapi, options.imagesDir);
+  require('./lib/resource-handlers/image-handler.js')(coresHapi, statics);
   require('./lib/resource-handlers/gallery-handler.js')(coresHapi);
   require('./lib/resource-handlers/article-handler.js')(coresHapi);
   require('./lib/resource-handlers/category-handler.js')(coresHapi, syncStages);
@@ -53,32 +63,28 @@ exports.register = function(plugin, options, next) {
   require('./lib/resource-handlers/generic-handlers.js')(coresHapi);
 
 
-  // create image upload dir
-  File.mkdirRec(options.imagesDir).then(function() {
+  var account = Account(options.cores.resources.User);
 
-    var account = Account(options.cores.resources.User);
-
-    // validate account route
-    plugin.route({
-      method: 'POST',
-      path: '/accounts/validate',
-      config: {
-        auth: 'api-simple',
-        handler: function(request, reply) {
-          account.validate(request.payload.username, request.payload.password).then(function(user) {
-            reply(user);
-          }, function(err) {
-            reply(Hapi.error.unauthorized('Unauthorized'));
-          });
-        }
+  // validate account route
+  plugin.route({
+    method: 'POST',
+    path: '/accounts/validate',
+    config: {
+      auth: 'api-simple',
+      handler: function(request, reply) {
+        account.validate(request.payload.username, request.payload.password).then(function(user) {
+          reply(user);
+        }, function(err) {
+          reply(Hapi.error.unauthorized('Unauthorized'));
+        });
       }
-    });
-    // create default admin if no user exists
-    return account.maybeCreateAdmin();
+    }
+  });
 
-  }).then(function() {
+  // create default admin if no user exists
+  return account.maybeCreateAdmin().then(function() {
+    // create missing stage models
     return syncStages();
-
   }).then(function() {
     try {
       next();

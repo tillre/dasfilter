@@ -11,7 +11,7 @@ if (debug) {
 
 
 var dbUrl = process.env.DF_DB_URL || 'http://localhost:5984/df';
-var staticUrl = process.env.DF_STATIC_URL || 'http://0.0.0.0:8060';
+var staticUrl = process.env.DF_STATIC_URL || 'http://static.dev.dasfilter.com.s3-website-eu-west-1.amazonaws.com';
 var context = { imagesUrl: staticUrl + '/images' };
 var sync = debug;
 
