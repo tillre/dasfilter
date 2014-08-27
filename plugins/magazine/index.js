@@ -23,10 +23,10 @@ function init(plugin, options, api, definitions, resources, next) {
 
   var selection = plugin.select('web');
   var urls = {
-      // these are served from different hosts/ports
-      images: options.urls.static + '/images',
-      assets: options.urls.web + '/static/assets',
-      magazine: options.urls.web
+    // these are served from different hosts/ports
+    images: options.urls.static + '/images',
+    assets: options.urls.web + '/static/assets',
+    magazine: options.urls.web
   };
   plugin.log(['magazine'], 'paths: ' + JSON.stringify(urls));
 
