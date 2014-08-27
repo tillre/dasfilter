@@ -2,9 +2,11 @@ var Path = require('path');
 var Fs = require('fs');
 var Q = require('kew');
 var Gm = require('gm');
-var AWS = require('aws-sdk');
 var Mime = require('mime');
 var File = require('./file.js');
+
+
+var TMP_DIR = '/tmp/images';
 
 
 function getDatePath(date) {
@@ -32,30 +34,16 @@ function getImageUrl(date, slug, ext, size) {
 
 
 
-module.exports = function(bucket) {
-
-  var s3 = new AWS.S3();
+module.exports = function(knox) {
 
   function storeFileInCloud(tmpFile, key) {
     var defer = Q.defer();
 
-    Fs.stat(tmpFile, function(err, stats) {
+    knox.putFile(tmpFile, 'images/' + key, function(err, res) {
       if (err) {
         return defer.reject(err);
       }
-      var rs = Fs.createReadStream(tmpFile);
-      s3.putObject({
-        Bucket: bucket,
-        Key: 'images/' + key,
-        Body: rs,
-        ContentLength: stats.size,
-        ContentType: Mime.lookup(tmpFile)
-      }, function(err, data) {
-        if (err) {
-          return defer.reject(err);
-        }
-        defer.resolve(key);
-      });
+      defer.resolve(key);
     });
     return defer.promise;
   }
@@ -64,25 +52,16 @@ module.exports = function(bucket) {
   function renameFileInCloud(oldKey, newKey) {
     var defer = Q.defer();
 
-    s3.copyObject({
-      Bucket: bucket,
-      CopySource: bucket + '/images/' + oldKey,
-      Key: 'images/' + newKey
-
-    }, function(err, data) {
+    knox.copyFile('images/' + oldKey, 'images/' + newKey, function(err) {
       if (err) {
         return defer.reject(err);
       }
-      s3.deleteObject({
-        Bucket: bucket,
-        Key: 'images/' + oldKey
-
-      }, function(err, data) {
+      knox.deleteFile('images/' + oldKey, function(err) {
         if (err) {
           return defer.reject(err);
         }
         defer.resolve(newKey);
-      });
+      })
     });
     return defer.promise;
   }
@@ -101,8 +80,7 @@ module.exports = function(bucket) {
   function storeResizedImage(buffer, slug, ext, size, date) {
 
     var url = getImageUrl(date, slug, ext, size);
-    var tmpPath = Path.join('/tmp/images/', getDatePath(date));
-    var tmpFile = Path.join('/tmp/images/', url);
+    var tmpFile = Path.join(TMP_DIR, url);
 
     var width = size.width || null;
     var height = size.height || null;
@@ -110,30 +88,26 @@ module.exports = function(bucket) {
     // One of %, @, !, ^, < or > see the GraphicsMagick docs for details
     var extraOption = size.option;
 
-    // create images dir
-    return File.mkdirRec(tmpPath).then(function() {
+    var defer = Q.defer();
+    var op = Gm(buffer);
 
-      var defer = Q.defer();
-      var op = Gm(buffer);
-
-      if (size.crop && width && height) {
-        // crop to specified width height - uses gravity option as well as
-        // x and y to decide what area to keep. Default is center of image
-        op.resize(width, height, extraOption)
-          .gravity(size.gravity || 'Center')
-          .crop(width, height, size.x, size.y);
+    if (size.crop && width && height) {
+      // crop to specified width height - uses gravity option as well as
+      // x and y to decide what area to keep. Default is center of image
+      op.resize(width, height, extraOption)
+        .gravity(size.gravity || 'Center')
+        .crop(width, height, size.x, size.y);
+    }
+    else if (width || height) {
+      op.resize(width, height, extraOption);
+    }
+    op.write(tmpFile, function(err) {
+      if (err) {
+        return defer.reject(err);
       }
-      else if (width || height) {
-        op.resize(width, height, extraOption);
-      }
-      op.write(tmpFile, function(err) {
-        if (err) {
-          return defer.reject(err);
-        }
-        defer.resolve(storeFileInCloud(tmpFile, url));
-      });
-      return defer.promise;
+      defer.resolve({ file: tmpFile, url: url });
     });
+    return defer.promise;
   }
 
 
@@ -141,19 +115,25 @@ module.exports = function(bucket) {
     // store original if no sizes specified or extension is .gif
     sizes = sizes || [{}];
 
-    // resize and save image in all possible sizes
-    var promises = sizes.map(function(size) {
-      return storeResizedImage(buffer, slug, ext, size, date).then(function(url) {
-        return { name: size.name, url: url };
-      });
-    });
+    // create images dir
+    var tmpPath = Path.join(TMP_DIR, getDatePath(date));
+    return File.mkdirRec(tmpPath).then(function() {
 
-    return Q.all(promises).then(function(images) {
-      // create sizes url map
-      var sizes = {};
-      images.forEach(function(img) {
-        sizes[img.name || 'original'] = img.url;
-      });
+      // resize images, store files on disk and put into s3
+      return Q.all(sizes.map(function(size) {
+        return storeResizedImage(buffer, slug, ext, size, date).then(function(image) {
+          return storeFileInCloud(image.file, image.url);
+        }).then(function(url) {
+          return { name: size.name, url: url };
+        });
+      }));
+
+    }).then(function(images) {
+      // create size: url map
+      var sizes = images.reduce(function(acc, size) {
+        acc[size.name] = size.url;
+        return acc;
+      }, {});
       return sizes;
     });
   }

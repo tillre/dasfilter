@@ -2,7 +2,7 @@ var Hapi = require('hapi');
 var Path = require('path');
 var Q = require('kew');
 var _ = require('lodash');
-var AWS = require('aws-sdk');
+var Knox = require('knox');
 var Resources = require('df-resources');
 var File = require('./lib/file.js');
 var Account = require('./lib/account.js');
@@ -42,14 +42,15 @@ exports.register = function(plugin, options, next) {
     }
   });
 
-  AWS.config.update({
-    accessKeyId: options.s3Key,
-    secretAccessKey: options.s3Secret,
+
+  var knox = Knox.createClient({
+    key: options.s3Key,
+    secret: options.s3Secret,
     region: 'eu-west-1',
-    logger: process.stdout
+    bucket: options.s3Bucket
   });
 
-  var statics = require('./lib/statics.js')(options.s3Bucket);
+  var statics = require('./lib/statics.js')(knox);
 
   // load api handlers
   require('./lib/resource-handlers/user-handler.js')(coresHapi);

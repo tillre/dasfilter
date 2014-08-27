@@ -82,9 +82,9 @@ module.exports = function(api, statics) {
     var ext = getExt(doc);
     var created = doc.stamp_ ? new Date(doc.stamp_.created.date) : new Date();
 
-    return statics.storeImage(fileBuffer, doc.slug, ext, sizes, created).then(function(urls) {
-      doc.file.url = urls.original;
-      doc.file.sizes = urls;
+    return statics.storeImage(fileBuffer, doc.slug, ext, sizes, created).then(function(sizes) {
+      doc.file.url = sizes.original;
+      doc.file.sizes = sizes;
       return doc;
     });
   }
@@ -126,14 +126,14 @@ module.exports = function(api, statics) {
 
     // if the payload is multipart, the image file will be updated
     // otherwise we only update the document
-    var updateImageMaybe = function() {
-      if (payload.isMultipart) {
-        return handleMultipart(payload);
-      }
-      else {
-        return Q.resolve(payload);
-      }
-    };
+    // var updateImageMaybe = function() {
+    //   if (payload.isMultipart) {
+    //     return handleMultipart(payload);
+    //   }
+    //   else {
+    //     return Q.resolve(payload);
+    //   }
+    // };
 
     var doc = (payload.isMultipart ? payload.doc : payload);
     var sizes = getSizes(doc);
@@ -147,10 +147,17 @@ module.exports = function(api, statics) {
         throw err;
       }
 
+      // old slug
       if (oldDoc.slug === doc.slug) {
-        return updateImageMaybe();
+        if (payload.isMultipart) {
+          return handleMultipart(payload);
+        }
+        else {
+          return Q.resolve(doc);
+        }
       }
 
+      // new slug
       return Helpers.checkUniqueness(
         resources.Image,
         'by_url',
@@ -158,16 +165,32 @@ module.exports = function(api, statics) {
         'file.url'
 
       ).then(function() {
-        console.log('oldDoc', oldDoc);
-        return statics.renameImage(
-          oldDoc,
-          doc,
-          sizes
-        );
-
-      }).then(function() {
-        return updateImageMaybe();
+        if (payload.isMultipart) {
+          return handleMultipart(payload);
+        }
+        else {
+          return statics.renameImage(oldDoc, doc, sizes).then(function() {
+            return doc;
+          });
+        }
       });
+      // return Helpers.checkUniqueness(
+      //   resources.Image,
+      //   'by_url',
+      //   doc,
+      //   'file.url'
+
+      // ).then(function() {
+      //   console.log('oldDoc', oldDoc);
+      //   return statics.renameImage(
+      //     oldDoc,
+      //     doc,
+      //     sizes
+      //   );
+
+      // }).then(function() {
+      //   return updateImageMaybe();
+      // });
     });
   });
 };

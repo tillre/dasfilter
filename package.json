@@ -13,15 +13,15 @@
   },
   "author": "Till Reitemeyer",
   "dependencies": {
-    "kew": "~0.4.x",
+    "cores-hapi": "~0.11.x",
+    "df-resources": "git+ssh://git@bitbucket.org:skoni/df-resources.git",
+    "good": "~2.x.x",
     "hapi": "~6.x.x",
     "hapi-auth-basic": "~1.x.x",
-    "good": "~2.x.x",
-    "cores-hapi": "~0.11.x",
+    "kew": "~0.4.x",
+    "knox": "^0.9.1",
     "lodash": "~2.4.1",
-    "df-resources": "git+ssh://git@bitbucket.org:skoni/df-resources.git",
     "longjohn": "~0.2.4",
-    "aws-sdk": "~2.0.15",
     "mime": "~1.2.11"
   },
   "devDependencies": {
