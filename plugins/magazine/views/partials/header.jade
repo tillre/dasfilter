@@ -19,9 +19,6 @@ mixin header(classifications, title, titleUrl)
         else if title
           .cls= headerTitle
 
-        if article
-          +share-links
-
         .social-links
           ul
             li
@@ -30,6 +27,10 @@ mixin header(classifications, title, titleUrl)
               a.twitter(href="https://twitter.com/dasfilter", title="Das Filter auf Twitter")
             li
               a.google-plus(href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank", title="Das Filter auf Google+")
+
+        if article
+          +share-links
+
 
   nav(id="off-canvas-menu")
     .off-canvas-inner

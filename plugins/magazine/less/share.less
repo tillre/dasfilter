@@ -1,1 +1,32 @@
 
+.share-links {
+    float: right;
+    padding: 0 @gutter * 0.5;
+    height: @header-height;
+
+    ul {
+        list-style: none;
+        overflow: hidden;
+    }
+    li {
+        float: left;
+        height: @header-height;
+        line-height: 1em;
+        padding-top: 15px;
+
+        margin-right: @gutter * 0.5;
+        &:last-child, &:only-child {
+            margin-right: 0;
+        }
+    }
+}
+
+
+@media(min-width: @break-m-portrait) {
+    .share-links {
+        padding: 0 @gutter;
+        margin-right: @gutter * 0.5;
+        border-right: 1px solid @extra-light-fg-color;
+        border-left: 1px solid @extra-light-fg-color;
+    }
+}
