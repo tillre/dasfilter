@@ -21,7 +21,7 @@ module.exports = function(app, viewContext) {
         );
       }
       else {
-        app.api.validateAccount(
+        app.validateAccount(
           request.payload.username,
           request.payload.password
 

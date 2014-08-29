@@ -18,7 +18,6 @@
     "hapi-auth-cookie": "~1.x.x",
     "good": "~2.x.x",
     "lodash": "~2.4.1",
-    "df-api-client": "git+ssh://git@bitbucket.org:skoni/df-api-client.git",
     "longjohn": "~0.2.4"
   },
   "devDependencies": {

@@ -1,17 +1,52 @@
 var Util = require('util');
 var Path = require('path');
 var Request = require('request');
-var Api = require('df-api-client');
+var Q = require('kew');
+
+
+function checkError(err, req, res, body) {
+  if (err) {
+    return err;
+  }
+  if (res.statusCode < 400) {
+    return null;
+  }
+  var payload = typeof body === 'string' ? JSON.parse(body) : body;
+  var cErr = new Error(payload.reason || 'couchdb ' + res.statusCode + ' - ' + payload.error);
+  cErr.statusCode = res.statusCode,
+  cErr.request = req;
+  cErr.response = res;
+  return cErr;
+}
 
 
 exports.register = function(plugin, options, next) {
 
   plugin.log(['admin'], 'register');
 
+
+  function validateAccount(username, password) {
+    var defer = Q.defer();
+    var req = Request({
+      url: options.urls.api + '/accounts/validate',
+      method: 'POST',
+      json: { username: username, password: password }
+
+    }, function(err, response, body) {
+      err = checkError(err, req, response, body);
+      if (err) {
+        return defer.reject(err);
+      }
+      defer.resolve(body);
+    });
+    return defer.promise;
+  }
+
+
   var app = {
     plugin: plugin,
     selection: plugin.select('admin'),
-    api: Api(options.urls.api, 'admin', options.apiKey),
+    validateAccount: validateAccount,
     debug: options.debug,
     paths: {
       admin: options.urls.admin,
