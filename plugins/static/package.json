@@ -1,7 +1,0 @@
-{
-  "name": "df-static",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "hapi": "2.x.x"
-  }
-}

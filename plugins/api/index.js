@@ -13,15 +13,6 @@ exports.register = function(plugin, options, next) {
 
   plugin.log(['api'], 'register');
 
-  // basic auth - only checks apikey
-  plugin.auth.strategy('api-simple', 'basic', {
-    validateFunc: function(username, password, callback) {
-      var valid = password === options.apiKey;
-      callback(null, valid, { username: username });
-    }
-  });
-
-
   // load resources and create api
   var coresHapi = plugin.plugins['cores-hapi'];
   // fn to sync stages with categories/collections/startpage
@@ -29,19 +20,8 @@ exports.register = function(plugin, options, next) {
 
   // create api
   coresHapi.createApi({
-    auth: 'api-simple',
-    selection: plugin.select('api'),
-    permissons: {
-      getRole: function(request) {
-        return request.auth.credentials.role;
-      },
-      roles: {
-        admin: true,
-        editor: true
-      }
-    }
+    selection: plugin.select('api')
   });
-
 
   var knox = Knox.createClient({
     key: options.s3Key,
@@ -71,7 +51,6 @@ exports.register = function(plugin, options, next) {
     method: 'POST',
     path: '/accounts/validate',
     config: {
-      auth: 'api-simple',
       handler: function(request, reply) {
         account.validate(request.payload.username, request.payload.password).then(function(user) {
           reply(user);
