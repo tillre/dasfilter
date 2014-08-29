@@ -65,8 +65,7 @@ exports.register = function(plugin, options, next) {
     // data passed on to the client
     clientData: {
       paths: app.paths,
-      apiUrl: options.urls.api,
-      apiKey: options.apiKey
+      apiUrl: options.urls.api
     }
   };
 

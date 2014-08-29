@@ -139,12 +139,6 @@
       });
     });
     $routeProvider.otherwise({ redirectTo: '/articles/published' });
-
-    //
-    // api auth
-    //
-    var authValue = 'Basic ' + btoa(userConfig.username + ':' + appConfig.apiKey);
-    $httpProvider.defaults.headers.common.Authorization = authValue;
   });
 
 
