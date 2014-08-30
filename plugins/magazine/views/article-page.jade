@@ -35,8 +35,14 @@ html(lang="de")
 
         if nextArticle
           a.article-next(href=urls.article(nextArticle.classification.category, nextArticle))
+            h4
+              span.header1= nextArticle.title
+              span.header2= nextArticle.subtitle
         if prevArticle
           a.article-prev(href=urls.article(prevArticle.classification.category, prevArticle))
+            h4
+              span.header1= prevArticle.title
+              span.header2= prevArticle.subtitle
 
       +footer(classifications)
     +body-end
