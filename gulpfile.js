@@ -15,7 +15,7 @@ gulp.task('serve', function () {
   nodemon({
     script: 'index.js',
     ext: 'js',
-    watch: ['plugins/api/index.js', 'plugins/api/lib/**/*.js'],
+    watch: ['*.js', 'plugins/api/index.js', 'plugins/api/lib/**/*.js'],
     env: {
       'NODE_ENV': 'development'
     }
