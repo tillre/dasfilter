@@ -26,7 +26,7 @@ exports.register = function(plugin, options, next) {
   var knox = Knox.createClient({
     key: options.s3Key,
     secret: options.s3Secret,
-    region: 'eu-west-1',
+    region: options.s3Region,
     bucket: options.s3Bucket
   });
 

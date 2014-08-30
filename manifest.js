@@ -12,7 +12,7 @@ module.exports = function(cores, definitions) {
           labels: ['api'],
           cors: true,
           payload: {
-            maxBytes: 99 * 1024 * 1024
+            maxBytes: 100 * 1024 * 1024
           },
           timeout: {
             client: false
@@ -39,6 +39,7 @@ module.exports = function(cores, definitions) {
         staticDir: Path.join('static'),
         s3Key: env.DF_S3_KEY || 'AKIAI7N2MQ6LGWWZGWEQ',
         s3Secret: env.DF_S3_SECRET || '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',
+        s3Region: env.DF_S3_REGION || 'eu-west-1',
         s3Bucket: env.DF_S3_BUCKET || 'static.dev.dasfilter.com'
       }
     }
