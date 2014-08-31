@@ -140,7 +140,8 @@
     });
     $routeProvider.otherwise({ redirectTo: '/articles/published' });
 
-    $httpProvider.defaults.withCredentials = true;
+    var authValue = 'Basic ' + btoa(appConfig.appKey + ':' + appConfig.appSecret);
+    $httpProvider.defaults.headers.common.Authorization = authValue;
   });
 
 
