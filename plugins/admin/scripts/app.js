@@ -139,6 +139,8 @@
       });
     });
     $routeProvider.otherwise({ redirectTo: '/articles/published' });
+
+    $httpProvider.defaults.withCredentials = true;
   });
 
 
