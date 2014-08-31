@@ -20,7 +20,7 @@ Resources(dbUrl, context, sync).then(function(res) {
 
   var manifest = require('./manifest.js')(res.cores, res.definitions);
 
-  console.log(Util.inspect(manifest, { depth: 5 }));
+  console.log(Util.inspect(manifest));
 
   Hapi.Pack.compose(manifest, { relativeTo: __dirname }, function(err, pack) {
     if (err) {

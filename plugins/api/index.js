@@ -18,10 +18,22 @@ exports.register = function(plugin, options, next) {
   // fn to sync stages with categories/collections/startpage
   var syncStages = SyncStages(plugin, options.cores, options.definitions);
 
+
+  // basic auth
+  plugin.auth.strategy('api', 'basic', {
+    validateFunc: function(username, password, callback) {
+      var valid = username === options.appKey && password === options.appSecret;
+      callback(null, valid, { username: username });
+    }
+  });
+
+
   // create api
   coresHapi.createApi({
+    auth: 'api',
     selection: plugin.select('api')
   });
+
 
   var knox = Knox.createClient({
     key: options.s3Key,
@@ -51,6 +63,7 @@ exports.register = function(plugin, options, next) {
     method: 'POST',
     path: '/accounts/validate',
     config: {
+      auth: 'api',
       handler: function(request, reply) {
         account.validate(request.payload.username, request.payload.password).then(function(user) {
           reply(user);

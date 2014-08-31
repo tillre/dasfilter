@@ -21,6 +21,8 @@ module.exports = function(cores, definitions) {
       }
     ],
     plugins: {
+      'hapi-auth-basic': {},
+
       good: {
         subscribers: {
           console: ['ops', 'request', 'log', 'error']
@@ -34,9 +36,14 @@ module.exports = function(cores, definitions) {
 
       './plugins/api': {
         debug: env.NODE_ENV !== 'production',
+
         cores: cores,
         definitions: definitions,
         staticDir: Path.join('static'),
+
+        appKey: env.DF_APP_KEY || 'key',
+        appSecret: env.DF_APP_SECRET || 'secret',
+
         s3Key: env.DF_S3_KEY || 'AKIAI7N2MQ6LGWWZGWEQ',
         s3Secret: env.DF_S3_SECRET || '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',
         s3Region: env.DF_S3_REGION || 'eu-west-1',
