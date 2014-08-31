@@ -28,7 +28,7 @@ var manifest = {
         web: env.DF_WEB_URL || 'http://127.0.0.1:8080',
         admin: env.DF_ADMIN_URL || 'http://127.0.0.1:8070',
         static: env.DF_STATIC_URL || 'http://static.dev.dasfilter.com.s3-website-eu-west-1.amazonaws.com',
-        api: env.DF_API_URL || 'http://key:secret@127.0.0.1:8050'
+        api: env.DF_API_URL || 'http://127.0.0.1:8050'
       },
 
       staticDir: Path.join('static'),

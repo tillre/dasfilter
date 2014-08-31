@@ -30,6 +30,7 @@ exports.register = function(plugin, options, next) {
     var req = Request({
       url: options.urls.api + '/accounts/validate',
       method: 'POST',
+      auth: { user: options.appKey, pass: options.appSecret },
       json: { username: username, password: password }
 
     }, function(err, response, body) {
