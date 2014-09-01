@@ -10,12 +10,19 @@
 [api]
 95.85.10.64
 
+[search]
+178.62.155.41
+
+[db]
+178.62.154.191
 
 [staging:children]
 proxy
 web
 admin
 api
+search
+db
 
 [staging_private:children]
 staging

@@ -1,0 +1,14 @@
+- hosts: db
+  remote_user: deploy
+  vars:
+    couchdb_version: 1.6.0
+    proxy_sites:
+      - db-site
+    firewall_open_ports:
+      - 80
+
+  roles:
+    - nginx
+    - proxy
+    - couchdb
+    - firewall

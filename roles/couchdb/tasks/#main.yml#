@@ -65,5 +65,7 @@
 - name: Link couchdb init.d script
   sudo: yes
   file: src=/usr/local/etc/init.d/couchdb path=/etc/init.d/couchdb state=link
-  notify:
-    - Restart couchdb
+
+- name: Restart couchdb
+  sudo: yes
+  service: name=couchdb state=restarted

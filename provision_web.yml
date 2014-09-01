@@ -5,18 +5,20 @@
 
     app_repo: git@bitbucket.org:skoni/df-web-server.git
     app_dir: "{{ deploy_home }}/app"
-    app_open_ports:
+
+    firewall_open_ports:
       - 8080
 
-  roles:
-    # - debug
-    - nodejs
-    - couchdb
-    - app_provision
+    env_vars:
+      NODE_ENV: "{{ node_env }}"
 
-  tasks:
-    - name: Create DB replication
-      shell: >
-        curl -X POST http://localhost:5984/_replicate
-        -H 'Content-Type: application/json'
-        -d '{"source":"{{ db_url }}","target":"df","create_target":true,"continuous":true}'
+      DF_DB_URL: "http://{{ app_key }}:{{ app_secret }}@{{ groups['db'][0] }}/df"
+
+      DF_WEB_URL: "{{ proxy_web_url }}"
+      DF_STATIC_URL: "{{ proxy_static_url }}"
+      
+  roles:
+    - env
+    - nodejs
+    - app_provision
+    - firewall

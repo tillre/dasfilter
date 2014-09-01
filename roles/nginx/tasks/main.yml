@@ -31,9 +31,3 @@
   sudo: yes
   command: openssl req -new -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=IT/CN={{ ansible_fqdn }}" -days 3650 -keyout /etc/nginx/ssl/server.key -out /etc/nginx/ssl/server.crt -extensions v3_ca creates=/etc/nginx/ssl/server.crt
 
-
-# open port 80
-
-- name: Open port 80
-  sudo: yes
-  shell: ufw allow 80

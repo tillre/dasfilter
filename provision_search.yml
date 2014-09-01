@@ -1,0 +1,6 @@
+- hosts: search
+  remote_user: deploy
+  vars:
+
+  roles:
+    - elasticsearch
