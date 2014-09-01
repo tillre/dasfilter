@@ -219,7 +219,7 @@ exports.register = function(plugin, options, next) {
 
   var api = Api(options.apiUrl, 'admin', options.apiKey);
 
-  Resources('http://localhost:5984/df').then(function(res) {
+  Resources(options.db).then(function(res) {
     init(plugin, options, api, res.definitions, res.cores.resources, next);
 
   }).fail(function(err) {
