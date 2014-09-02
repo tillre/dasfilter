@@ -6,7 +6,7 @@ var Knox = require('knox');
 var Resources = require('df-resources');
 var File = require('./lib/file.js');
 var Account = require('./lib/account.js');
-var SyncStages = require('./lib/sync-stages.js');
+var SyncWireframes = require('./lib/sync-wireframes.js');
 
 
 exports.register = function(plugin, options, next) {
@@ -15,8 +15,8 @@ exports.register = function(plugin, options, next) {
 
   // load resources and create api
   var coresHapi = plugin.plugins['cores-hapi'];
-  // fn to sync stages with categories/collections/startpage
-  var syncStages = SyncStages(plugin, options.cores, options.definitions);
+  // fn to sync layouts with categories/collections/startpage
+  var syncWireframes = SyncWireframes(plugin, options.cores, options.definitions);
 
 
   // basic auth
@@ -49,8 +49,8 @@ exports.register = function(plugin, options, next) {
   require('./lib/resource-handlers/image-handler.js')(coresHapi, statics);
   require('./lib/resource-handlers/gallery-handler.js')(coresHapi);
   require('./lib/resource-handlers/article-handler.js')(coresHapi);
-  require('./lib/resource-handlers/category-handler.js')(coresHapi, syncStages);
-  require('./lib/resource-handlers/collection-handler.js')(coresHapi, syncStages);
+  require('./lib/resource-handlers/category-handler.js')(coresHapi, syncWireframes);
+  require('./lib/resource-handlers/collection-handler.js')(coresHapi, syncWireframes);
   require('./lib/resource-handlers/tags-handler.js')(coresHapi);
   require('./lib/resource-handlers/contributor-handler.js')(coresHapi);
   require('./lib/resource-handlers/generic-handlers.js')(coresHapi);
@@ -76,8 +76,8 @@ exports.register = function(plugin, options, next) {
 
   // create default admin if no user exists
   return account.maybeCreateAdmin().then(function() {
-    // create missing stage models
-    return syncStages();
+    // create missing wireframes
+    return syncWireframes();
   }).then(function() {
     try {
       next();

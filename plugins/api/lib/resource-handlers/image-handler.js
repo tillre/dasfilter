@@ -38,9 +38,6 @@ var imageSizes = {
     { name: sizeL.name, width: sizeL.w, option: '^', crop: true, suffix: '-' + sizeL.name },
     { name: sizeM.name, width: sizeM.w, option: '^', crop: true, suffix: '-' + sizeM.name },
     { name: sizeS.name, width: sizeS.w, option: '^', crop: true, suffix: '-' + sizeS.name }
-  ],
-  stage: [
-    { name: 'original' }
   ]
 };
 

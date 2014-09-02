@@ -1,6 +1,6 @@
 var Helpers = require('./helpers.js');
 
-module.exports = function(api, syncStages) {
+module.exports = function(api, syncWireframes) {
 
   var cls = api.cores.resources.Classification;
 
@@ -9,7 +9,7 @@ module.exports = function(api, syncStages) {
   });
 
   api.post.create('Collection', function(doc) {
-    return syncStages().then(function() {
+    return syncWireframes().then(function() {
       return doc;
     });
   });
