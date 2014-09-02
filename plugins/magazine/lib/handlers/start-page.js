@@ -9,10 +9,10 @@ module.exports = function startHandler(app) {
 
     app.models.classifications.getAll().then(function(cs) {
       classes = cs;
-      return app.models.stages.getStartStage();
+      return app.models.wireframes.bySlug('start');
 
-    }).then(function(stage) {
-      return Layout.build(app, classes, stage);
+    }).then(function(wireframe) {
+      return Layout.build(app, classes, wireframe);
 
     }).then(function(layout) {
 

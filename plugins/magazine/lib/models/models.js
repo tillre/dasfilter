@@ -4,7 +4,7 @@ module.exports = function(resources) {
     articles: require('./articles.js')(resources),
     pages: require('./pages.js')(resources),
     classifications: require('./classifications.js')(resources),
-    stages: require('./stages.js')(resources),
+    wireframes: require('./wireframes.js')(resources),
     teasers: require('./teasers.js')(resources),
     contributors: require('./contributors.js')(resources)
   };

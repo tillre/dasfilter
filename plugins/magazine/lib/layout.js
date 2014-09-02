@@ -65,40 +65,40 @@ function createRefs() {
 }
 
 
-function addGroup(type, id, url, stageGroup, refs) {
-  var layoutGroup = _.clone(stageGroup);
+function addGroup(type, id, url, wireframeGroup, refs) {
+  var layoutGroup = _.clone(wireframeGroup);
   layoutGroup.id = id;
   layoutGroup.teasers = layoutGroup.teasers || [];
   if (url) {
     layoutGroup.link = url;
   }
-  for (var i = 0; i < stageGroup.numTeasers; ++i) {
-    var t = createTeaser(type, getSize(stageGroup.numTeasers, i));
+  for (var i = 0; i < wireframeGroup.numTeasers; ++i) {
+    var t = createTeaser(type, getSize(wireframeGroup.numTeasers, i));
     layoutGroup.teasers.push(t);
     refs.addCls(type, id, t);
   }
   return layoutGroup;
 }
 
-function buildGroup(app, classes, stageGroup, refs) {
+function buildGroup(app, classes, wireframeGroup, refs) {
   var id;
   var layoutGroup;
 
-  switch(stageGroup.type_) {
+  switch(wireframeGroup.type_) {
   case 'chrono':
-    layoutGroup = _.clone(stageGroup);
+    layoutGroup = _.clone(wireframeGroup);
     layoutGroup.teasers = [];
-    for (var t, i = 0; i < stageGroup.numTeasers; ++i) {
-      t = createTeaser('chrono', getSize(stageGroup.numTeasers, i));
+    for (var t, i = 0; i < wireframeGroup.numTeasers; ++i) {
+      t = createTeaser('chrono', getSize(wireframeGroup.numTeasers, i));
       layoutGroup.teasers.push(t);
       refs.addChrono(t);
     }
     break;
 
   case 'pinned':
-    layoutGroup = _.clone(stageGroup);
-    layoutGroup.teasers = stageGroup.teasers.map(function(t, i) {
-      t.span = getSize(stageGroup.teasers.length, i);
+    layoutGroup = _.clone(wireframeGroup);
+    layoutGroup.teasers = wireframeGroup.teasers.map(function(t, i) {
+      t.span = getSize(wireframeGroup.teasers.length, i);
       if (t.article.id_) {
         t.type = 'pinned';
         t.id = t.article.id_;
@@ -112,45 +112,45 @@ function buildGroup(app, classes, stageGroup, refs) {
     break;
 
   case 'tag':
-    id = stageGroup.tag ? stageGroup.tag.slug : null;
+    id = wireframeGroup.tag ? wireframeGroup.tag.slug : null;
     if (!id) break;
     layoutGroup = addGroup('tag', id,
-                           app.urls.tag(stageGroup.tag),
-                           stageGroup, refs);
+                           app.urls.tag(wireframeGroup.tag),
+                           wireframeGroup, refs);
     break;
 
   case 'category':
-    id = stageGroup.category.id_ || stageGroup.category._id;
+    id = wireframeGroup.category.id_ || wireframeGroup.category._id;
     if (!id) break;
     layoutGroup = addGroup('category', id,
                            app.urls.classification(classes.byId[id]),
-                           stageGroup, refs);
+                           wireframeGroup, refs);
     break;
 
   case 'collection':
-    id = stageGroup.collection.id_ || stageGroup.collection._id;
+    id = wireframeGroup.collection.id_ || wireframeGroup.collection._id;
     if (!id) break;
     layoutGroup = addGroup('collection', id,
                            app.urls.classification(classes.byId[id]),
-                           stageGroup, refs);
+                           wireframeGroup, refs);
     break;
 
   case 'contributor':
-    id = stageGroup.contributor.id_ || stageGroup.contributor._id;
+    id = wireframeGroup.contributor.id_ || wireframeGroup.contributor._id;
     if (!id) break;
-    layoutGroup = addGroup('contributor', id, '', stageGroup, refs);
+    layoutGroup = addGroup('contributor', id, '', wireframeGroup, refs);
     break;
   }
   return layoutGroup;
 }
 
 
-function createLayout(app, classes, stage) {
+function createLayout(app, classes, wireframe) {
   var layout = {
     refs: createRefs()
   };
 
-  layout.groups = stage.groups.reduce(function(acc, group) {
+  layout.groups = wireframe.groups.reduce(function(acc, group) {
     var g = buildGroup(app, classes, group, layout.refs);
     if (g) acc.push(g);
     return acc;
@@ -293,12 +293,12 @@ function createGroupRows(groups) {
 
 
 
-function buildLayout(app, classes, stage, date, usedIds) {
+function buildLayout(app, classes, wireframe, date, usedIds) {
 
   date = date || new Date().toISOString();
   usedIds = usedIds || {};
 
-  var l = createLayout(app, classes, stage);
+  var l = createLayout(app, classes, wireframe);
   var teasers = app.models.teasers;
 
   var order = [];

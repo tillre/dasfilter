@@ -14,12 +14,12 @@ module.exports = function tagHandler(app) {
     app.models.classifications.getAll().then(function(cs) {
       classes = cs;
 
-      var stage = { groups: [
+      var wireframe = { groups: [
         Layout.createGroup('tag', 'spaced', { numTeasers: 2, tag: { slug: slug } }),
         Layout.createGroup('tag', 'spaced', { numTeasers: 15, tag: { slug: slug } })
       ] };
 
-      return Layout.build(app, classes, stage, startDate);
+      return Layout.build(app, classes, wireframe, startDate);
 
     }).then(function(layout) {
 

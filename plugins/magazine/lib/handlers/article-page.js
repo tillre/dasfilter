@@ -78,24 +78,24 @@ module.exports = function(app) {
         nextDoc = result[1][1];
       }
 
-      // create realted stage
-      var relatedStage = { groups: [] };
+      // create related teasers layout
+      var related = { groups: [] };
 
       if (doc.classification.relatedTag) {
         var tag = doc.classification.relatedTag;
-        relatedStage.groups.push(Layout.createGroup('tag', 'spaced', {
+        related.groups.push(Layout.createGroup('tag', 'spaced', {
           numTeasers: 3, tag: tag, seperate: false,
           title: 'Mehr zum Thema ' + tag.name.toUpperCase()
         }));
       }
 
-      relatedStage.groups.push(Layout.createGroup('category', 'spaced', {
+      related.groups.push(Layout.createGroup('category', 'spaced', {
         numTeasers: 3, category: cls, seperate: false,
         title: 'Mehr ' + cls.title.toUpperCase()
       }));
 
       doc.classification.collections.forEach(function(c) {
-        relatedStage.groups.push(Layout.createGroup('collection', 'spaced', {
+        related.groups.push(Layout.createGroup('collection', 'spaced', {
           numTeasers: 3, collection: c, seperate: false,
           title: 'Weitere ' + c.title.toUpperCase()
         }));
@@ -104,7 +104,7 @@ module.exports = function(app) {
       var usedIds = {};
       usedIds[doc._id] = true;
 
-      return Layout.build(app, classes, relatedStage, doc.date, usedIds);
+      return Layout.build(app, classes, related, doc.date, usedIds);
 
     }).then(function(relatedLayout) {
 

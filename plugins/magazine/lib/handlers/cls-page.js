@@ -22,21 +22,21 @@ module.exports = function clsHandler(app) {
 
       var type = cls.type_.toLowerCase();
 
-      var stage = {};
+      var wireframe = {};
       if (type === 'category') {
-        stage.groups = [
+        wireframe.groups = [
           Layout.createGroup(type, 'spaced', { numTeasers: 2, category: cls }),
           Layout.createGroup(type, 'spaced', { numTeasers: 15, category: cls })
         ];
       }
       else {
-        stage.groups = [
+        wireframe.groups = [
           Layout.createGroup(type, 'spaced', { numTeasers: 2, collection: cls }),
           Layout.createGroup(type, 'spaced', { numTeasers: 15, collection: cls })
         ];
       }
 
-      return Layout.build(app, classes, stage, startDate).then(function(layout) {
+      return Layout.build(app, classes, wireframe, startDate).then(function(layout) {
 
         var nextDate = layout.refs[type][cls._id].nextDate;
 

@@ -19,12 +19,12 @@ module.exports = function contributorHandler(app) {
     }).then(function(c) {
       contributor = c;
 
-      var stage = { groups: [
+      var wireframe = { groups: [
         Layout.createGroup('contributor', 'spaced', { numTeasers: 2, contributor: contributor }),
         Layout.createGroup('contributor', 'spaced', { numTeasers: 15, contributor: contributor })
       ] };
 
-      return Layout.build(app, classes, stage, startDate);
+      return Layout.build(app, classes, wireframe, startDate);
 
     }).then(function(layout) {
 
