@@ -1,21 +1,11 @@
 
 .share-links {
-    float: right;
-    padding: 0 0 0 @gutter;
-    height: @header-height;
-
     ul {
+        display: inline-block;
         list-style: none;
-    }
-    li.title {
-        text-transform: uppercase;
-        .type2-regular;
-        .set-font-size(16);
-        color: #555;
     }
     li {
         float: left;
-        height: @header-height;
         line-height: 1em;
         padding-top: 14px;
 
@@ -29,8 +19,9 @@
 
 @media(min-width: @break-m-portrait) {
     .share-links {
-        background-color: @extra-extra-light-fg-color;
-        border-right: 1px solid @extra-extra-light-fg-color;
-        border-left: 1px solid @extra-extra-light-fg-color;
+        text-align: center;
+        ul {
+            margin-left: 50px;
+        }
     }
 }
