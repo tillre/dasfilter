@@ -14,7 +14,7 @@
     }
     .title {
         padding-top: @gutter * 1.25;
-        padding-bottom: @gutter;
+        padding-bottom: @gutter * 0.25;
 
         h1 {
             .size-normal;
@@ -36,29 +36,30 @@
                 display: inline-block;
                 width: @gutter * 4;
                 height: 0;
-                border-bottom: 1px solid @extra-light-fg-color;
+                border-bottom: 3px solid @fg-color;
             }
         }
     }
     .byline {
         display: block;
 
-        .date, .category, .divider {
+        .date, .category, .contributors, .divider {
             .type2-regular;
             .size-small();
             display: inline-block;
             color: @light-fg-color;
+            a {
+                color: @medium-fg-color;
+                &:hover {
+                    color: @df-color;
+                }
+            }
         }
         .category {
             text-transform: uppercase;
-            &:hover {
-                color: @df-color;
-            }
         }
         .contributors {
             .type2-regular-i;
-            .size-small();
-            color: @fg-color;
         }
     }
 

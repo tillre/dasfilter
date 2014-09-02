@@ -1,5 +1,5 @@
-mixin share-links
-  .share-links
+mixin share-links(klass)
+  .share-links(class=klass)
     ul
       li.facebook
         .fb-like(data-href=urls.full(), data-layout="button_count", data-action="like", data-show-faces="true", data-share="true")

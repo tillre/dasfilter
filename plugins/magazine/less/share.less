@@ -7,9 +7,8 @@
     li {
         float: left;
         line-height: 1em;
-        padding-top: 14px;
-
         margin-right: @gutter * 0.5;
+        padding: @gutter * 0.25 0;
         &:last-child, &:only-child {
             margin-right: 0;
         }
@@ -18,10 +17,16 @@
 
 
 @media(min-width: @break-m-portrait) {
-    .share-links {
+    .share-links.top {
         text-align: center;
         ul {
             margin-left: 50px;
+            padding: @gutter * 1.25 0 0;
         }
+    }
+    .share-links.bottom {
+        text-align: center;
+        border-bottom: 1px solid @extra-light-fg-color;
+        margin-bottom: @gutter * 0.25;
     }
 }

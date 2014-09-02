@@ -21,7 +21,8 @@ mixin article-byline(contributors, date)
   small.byline
     span.date= formatDate(date)
     span.divider &nbsp;•&nbsp;
-    a.category(href=urls.classification(article.classification.category))= article.classification.category.title
+    span.category
+      a(href=urls.classification(article.classification.category))= article.classification.category.title
     if contributors.length > 0
       span.divider &nbsp;&ndash;&nbsp;
       span.contributors
@@ -46,7 +47,7 @@ mixin article(article)
             span.header-1.balance-text= article.title
             span.header-2= article.subtitle
           +article-byline(article.contributors, article.date)
-          +share-links
+          +share-links('top')
 
 
       if hasEmbed
@@ -78,9 +79,9 @@ mixin article(article)
 
     .article-footer-wrapper
       .article-footer
-        +share-links
-        if article.classification.tags.length > 0
-          .article-footer-items-wrapper
+        .article-footer-items-wrapper
+          +share-links('bottom')
+          if article.classification.tags.length > 0
             .article-footer-items.article-cls-items
               h4.items-title Tags:
               ul
