@@ -82,8 +82,8 @@ mixin article(article)
         .article-footer-items-wrapper
           +share-links('bottom')
           if article.classification.tags.length > 0
-            .article-footer-items.article-cls-items
-              h4.items-title Tags:
+            .article-footer-items
+              h4 Tags:
               ul
                 each item in article.classification.tags
                   li
