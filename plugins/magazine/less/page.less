@@ -7,14 +7,14 @@ body {
 
 // off canvas menu animation
 .wrapper, #menu-bar, #off-canvas-menu {
-    .transition(transform 250ms ease-out);
+    transition: transform 250ms ease-out;
 }
 #content-cloak {
-    .transition(opacity 250ms ease-out);
+    transition: opacity 250ms ease-out;
 }
 body.open-off-canvas {
     .wrapper, #menu-bar, #off-canvas-menu {
-        .transform(translate3d(@off-canvas-width, 0, 0));
+        transform: translate3d(@off-canvas-width, 0, 0);
     }
     #content-cloak {
         left: 0;

@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var less = require('gulp-less');
 var nodemon = require('gulp-nodemon');
 var shell = require('gulp-shell');
+var prefix = require('gulp-autoprefixer');
 
 
 function svg2css(cssPrefix) {
@@ -66,6 +67,7 @@ gulp.task('svg2less', function() {
 gulp.task('styles', ['svg2less'], function() {
   return gulp.src(paths.mainLess)
     .pipe(less())
+    .pipe(prefix('last 2 versions', '> 1%', 'ie 9'))
     .pipe(gulp.dest('./static/assets/css/'));
 });
 

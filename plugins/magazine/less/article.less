@@ -103,7 +103,7 @@
     min-height: 35px;
 
     bottom: 0;
-    .transition(transform 250ms ease-out);
+    transition: transform 250ms ease-out;
 
     background-color: white;
     background-size: @gutter * 0.85;
@@ -136,7 +136,7 @@
 .article-prev {
     left: 45px;
     padding-right: 45px;
-    .transform(translate(-100%, 0));
+    transform: translate(-100%, 0);
     background-position: right 12px center;
     border-left: 0;
     border-bottom: 0;
@@ -149,7 +149,7 @@
 .article-next {
     right: 45px;
     padding-left: 45px;
-    .transform(translate(100%, 0));
+    transform: translate(100%, 0);
     background-position: 12px center;
     border-right: 0;
     border-bottom: 0;
@@ -179,16 +179,16 @@
     }
     .article-prev {
         border-bottom-right-radius: 4px;
-        .transform(translate(-100%, -50%));
+        transform: translate(-100%, -50%);
         &:hover {
-            .transform(translate(-45px, -50%));
+            transform: translate(-45px, -50%);
         }
     }
     .article-next {
         border-bottom-left-radius: 4px;
-        .transform(translate(100%, -50%));
+        transform: translate(100%, -50%);
         &:hover {
-            .transform(translate(45px, -50%));
+            transform: translate(45px, -50%);
         }
     }
 
