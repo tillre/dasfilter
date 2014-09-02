@@ -4,7 +4,7 @@
 
 .row
   .col-md-12
-    a(class="btn btn-success", href="\#{{path}}/new")
+    a.btn.btn-success(ng-show="!newDisabled", href="\#{{path}}/new")
       span(class="glyphicon glyphicon-plus")
       span &nbsp;Create
 

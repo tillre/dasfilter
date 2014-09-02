@@ -68,8 +68,8 @@
       path: '/contributors'
     },
     {
-      title: 'Stages',
-      path: '/stages'
+      title: 'Wireframes',
+      path: '/wireframes'
     },
     {
       title: 'Pages',
@@ -112,10 +112,7 @@
       { path: '/articles/published', template: '/resource-list', controller: 'ArticlesCtrl' },
       { path: '/articles/drafts', template: '/resource-list', controller: 'ArticlesCtrl' },
       { path: '/articles/new', template: '/resource', controller: 'ArticleCtrl' },
-      { path: '/articles/:id', template: '/resource', controller: 'ArticleCtrl' },
-
-      { path: '/stages', template: '/stages-list', controller: 'StagesCtrl' },
-      { path: '/stages/:type/:id', template: '/resource', controller: 'StageCtrl' }
+      { path: '/articles/:id', template: '/resource', controller: 'ArticleCtrl' }
     ]
           .concat(createRoutes('/users', 'UsersCtrl', 'UserCtrl'))
           .concat(createRoutes('/pages', 'PagesCtrl', 'PageCtrl'))
@@ -125,6 +122,7 @@
           .concat(createRoutes('/tags', 'TagsCtrl', 'TagCtrl'))
           .concat(createRoutes('/galleries', 'GalleriesCtrl', 'GalleryCtrl'))
           .concat(createRoutes('/images', 'ImagesCtrl', 'ImageCtrl'))
+          .concat(createRoutes('/wireframes', 'WireframesCtrl', 'WireframeCtrl'))
 
       .map(function(route) {
         if (route.template) {
