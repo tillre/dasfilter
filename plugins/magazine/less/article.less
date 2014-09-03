@@ -84,9 +84,10 @@
 
 
 .article-related {
-    margin-top: @gutter;
-    .meta-title-wrapper {
-        border-top: 2px solid @fg-color;
+    .meta-title {
+        h1, h2 {
+            .size-teaser-title;
+        }
     }
 }
 
@@ -210,12 +211,6 @@
         }
         .media-inner {
             .no-column;
-        }
-    }
-
-    .article-related {
-        .teaser {
-            margin-bottom: @gutter;
         }
     }
 }
