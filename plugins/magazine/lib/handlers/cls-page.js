@@ -26,13 +26,13 @@ module.exports = function clsHandler(app) {
       if (type === 'category') {
         wireframe.groups = [
           Layout.createGroup(type, 'spaced', { numTeasers: 2, category: cls }),
-          Layout.createGroup(type, 'spaced', { numTeasers: 15, category: cls })
+          Layout.createGroup(type, 'spaced', { numTeasers: 18, category: cls })
         ];
       }
       else {
         wireframe.groups = [
           Layout.createGroup(type, 'spaced', { numTeasers: 2, collection: cls }),
-          Layout.createGroup(type, 'spaced', { numTeasers: 15, collection: cls })
+          Layout.createGroup(type, 'spaced', { numTeasers: 18, collection: cls })
         ];
       }
 

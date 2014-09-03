@@ -21,7 +21,7 @@ module.exports = function contributorHandler(app) {
 
       var wireframe = { groups: [
         Layout.createGroup('contributor', 'spaced', { numTeasers: 2, contributor: contributor }),
-        Layout.createGroup('contributor', 'spaced', { numTeasers: 15, contributor: contributor })
+        Layout.createGroup('contributor', 'spaced', { numTeasers: 18, contributor: contributor })
       ] };
 
       return Layout.build(app, classes, wireframe, startDate);

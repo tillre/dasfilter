@@ -16,7 +16,7 @@ module.exports = function tagHandler(app) {
 
       var wireframe = { groups: [
         Layout.createGroup('tag', 'spaced', { numTeasers: 2, tag: { slug: slug } }),
-        Layout.createGroup('tag', 'spaced', { numTeasers: 15, tag: { slug: slug } })
+        Layout.createGroup('tag', 'spaced', { numTeasers: 18, tag: { slug: slug } })
       ] };
 
       return Layout.build(app, classes, wireframe, startDate);

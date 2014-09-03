@@ -16,7 +16,7 @@ module.exports = function tagHandler(app) {
 
       var wireframe = { groups: [
         Layout.createGroup('chrono', 'spaced', { numTeasers: 2 }),
-        Layout.createGroup('chrono', 'spaced', { numTeasers: 15 })
+        Layout.createGroup('chrono', 'spaced', { numTeasers: 18 })
       ] };
 
       return Layout.build(app, classes, wireframe, startDate);
