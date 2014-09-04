@@ -103,7 +103,7 @@
     max-width: 25%;
 
     padding: 0.25 * @gutter;
-    min-height: 35px;
+    height: 35px;
 
     bottom: 0;
     transition: transform 250ms ease-out;
@@ -113,10 +113,10 @@
 
     border: 1px solid @fg-color;
     opacity: 0.333;
+    overflow: hidden;
 
     h4 {
-        height: 0;
-        overflow: hidden;
+        //height: 0;
         color: @fg-color;
     }
     &:hover {
@@ -170,28 +170,24 @@
 @media (min-width: @break-m-portrait) {
 
     .article-prev, .article-next {
-        top: 50%;
+        top: 45%;
         bottom: initial;
-        min-height: 55px;
+        height: 55px;
         border-bottom: 1px solid @fg-color;
         &:hover {
-            h4 {
-                height: auto;
-            }
+            height: auto;
         }
     }
     .article-prev {
         border-bottom-right-radius: 4px;
-        transform: translate(-100%, -50%);
         &:hover {
-            transform: translate(-45px, -50%);
+            transform: translate(-45px, 0%);
         }
     }
     .article-next {
         border-bottom-left-radius: 4px;
-        transform: translate(100%, -50%);
         &:hover {
-            transform: translate(45px, -50%);
+            transform: translate(45px, 0%);
         }
     }
 
