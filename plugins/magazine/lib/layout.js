@@ -340,7 +340,6 @@ function buildLayout(app, classes, wireframe, date, usedIds) {
   var promises = order.map(function(o) { return o.promise; });
 
   return Q.all(promises).then(function(results) {
-
     // merge docs into refs
     order.forEach(function(o, i) {
       o.merge(l.refs[o.type], results[i], usedIds);

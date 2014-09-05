@@ -11,21 +11,9 @@ module.exports = function(resources) {
     // the view emits the article itself plus dependent resources
     // these will be put together again from the resulting rows
 
-    var NUM_PARTS = 4;
-
-    // extend the limit times each resource part
+    // extend the limit times (doc + number of resource parts)
     if (qs.limit) {
-      qs.limit *= NUM_PARTS;
-    }
-    if (qs.keys) {
-      // create seperate keys times each resource part
-      var modKeys = [];
-      for (var i = 0; i < qs.keys.length; ++i) {
-        for (var j = NUM_PARTS; j > 0; --j) {
-          modKeys.push([qs.keys[i], j - 1]);
-        }
-      }
-      qs.keys = JSON.stringify(modKeys);
+      qs.limit *= 4;
     }
 
     return resources.Article.view(view, qs).then(function(result) {
