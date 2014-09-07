@@ -1,4 +1,5 @@
 var Util = require('util');
+var Wireframe = require('../wireframe.js');
 var Layout = require('../layout.js');
 
 
@@ -19,12 +20,11 @@ module.exports = function contributorHandler(app) {
     }).then(function(c) {
       contributor = c;
 
-      var wireframe = { groups: [
-        Layout.createGroup('contributor', 'spaced', { numTeasers: 2, contributor: contributor }),
-        Layout.createGroup('contributor', 'spaced', { numTeasers: 18, contributor: contributor })
-      ] };
+      var wireframe = Wireframe();
+      wireframe.addGroup('contributor', '2', { contributor: contributor });
+      wireframe.addGroups(7, 'contributor', '3', { contributor: contributor });
 
-      return Layout.build(app, classes, wireframe, startDate);
+      return Layout(app, classes, wireframe, startDate);
 
     }).then(function(layout) {
 

@@ -12,25 +12,22 @@ mixin layout-mixed-group(group)
   each teaser in group.teasers
     +teaser(teaser)
 
-mixin layout-groups(groups)
-  each group in groups
-    if group.rows.length > 0
-      section.teaser-group-wrapper(class=[group.type_, group.display])
-        if group.title
-          .meta-title-wrapper
-            if group.link
-              a.meta-title(href=group.link)
-                h2= group.title
-            else
-              .meta-title
-                h2= group.title
-        .teaser-group
-          each row in group.rows
-            .teaser-row
-              each teaser in row
-                if teaser.doc
-                  +teaser(teaser, group)
+mixin layout-rows(rows)
+  each row in rows
+    .teaser-row(class=[row.type, row.classes])
+      if row.title
+        .meta-title-wrapper
+          if row.link
+            a.meta-title(href=row.link)
+              h2= row.title
+          else
+            .meta-title
+              h2= row.title
+      .teasers
+        each teaser in row.teasers
+          if teaser.doc
+            +teaser(teaser, group)
 
 mixin layout(layout, nextDate)
   div
-    +layout-groups(layout.groups)
+    +layout-rows(layout.rows)

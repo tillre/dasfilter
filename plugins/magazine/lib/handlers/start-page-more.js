@@ -1,5 +1,6 @@
 var Util = require('util');
 var _ = require('lodash');
+var Wireframe = require('../wireframe.js');
 var Layout = require('../layout.js');
 
 module.exports = function tagHandler(app) {
@@ -14,12 +15,11 @@ module.exports = function tagHandler(app) {
     app.models.classifications.getAll().then(function(cs) {
       classes = cs;
 
-      var wireframe = { groups: [
-        Layout.createGroup('chrono', 'spaced', { numTeasers: 2 }),
-        Layout.createGroup('chrono', 'spaced', { numTeasers: 18 })
-      ] };
+      var wireframe = Wireframe();
+      wireframe.addGroup('chrono', '2');
+      wireframe.addGroups(7, 'chrono', '3');
 
-      return Layout.build(app, classes, wireframe, startDate);
+      return Layout(app, classes, wireframe, startDate);
 
     }).then(function(layout) {
 

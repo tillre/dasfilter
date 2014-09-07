@@ -1,6 +1,7 @@
 var Util = require('util');
 var Q = require('kew');
 var Layout = require('../layout.js');
+var Wireframe = require('../wireframe.js');
 
 
 function articleBelongsToClassification(doc, clsId, clsType) {
@@ -79,32 +80,35 @@ module.exports = function(app) {
       }
 
       // create related teasers layout
-      var related = { groups: [] };
+      var wireframe = Wireframe();
 
       if (doc.classification.relatedTag) {
         var tag = doc.classification.relatedTag;
-        related.groups.push(Layout.createGroup('tag', 'spaced', {
-          numTeasers: 3, tag: tag, seperate: false,
+        wireframe.addGroup('tag', '3', {
+          tag: tag,
+          seperate: false,
           title: 'Mehr zum Thema ' + tag.name.toUpperCase()
-        }));
+        });
       }
 
-      related.groups.push(Layout.createGroup('category', 'spaced', {
-        numTeasers: 3, category: cls, seperate: false,
+      wireframe.addGroup('category', '3', {
+        category: cls,
+        seperate: false,
         title: 'Mehr ' + cls.title.toUpperCase()
-      }));
+      });
 
       doc.classification.collections.forEach(function(c) {
-        related.groups.push(Layout.createGroup('collection', 'spaced', {
-          numTeasers: 3, collection: c, seperate: false,
+        wireframe.addGroup('collection', '3', {
+          collection: c,
+          seperate: false,
           title: 'Weitere ' + c.title.toUpperCase()
-        }));
+        });
       });
 
       var usedIds = {};
       usedIds[doc._id] = true;
 
-      return Layout.build(app, classes, related, doc.date, usedIds);
+      return Layout(app, classes, wireframe, doc.date, usedIds);
 
     }).then(function(relatedLayout) {
 

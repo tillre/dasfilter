@@ -12,7 +12,7 @@ module.exports = function startHandler(app) {
       return app.models.wireframes.bySlug('start');
 
     }).then(function(wireframe) {
-      return Layout.build(app, classes, wireframe);
+      return Layout(app, classes, wireframe);
 
     }).then(function(layout) {
 

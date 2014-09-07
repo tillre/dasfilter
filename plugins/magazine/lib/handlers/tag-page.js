@@ -1,4 +1,5 @@
 var Util = require('util');
+var Wireframe = require('../wireframe.js');
 var Layout = require('../layout.js');
 
 
@@ -14,19 +15,18 @@ module.exports = function tagHandler(app) {
     app.models.classifications.getAll().then(function(cs) {
       classes = cs;
 
-      var wireframe = { groups: [
-        Layout.createGroup('tag', 'spaced', { numTeasers: 2, tag: { slug: slug } }),
-        Layout.createGroup('tag', 'spaced', { numTeasers: 18, tag: { slug: slug } })
-      ] };
+      var wireframe = Wireframe();
+      wireframe.addGroup('tag', '2', {tag: { slug: slug }});
+      wireframe.addGroups('tag', '7', {tag: { slug: slug }});
 
-      return Layout.build(app, classes, wireframe, startDate);
+      return Layout(app, classes, wireframe, startDate);
 
     }).then(function(layout) {
 
       // get name of tag from first teasers
       var tag = { slug: slug, name: slug };
-      if (layout.groups.length && layout.groups[0].teasers.length) {
-        layout.groups[0].teasers[0].doc.classification.tags.forEach(function(t) {
+      if (layout.rows.length && layout.rows[0].teasers.length) {
+        layout.rows[0].teasers[0].doc.classification.tags.forEach(function(t) {
           if (t.slug === slug) {
             tag.name = t.name;
           }

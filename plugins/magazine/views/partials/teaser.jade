@@ -25,12 +25,9 @@ mixin teaser-info(teaser)
         .text!= markdown(teaser.doc.teaser)
 
 
-mixin teaser(teaser, group)
-  article.teaser(class="span#{teaser.span}")
+mixin teaser(teaser)
+  article.teaser
     .teaser-inner
-      if teaser.title
-        h2.meta-title= teaser.title
-
       if !teaser.textonly
         +teaser-image(teaser)
       +teaser-info(teaser)

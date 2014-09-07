@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var Q = require('kew');
+var Wireframe = require('../wireframe.js');
 var Layout = require('../layout.js');
 
 
@@ -21,22 +22,17 @@ module.exports = function clsHandler(app) {
       }
 
       var type = cls.type_.toLowerCase();
-
-      var wireframe = {};
+      var wireframe = Wireframe();
       if (type === 'category') {
-        wireframe.groups = [
-          Layout.createGroup(type, 'spaced', { numTeasers: 2, category: cls }),
-          Layout.createGroup(type, 'spaced', { numTeasers: 18, category: cls })
-        ];
+        wireframe.addGroup(type, '2', { category: cls });
+        wireframe.addGroups(7, type, '3', { category: cls });
       }
       else {
-        wireframe.groups = [
-          Layout.createGroup(type, 'spaced', { numTeasers: 2, collection: cls }),
-          Layout.createGroup(type, 'spaced', { numTeasers: 18, collection: cls })
-        ];
+        wireframe.addGroup(type, '2', { collection: cls });
+        wireframe.addGroups(7, type, '3', { collection: cls });
       }
 
-      return Layout.build(app, classes, wireframe, startDate).then(function(layout) {
+      return Layout(app, classes, wireframe, startDate).then(function(layout) {
 
         var nextDate = layout.refs[type][cls._id].nextDate;
 
