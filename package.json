@@ -22,7 +22,8 @@
     "knox": "^0.9.1",
     "lodash": "~2.4.1",
     "longjohn": "~0.2.4",
-    "mime": "~1.2.11"
+    "mime": "~1.2.11",
+    "mkdirp": "^0.5.0"
   },
   "devDependencies": {
     "gulp": "~3.8.7",
