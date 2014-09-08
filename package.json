@@ -24,9 +24,7 @@
     "longjohn": "~0.2.4",
     "mime": "~1.2.11",
     "gulp": "~3.8.7",
-    "gulp-shell": "~0.2.9"
-  },
-  "devDependencies": {
+    "gulp-shell": "~0.2.9",
     "gulp-nodemon": "~1.0.4"
   }
 }
