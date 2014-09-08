@@ -220,19 +220,15 @@ function buildLayout(app, classes, wireframe, date, usedIds) {
                  promise: loadPinned(teasers.byIds, l.refs.pinned),
                  merge: mergeRefs });
   }
+  if (l.refs.chrono.length > 0) {
+    order.push({ type: 'chrono',
+                 promise: loadChrono(teasers.byClsDate, date, l.refs.chrono, l.refs.pinned.length),
+                 merge: mergeRefs });
+  }
   if (Object.keys(l.refs.tag).length > 0) {
     order.push({ type: 'tag',
-                 promise: loadCls(teasers.byTag, date, l.refs.tag, 1),
+                 promise: loadCls(teasers.byTag, date, l.refs.tag, 10),
                  merge: mergeCls });
-  }
-  if (l.refs.chrono.length > 0) {
-    var offsetChrono = l.refs.pinned.length +
-          _.reduce(l.refs.tag, function(sum, t) {
-            return sum + t.length;
-          }, 0) + 1;
-    order.push({ type: 'chrono',
-                 promise: loadChrono(teasers.byClsDate, date, l.refs.chrono, offsetChrono),
-                 merge: mergeRefs });
   }
   if (Object.keys(l.refs.contributor).length > 0) {
     order.push({ type: 'contributor',
@@ -241,12 +237,12 @@ function buildLayout(app, classes, wireframe, date, usedIds) {
   }
   if (Object.keys(l.refs.collection).length > 0) {
     order.push({ type: 'collection',
-                 promise: loadCls(teasers.byClsDate, date, l.refs.collection, 5),
+                 promise: loadCls(teasers.byClsDate, date, l.refs.collection, 10),
                  merge: mergeCls });
   }
   if (Object.keys(l.refs.category).length > 0) {
     order.push({ type: 'category',
-                 promise: loadCls(teasers.byClsDate, date, l.refs.category, 5),
+                 promise: loadCls(teasers.byClsDate, date, l.refs.category, 10),
                  merge: mergeCls });
   }
 
