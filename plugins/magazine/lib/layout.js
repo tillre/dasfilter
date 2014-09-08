@@ -222,7 +222,7 @@ function buildLayout(app, classes, wireframe, date, usedIds) {
   }
   if (l.refs.chrono.length > 0) {
     order.push({ type: 'chrono',
-                 promise: loadChrono(teasers.byClsDate, date, l.refs.chrono, l.refs.pinned.length),
+                 promise: loadChrono(teasers.byClsDate, date, l.refs.chrono, l.refs.pinned.length + 1),
                  merge: mergeRefs });
   }
   if (Object.keys(l.refs.tag).length > 0) {
