@@ -19,9 +19,7 @@
     "lodash": "~2.4.x",
     "df-resources": "git+ssh://git@bitbucket.org:skoni/df-resources.git",
     "df-api-client": "git+ssh://git@bitbucket.org:skoni/df-api-client.git",
-    "longjohn": "~0.2.4"
-  },
-  "devDependencies": {
+    "longjohn": "~0.2.4",
     "gulp": "~3.8.7",
     "gulp-autoprefixer": "0.0.10",
     "gulp-concat": "~2.3.4",
