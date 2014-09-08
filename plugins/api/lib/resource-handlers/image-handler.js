@@ -56,18 +56,20 @@ module.exports = function(api, statics) {
 
   function getSizes(doc) {
     var ext = getExt(doc);
-    var sizes = [{}];
 
     // only resize non gifs
     if (ext !== '.gif') {
-      sizes = imageSizes[doc.family];
+      var sizes = imageSizes[doc.family];
       if (!sizes) {
         var err = new Error('No sizes found for image family: ' + doc.family);
         err.code = 400;
         throw err;
       }
+      return sizes;
     }
-    return sizes;
+    else {
+      return [{ name: 'original' }];
+    }
   }
 
 

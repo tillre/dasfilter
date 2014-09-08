@@ -113,7 +113,7 @@ module.exports = function(knox) {
 
   function storeImage(buffer, slug, ext, sizes, date) {
     // store original if no sizes specified or extension is .gif
-    sizes = sizes || [{}];
+    sizes = sizes || [{ name: 'original' }];
 
     // create images dir
     var tmpPath = Path.join(TMP_DIR, getDatePath(date));
