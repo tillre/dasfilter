@@ -28,7 +28,7 @@ function createRefs() {
       return t;
     },
     pinned: function(group, i) {
-      var id = group.teasers.length > 1 && group.teasers[i].article.id_
+      var id = group.teasers.length > i && group.teasers[i].article.id_
             ? group.teasers[i].article.id_ : null;
       if (!id) return null;
       var t = { type: group.type_, id: id };
