@@ -18,6 +18,7 @@
     "good": "~2.x.x",
     "hapi": "~6.x.x",
     "hapi-auth-basic": "^1.1.1",
+    "jski": "^0.6.1",
     "kew": "~0.4.x",
     "knox": "^0.9.1",
     "lodash": "~2.4.1",
