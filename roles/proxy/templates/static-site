@@ -7,8 +7,6 @@ server {
     server_name static.{{ domain }};
 
     location / {
-      access_log off;
-
       proxy_pass         http://{{ groups['api'][0] }}:8050;
       
       proxy_redirect off;

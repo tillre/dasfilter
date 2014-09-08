@@ -198,6 +198,8 @@ index.number_of_replicas: 0
 # communication. (the range means that if the port is busy, it will automatically
 # try the next port).
 
+network.host: localhost
+
 # Set the bind address specifically (IPv4 or IPv6):
 #
 #network.bind_host: 192.168.0.1

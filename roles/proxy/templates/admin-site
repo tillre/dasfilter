@@ -6,6 +6,8 @@ server {
     listen 80;
     server_name admin.{{ domain }};
 
+    access_log /var/log/nginx/access-admin.log;
+
     location / {
       proxy_redirect off;
       proxy_set_header   X-Real-IP            $remote_addr;

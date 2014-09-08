@@ -26,6 +26,6 @@
       
   roles:
     - env
-    - nodejs
-    - app_provision
-    - firewall
+    # - nodejs
+    # - app_provision
+    # - firewall

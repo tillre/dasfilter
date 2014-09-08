@@ -2,20 +2,23 @@
 80.240.134.207
 
 [web]
-188.226.176.62
+178.62.138.167
 
 [admin]
-80.240.134.209
+178.62.138.177
 
 [api]
-80.240.134.208
+178.62.138.171
 
+[db]
+178.62.138.168
 
 [production:children]
 proxy
 web
 admin
 api
+db
 
 [production_private:children]
 production
