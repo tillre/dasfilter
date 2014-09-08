@@ -72,6 +72,12 @@ mixin content-threeway(section)
     +content-group(section.two.items, section.two.align, 'threeway')
     +content-group(section.three.items, section.three.align, 'threeway')
 
+mixin content-fourway(section)
+  .groups
+    +content-group(section.one.items, section.one.align, 'fourway')
+    +content-group(section.two.items, section.two.align, 'fourway')
+    +content-group(section.three.items, section.three.align, 'fourway')
+    +content-group(section.four.items, section.four.align, 'fourway')
 
 
 //- main mixin
@@ -83,3 +89,4 @@ mixin content(sections)
             when "oneway": +content-oneway(section)
             when "twoway": +content-twoway(section)
             when "threeway": +content-threeway(section)
+            when "fourway": +content-fourway(section)

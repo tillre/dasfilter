@@ -32,6 +32,11 @@ mixin image-content(data, type, delayLoad)
     when "content-threeway-inside-right": +image-node(data, 's', delayLoad)
     when "content-threeway-full":         +image-node(data, 'm', delayLoad)
 
+    when "content-fourway-default":      +image-node(data, 's', delayLoad)
+    when "content-fourway-inside-left":  +image-node(data, 's', delayLoad)
+    when "content-fourway-inside-right": +image-node(data, 's', delayLoad)
+    when "content-fourway-full":         +image-node(data, 's', delayLoad)
+
     default: +image-node(data, 'l', delayLoad)
 
 
