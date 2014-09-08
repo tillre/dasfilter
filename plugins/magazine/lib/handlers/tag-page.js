@@ -17,7 +17,7 @@ module.exports = function tagHandler(app) {
 
       var wireframe = Wireframe();
       wireframe.addGroup('tag', '2', {tag: { slug: slug }});
-      wireframe.addGroups('tag', '7', {tag: { slug: slug }});
+      wireframe.addGroups(7, 'tag', '3', {tag: { slug: slug }});
 
       return Layout(app, classes, wireframe, startDate);
 
