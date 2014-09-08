@@ -152,10 +152,10 @@
     }
     .content-text {
         .font-article-text;
-        h1, h2 {
+        h1, h2, h3 {
             margin-bottom: @gutter * 0.333;
         }
-        h3, h4, h5, h6, p, blockquote {
+        h4, h5, h6, p, blockquote {
             margin-bottom: @gutter * 1.5;
         }
         .content > *:last-child {
@@ -367,6 +367,7 @@
 
         &.fourway {
             .multiway;
+            font-size: 0.8em;
         }
         &.fourway .group {
             width: 100% / 4;
