@@ -267,6 +267,7 @@
 
     .groups {
         display: table;
+        table-layout: fixed;
         width: 100%;
     }
     .group {
@@ -347,11 +348,18 @@
         }
 
         &.fourway {
-            .multiway;
-            font-size: 0.8em;
-        }
-        &.fourway .group {
-            width: 100% / 4;
+            .groups {
+                display: block;
+                overflow: hidden;
+            }
+            .group {
+                display: block;
+                float: left;
+                width: 50%;
+                &:nth-child(2n+1) {
+                    clear: both;
+                }
+            }
         }
     }
 }
@@ -373,5 +381,16 @@
             }
         }
 
+        &.fourway {
+            .group {
+                width: 25%;
+                &:nth-child(2n+1) {
+                    clear: none;
+                }
+            }
+            .content {
+                font-size: 0.8em;
+            }
+        }
     }
 }
