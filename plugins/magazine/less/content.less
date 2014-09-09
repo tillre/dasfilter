@@ -379,6 +379,23 @@
                 }
             }
         }
+
+        &.fourway {
+            .groups {
+                width: 70%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .content-inner {
+                font-size: 0.8em;
+            }
+            .content-text {
+                h1, h2, h3,
+                h4, h5, h6, p, blockquote {
+                    margin-bottom: @gutter * 0.5;
+                }
+            }
+        }
     }
 }
 
@@ -387,14 +404,16 @@
     .content-section {
 
         &.fourway {
+            .groups {
+                width: auto;
+                margin-left: 0;
+                margin-right: 0;
+            }
             .group {
                 width: 25%;
                 &:nth-child(2n+1) {
                     clear: none;
                 }
-            }
-            .content-inner {
-                font-size: 0.8em;
             }
             .content-text {
                 h1, h2, h3,
