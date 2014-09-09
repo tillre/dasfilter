@@ -388,8 +388,14 @@
                     clear: none;
                 }
             }
-            .content {
+            .content-inner {
                 font-size: 0.8em;
+            }
+            .content-text {
+                h1, h2, h3,
+                h4, h5, h6, p, blockquote {
+                    margin-bottom: @gutter * 0.5;
+                }
             }
         }
     }
