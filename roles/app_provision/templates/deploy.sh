@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd {{ deploy_home }}
 source env_setup
 cd {{ app_dir }}

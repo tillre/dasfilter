@@ -223,7 +223,7 @@ network.host: localhost
 
 # Set a custom port to listen for HTTP traffic:
 #
-#http.port: 9200
+http.port: 9200
 
 # Set a custom allowed content length:
 #
@@ -385,3 +385,5 @@ discovery.zen.ping.multicast.enabled: false
 # it unless you need it is recommended (it is disabled by default).
 #
 #http.jsonp.enable: true
+
+script.disable_dynamic: false

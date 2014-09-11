@@ -1,5 +1,4 @@
 
-
 - name: Add apt key
   sudo: yes
   apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch state=present
@@ -21,3 +20,16 @@
   notify:
     - Restart elasticsearch
     
+- name: Install couchdb river
+  sudo: yes
+  shell: /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-river-couchdb/2.3.0
+
+- name: Restart elasticsearch
+  sudo: yes
+  service: name=nginx state=restarted
+  
+- name: Copy couchdb river start script
+  template: src=start_couchdb_river.sh dest={{ deploy_home }} mode=755
+
+- name: Start couchdb river
+  shell: "{{ deploy_home }}/start_couchdb_river.sh"
