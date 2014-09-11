@@ -28,7 +28,7 @@ module.exports = function(app) {
   return function pageHandler(request, reply) {
     var classes;
     var query = request.query.q;
-    var page = request.query.p || 0;
+    var page = request.query.p ? parseInt(request.query.p, 10) : 0;
     var nextUrl = '';
     var hasHits = true;
 
