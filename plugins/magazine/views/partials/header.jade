@@ -7,6 +7,7 @@ mixin cls-list(items, cls)
          - var active = (cls && cls._id === item._id) ? 'active' : ''
          a(class=active, href=urls.classification(item))= item.title
 
+
 mixin header(classifications, title, titleUrl)
   header(id="menu-bar", class="#{headerClass}")
     nav(id="nav-bar")
@@ -28,7 +29,10 @@ mixin header(classifications, title, titleUrl)
             li
               a.google-plus(href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank", title="Das Filter auf Google+")
 
-
+        .search
+          form(id="search", action="/suchen", method="get")
+            input(name="q", type="text", value=searchValue, placeholder="Suchen")
+            button(type="submit", value="Suchen") Suchen
 
   nav(id="off-canvas-menu")
     .off-canvas-inner

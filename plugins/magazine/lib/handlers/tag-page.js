@@ -34,6 +34,7 @@ module.exports = function tagHandler(app) {
       }
 
       var nextDate = layout.refs.tag[slug].nextDate;
+      var nextUrl = nextDate ? request.path + '?date=' + nextDate : '';
 
       app.replyView(request, reply, 'chrono-page', {
         pageType: 'cls-page',
@@ -44,7 +45,7 @@ module.exports = function tagHandler(app) {
         layout: layout,
         tag: tag,
         classifications: classes,
-        nextDate: nextDate
+        nextUrl: nextUrl
       });
 
     }).fail(function(err) {

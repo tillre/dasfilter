@@ -10,6 +10,7 @@ module.exports = function(app) {
     page: require('./generic-page.js')(app),
     contributors: require('./contributors-page.js')(app),
     contributor: require('./contributor-page.js')(app),
+    search: require('./search-page.js')(app),
 
     mainRss: require('./main-rss.js')(app),
     clsRss: require('./cls-rss.js')(app)

@@ -31,7 +31,7 @@ module.exports = function tagHandler(app) {
         layout: layout,
         classifications: classes,
         pageType: 'start-page-continued',
-        nextDate: nextDate
+        nextUrl: app.urls.current() + '?date=' + nextDate
       });
 
     }).fail(function(err) {

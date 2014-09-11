@@ -35,6 +35,7 @@ module.exports = function clsHandler(app) {
       return Layout(app, classes, wireframe, startDate).then(function(layout) {
 
         var nextDate = layout.refs[type][cls._id].nextDate;
+        var nextUrl = nextDate ? request.path + '?date=' + nextDate : '';
 
         app.replyView(request, reply, 'chrono-page', {
           pageType: 'cls-page',
@@ -45,7 +46,7 @@ module.exports = function clsHandler(app) {
           layout: layout,
           classification: cls,
           classifications: classes,
-          nextDate: nextDate
+          nextUrl: nextUrl
         });
       });
 

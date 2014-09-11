@@ -27,11 +27,12 @@ var manifest = {
     './plugins/magazine': {
       debug: env.NODE_ENV !== 'production',
 
-      db: env.DF_DB_URL || 'http://localhost:5984/df',
+      dbUrl: env.DF_DB_URL || 'http://localhost:5984/df',
+      searchUrl: env.DF_SEARCH_URL || 'http://127.0.0.1:9200/df/_search',
 
       urls: {
         web: env.DF_WEB_URL || 'http://127.0.0.1:8080',
-        static: env.DF_STATIC_URL || 'http://static.dev.dasfilter.com.s3-website-eu-west-1.amazonaws.com'
+        static: env.DF_STATIC_URL || 'http://static.staging.dasfilter.com'
       },
 
       assetsDir: Path.join('static/assets')

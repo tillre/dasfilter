@@ -37,6 +37,7 @@ function init(plugin, options, api, definitions, resources, next) {
     definitions: definitions,
     resources: resources,
     models: Models(resources),
+    searchUrl: options.searchUrl,
 
     replyView: function(request, reply, viewName, context, options) {
       return reply.view(viewName, _.merge(context, {
@@ -154,6 +155,13 @@ function init(plugin, options, api, definitions, resources, next) {
       handler: handlers.clsRss
     },
 
+    // search
+    {
+      method: 'GET',
+      path: '/suchen',
+      handler: handlers.search
+    },
+
     // static
     {
       method: 'GET',
@@ -219,7 +227,7 @@ exports.register = function(plugin, options, next) {
 
   var api = Api(options.apiUrl, 'admin', options.apiKey);
 
-  Resources(options.db).then(function(res) {
+  Resources(options.dbUrl).then(function(res) {
     init(plugin, options, api, res.definitions, res.cores.resources, next);
 
   }).fail(function(err) {

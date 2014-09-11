@@ -29,6 +29,7 @@ module.exports = function contributorHandler(app) {
     }).then(function(layout) {
 
       var nextDate = layout.refs.contributor[contributor._id].nextDate;
+      var nextUrl = nextDate ? request.path + '?date=' + nextDate : '';
       var name = contributor.firstname + ' ' + contributor.lastname;
 
       app.replyView(request, reply, 'chrono-page', {
@@ -39,7 +40,7 @@ module.exports = function contributorHandler(app) {
         pageDescription: 'Beiträge von ' + name,
         layout: layout,
         classifications: classes,
-        nextDate: nextDate
+        nextUrl: nextUrl
       });
 
     }).fail(function(err) {

@@ -17,13 +17,14 @@ module.exports = function startHandler(app) {
     }).then(function(layout) {
 
       var nextDate = layout.refs.chrono.nextDate;
+      var nextUrl = nextDate ? request.path + '?date=' + nextDate : '';
 
       app.replyView(request, reply, 'start-page', {
         pageTitle: 'Das Filter - Medium für Gegenwart',
         pageDescription: 'Medien, Kultur, Technik, Diskurse und Stil. Geschichten, die unser Leben schreibt.',
         classifications: classes,
         layout: layout,
-        nextDate: nextDate
+        nextUrl: nextUrl
       });
 
     }).fail(function(err) {

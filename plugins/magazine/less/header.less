@@ -154,6 +154,43 @@
             .row;
             .column;
         }
+        .search {
+            float: right;
+            padding: 0;
+            margin-right: @gutter * 0.5;
+
+            input[type=text] {
+                .type2-regular;
+                .set-font-size(19);
+                background: transparent;
+                height: @header-height;
+                border: 0;
+                padding-left: @gutter * 0.5;
+                padding-right: @header-height;
+                box-sizing: border-box;
+                border-left: 1px solid @extra-light-fg-color;
+                border-right: 1px solid @extra-light-fg-color;
+                border-top: 3px solid transparent;
+                border-bottom: 3px solid transparent;
+                &:focus {
+                    border-bottom: 3px solid @df-color;
+                    outline: transparent;
+                }
+            }
+            button[type=submit] {
+                background: transparent;
+                border: 0;
+                color: transparent;
+                height: @header-height;
+                width: @header-height;
+                margin-left: -@header-height;
+                .svg-search;
+                background-position: center center;
+                &:hover {
+                    .svg-search-hover;
+                }
+            }
+        }
         .social-links {
             overflow: hidden;
             display: block;

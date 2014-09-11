@@ -1,6 +1,12 @@
 
-mixin more(nextDate)
+mixin next-date-page(nextDate)
   if nextDate
     .more-wrapper
       - var url = urls.current() + '?date=' + nextDate
+      a(class="more-button", href=url) Weiter
+
+mixin more(url)
+  if url
+    .more-wrapper
+      //- var url = urls.current() + '?date=' + nextDate
       a(class="more-button", href=url) Weiter

@@ -92,6 +92,7 @@ function createRow(app, classes, group, refs) {
     classes: 'row-' + group.layout
   };
   if (group.title) row.title = group.title;
+  if (group.dontSeperate) row.dontSeperate = group.dontSeperate;
 
   switch(row.type) {
   case 'category':
@@ -135,6 +136,7 @@ function createLayout(app, classes, wireframe) {
   for (var i = 0; i < layout.rows.length - 1; ++i) {
     row = layout.rows[i];
     nextRow = layout.rows[i + 1];
+    if (row.dontSeperate) continue;
     if (!nextRow.title && row.type === nextRow.type) {
       if (row.type === 'chrono') continue;
       if (row.id && row.id === nextRow.id) continue;
