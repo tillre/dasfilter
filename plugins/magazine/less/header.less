@@ -43,7 +43,42 @@
             .svg-logo-small-hover;
         }
     }
+    .search {
+        float: right;
+        padding: 0;
 
+        input[type=text] {
+            width: 200px;
+            .type2-regular;
+            .set-font-size(19);
+            background: transparent;
+            height: @header-height;
+            border: 0;
+            padding-left: @gutter * 0.5;
+            padding-right: @header-height;
+            box-sizing: border-box;
+            border-left: 1px solid @extra-light-fg-color;
+            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+            &:hover, &:focus {
+                border-bottom: 3px solid @df-color;
+                outline: transparent;
+            }
+        }
+        button[type=submit] {
+            background: transparent;
+            border: 0;
+            color: transparent;
+            height: @header-height;
+            width: @header-height;
+            margin-left: -@header-height;
+            .svg-search;
+            background-position: center center;
+            &:hover {
+                .svg-search-hover;
+            }
+        }
+    }
     .social-links {
         display: none;
     }
@@ -149,101 +184,17 @@
 
 
 @media(min-width: @break-m-portrait) {
+    #nav-bar .logo {
+        width: 206px;
+        .svg-logo-dark;
+        &:hover {
+            .svg-logo-hover;
+        }
+    }
     #nav-bar {
-        .inner-bar {
-            .row;
-            .column;
-        }
         .search {
-            float: right;
-            padding: 0;
-            margin-right: @gutter * 0.5;
-
             input[type=text] {
-                .type2-regular;
-                .set-font-size(19);
-                background: transparent;
-                height: @header-height;
-                border: 0;
-                padding-left: @gutter * 0.5;
-                padding-right: @header-height;
-                box-sizing: border-box;
-                border-left: 1px solid @extra-light-fg-color;
-                border-right: 1px solid @extra-light-fg-color;
-                border-top: 3px solid transparent;
-                border-bottom: 3px solid transparent;
-                &:focus {
-                    border-bottom: 3px solid @df-color;
-                    outline: transparent;
-                }
-            }
-            button[type=submit] {
-                background: transparent;
-                border: 0;
-                color: transparent;
-                height: @header-height;
-                width: @header-height;
-                margin-left: -@header-height;
-                .svg-search;
-                background-position: center center;
-                &:hover {
-                    .svg-search-hover;
-                }
-            }
-        }
-        .social-links {
-            overflow: hidden;
-            display: block;
-            float: right;
-            padding: 9px  0 0;
-            height: @header-height;
-
-            h4 {
-                .type2-regular;
-                .set-font-size(16);
-                text-transform: uppercase;
-                float: left;
-                color: @fg-color;
-                margin-top: 5px;
-                margin-right: @gutter * 0.5;
-            }
-            ul {
-                display: inline-block;
-                list-style: none;
-                float: left;
-            }
-            li {
-                float: left;
-                display: block;
-                margin-right: @gutter * 0.5;
-            }
-            li:last-child {
-                margin-right: 0;
-            }
-            a {
-                display: block;
-                width: 32px;
-                height: 32px;
-                background-position: top left;
-
-                &.google-plus {
-                    .svg-google-plus-dark;
-                    &:hover {
-                        .svg-google-plus-color;
-                    }
-                }
-                &.facebook {
-                    .svg-facebook-dark;
-                    &:hover {
-                        .svg-facebook-color;
-                    }
-                }
-                &.twitter {
-                    .svg-twitter-dark;
-                    &:hover {
-                        .svg-twitter-color;
-                    }
-                }
+                width: 300px;
             }
         }
     }
@@ -300,12 +251,73 @@
 
 
 @media(min-width: @break-m-landscape) {
-    #nav-bar .logo {
-        margin-left: 0;
-        width: 206px;
-        .svg-logo-dark;
-        &:hover {
-            .svg-logo-hover;
+    #nav-bar {
+        .inner-bar {
+            .row;
+            .column;
+
+            .search {
+                margin-right: @gutter * 0.5;
+                input[type=text] {
+                    border-right: 1px solid @extra-light-fg-color;
+                }
+            }
+
+            .social-links {
+                overflow: hidden;
+                display: block;
+                float: right;
+                padding: 9px  0 0;
+                height: @header-height;
+
+                h4 {
+                    .type2-regular;
+                    .set-font-size(16);
+                    text-transform: uppercase;
+                    float: left;
+                    color: @fg-color;
+                    margin-top: 5px;
+                    margin-right: @gutter * 0.5;
+                }
+                ul {
+                    display: inline-block;
+                    list-style: none;
+                    float: left;
+                }
+                li {
+                    float: left;
+                    display: block;
+                    margin-right: @gutter * 0.5;
+                }
+                li:last-child {
+                    margin-right: 0;
+                }
+                a {
+                    display: block;
+                    width: 32px;
+                    height: 32px;
+                    background-position: top left;
+
+                    &.google-plus {
+                        .svg-google-plus-dark;
+                        &:hover {
+                            .svg-google-plus-color;
+                        }
+                    }
+                    &.facebook {
+                        .svg-facebook-dark;
+                        &:hover {
+                            .svg-facebook-color;
+                        }
+                    }
+                    &.twitter {
+                        .svg-twitter-dark;
+                        &:hover {
+                            .svg-twitter-color;
+                        }
+                    }
+                }
+            }
         }
     }
 }

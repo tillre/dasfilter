@@ -34,15 +34,15 @@ body.no-scroll {
 }
 
 
-.start-page, .start-page-continued, .generic-page {
-    #nav-bar .logo {
-        width: 206px;
-        .svg-logo-dark;
-        &:hover {
-            .svg-logo-hover;
-        }
-    }
-}
+// .start-page, .start-page-continued, .generic-page {
+//     #nav-bar .logo {
+//         width: 206px;
+//         .svg-logo-dark;
+//         &:hover {
+//             .svg-logo-hover;
+//         }
+//     }
+// }
 
 
 .generic-page {
@@ -90,17 +90,20 @@ body.no-scroll {
 
 
 @media (min-width: @break-m-portrait) {
-    .meta-title {
-        h1, h2 {
-            border-top: 0;
-        }
-    }
     .article-page {
         #nav-bar .logo {
             width: 206px;
             .svg-logo-dark;
             &:hover {
                 .svg-logo-hover;
+            }
+        }
+    }
+    .chrono-page {
+        .meta-title {
+            h1, h2 {
+                padding-top: @gutter * 0.5;
+                .size-teaser-title;
             }
         }
     }
