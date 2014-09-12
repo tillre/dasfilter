@@ -92,11 +92,19 @@
         float: left;
         width: @header-height;
         height: @header-height;
-        .svg-menu-white;
+        .svg-menu-dark;
         background-position: center;
-        background-color: @header-menu-bg-color;
+        background-color: white;
+        border-bottom: 1px solid @extra-light-fg-color;
+        border-right: 1px solid @extra-light-fg-color;
+        box-sizing: border-box;
         img {
             margin: 2px;
+        }
+        &:hover {
+            background-color: @df-color;
+            border-color: @df-color;
+            .svg-menu-white;
         }
     }
 }
@@ -119,7 +127,7 @@
     .off-canvas-inner {
         height: 100%;
         padding-bottom: @gutter;
-        border-right: 1px solid @extra-extra-light-fg-color;
+        border-right: 1px solid @extra-light-fg-color;
     }
 
     ul {
@@ -244,8 +252,13 @@
         .logo {
             margin-left: 0;
         }
+        .search {
+            input[type=text] {
+                width: 400px;
+            }
+        }
         .inner-bar {
-            .row;
+            .row-left;
             .column;
 
             .search {
