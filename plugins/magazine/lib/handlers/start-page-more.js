@@ -24,6 +24,7 @@ module.exports = function tagHandler(app) {
     }).then(function(layout) {
 
       var nextDate = layout.refs.chrono.nextDate;
+      var nextUrl = nextDate ? request.path + '?date=' + nextDate : '';
 
       app.replyView(request, reply, 'chrono-page', {
         pageTitle: 'Alle Artikel',
@@ -31,7 +32,7 @@ module.exports = function tagHandler(app) {
         layout: layout,
         classifications: classes,
         pageType: 'start-page-continued',
-        nextUrl: app.urls.current() + '?date=' + nextDate
+        nextUrl: nextUrl
       });
 
     }).fail(function(err) {
