@@ -8,17 +8,12 @@ mixin cls-list(items, cls)
          a(class=active, href=urls.classification(item))= item.title
 
 
-mixin header(classifications, title, titleUrl)
+mixin header(classifications)
   header(id="menu-bar", class="#{headerClass}")
     nav(id="nav-bar")
       a.menu-btn(href="#nav-drawer", title="Menu")
       .inner-bar
         a.logo(href=urls.start(), title="Startseite")
-
-        if title && titleUrl
-          a.cls(href=titleUrl)= headerTitle
-        else if title
-          .cls= headerTitle
 
         .social-links
           ul
@@ -46,10 +41,10 @@ mixin header(classifications, title, titleUrl)
 
 
 mixin header-categories(classifications, cls)
-  //- .cls-nav-wrapper
-  //-   nav.cls-nav
-  //-     ul
-  //-       each item in classifications.categories
-  //-         li
-  //-           - var active = (cls && cls._id === item._id) ? 'active' : ''
-  //-           a(class=active, href=urls.classification(item))= item.title
+  .cls-nav-wrapper
+    nav.cls-nav
+      ul
+        each item in classifications.categories
+          li
+            - var active = (cls && cls._id === item._id) ? 'active' : ''
+            a(class=active, href=urls.classification(item))= item.title

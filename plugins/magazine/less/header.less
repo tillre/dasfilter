@@ -82,21 +82,8 @@
     .social-links {
         display: none;
     }
-    .cls {
-        display: block;
-        float: left;
-        .type2-bold;
-        .set-font-size(19);
-        padding: 11px 16px 0;
-        text-transform: uppercase;
-        height: @header-height;
-        color: @header-cls-fg-color;
-        text-decoration: none;
-        box-sizing: border-box;
-        border-left: 1px solid @header-border-color;
-        &:hover {
-            color: @df-color;
-        }
+    .title {
+        display: none;
     }
 
     .menu-btn {
@@ -185,7 +172,6 @@
 
 @media(min-width: @break-m-portrait) {
     #nav-bar .logo {
-        margin-left: 0;
         width: 206px;
         .svg-logo-dark;
         &:hover {
@@ -201,13 +187,14 @@
     }
     .cls-nav-wrapper {
         display: block;
-        padding: @gutter * 0.3 0 @gutter * 0.35;
+        height: @header-height;
         border-bottom: 1px solid @header-border-color;
     }
 
     .cls-nav {
         .row;
         .column;
+        padding-top: 6px;
 
         ul {
             list-style: none;
@@ -236,6 +223,7 @@
                     border-bottom: 2px solid @df-color;
                 }
                 &.active {
+                    .type2-bold;
                     color: @medium-fg-color;
                     border-bottom: 2px solid @light-fg-color;
                 }
@@ -253,6 +241,9 @@
 
 @media(min-width: @break-m-landscape) {
     #nav-bar {
+        .logo {
+            margin-left: 0;
+        }
         .inner-bar {
             .row;
             .column;
@@ -261,6 +252,23 @@
                 margin-right: @gutter * 0.5;
                 input[type=text] {
                     border-right: 1px solid @extra-light-fg-color;
+                }
+            }
+
+            .title {
+                display: block;
+                float: left;
+                .type2-bold;
+                .set-font-size(19);
+                padding: 11px 16px 0;
+                text-transform: uppercase;
+                height: @header-height;
+                color: @header-cls-fg-color;
+                text-decoration: none;
+                box-sizing: border-box;
+                border-left: 1px solid @header-border-color;
+                &:hover {
+                    color: @df-color;
                 }
             }
 
