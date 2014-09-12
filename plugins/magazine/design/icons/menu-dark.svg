@@ -4,7 +4,7 @@
     <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="menu-dark" sketch:type="MSArtboardGroup" stroke-linecap="round" stroke="#4A4A4A" stroke-width="3">
+        <g id="menu-dark" sketch:type="MSArtboardGroup" stroke-linecap="round" stroke="#333333" stroke-width="3">
             <g id="Group" sketch:type="MSLayerGroup" transform="translate(6.000000, 8.000000)">
                 <path d="M-0.5,0 L18.5,0" id="Shape" sketch:type="MSShapeGroup"></path>
                 <path d="M-0.5,7 L18.5,7" id="Shape" sketch:type="MSShapeGroup"></path>
