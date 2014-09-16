@@ -16,9 +16,11 @@ module.exports = function clsHandler(app) {
       var classes = cs;
       var cls = classes.bySlug[request.params.classification];
       if (!cls) {
-        var err = new Error('Category or Collection not found: ' + request.params.classification);
-        err.code = 404;
-        throw err;
+        // check if it is an article slug and redirect to article
+        return app.models.articles.bySlug(request.params.classification).then(function(doc) {
+          var c = classes.byId[doc.classification.category.id_];
+          reply('You are being redirect...').redirect('/' + c.slug + '/' + doc.slug);
+        });
       }
 
       var type = cls.type_.toLowerCase();
