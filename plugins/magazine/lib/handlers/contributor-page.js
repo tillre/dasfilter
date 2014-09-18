@@ -36,7 +36,6 @@ module.exports = function contributorHandler(app) {
         pageType: 'contributor-page',
         pageTitle: name,
         mainTitle: 'Beiträge von ' + name,
-        headerTitleUrl: app.urls.contributor(contributor),
         pageDescription: 'Beiträge von ' + name,
         layout: layout,
         classifications: classes,

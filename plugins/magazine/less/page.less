@@ -62,8 +62,7 @@ body.no-scroll {
         .column;
     }
     .meta-title {
-        border-bottom: 0;
-        margin-bottom: @gutter;
+        margin: @gutter 0;
     }
 }
 
@@ -71,6 +70,7 @@ body.no-scroll {
 @media (min-width: @break-m-portrait) {
     .chrono-page {
         .meta-title {
+            border-bottom: 3px solid @extra-light-fg-color;
             h1, h2 {
                 padding-top: @gutter * 0.5;
                 .size-teaser-title;
