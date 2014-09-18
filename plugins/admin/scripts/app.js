@@ -14,9 +14,6 @@
   module.value('dfApp', appConfig);
   module.value('dfUser', userConfig);
 
-  console.log('app config', appConfig);
-  console.log('user config', userConfig);
-
   // generic resolve to always init resources on route change
   var resourcesInitialized = false;
   var resolve = {
@@ -30,11 +27,6 @@
 
   // pages config values
   module.value('dfPages', [
-    // {
-    //   title: 'Home',
-    //   path: '/home',
-    //   isActive: true
-    // },
     {
       title: 'Published',
       path: '/articles/published'
@@ -43,10 +35,6 @@
       title: 'Drafts',
       path: '/articles/drafts'
     },
-    // {
-    //   title: 'Galleries',
-    //   path: '/galleries'
-    // },
     {
       title: 'Images',
       path: '/images'
@@ -59,10 +47,6 @@
       title: 'Collections',
       path: '/collections'
     },
-    // {
-    //   title: 'Tags',
-    //   path: '/tags'
-    // },
     {
       title: 'Contributors',
       path: '/contributors'
@@ -106,8 +90,6 @@
     }
 
     var routes = [
-      { path: '/home', template: '/home', controller: 'HomeCtrl' },
-
       { path: '/articles', redirectTo: '/articles/published' },
       { path: '/articles/published', template: '/resource-list', controller: 'ArticlesCtrl' },
       { path: '/articles/drafts', template: '/resource-list', controller: 'ArticlesCtrl' },
@@ -139,7 +121,9 @@
     $routeProvider.otherwise({ redirectTo: '/articles/published' });
 
     var authValue = 'Basic ' + btoa(appConfig.appKey + ':' + appConfig.appSecret);
+    var credValue = userConfig.username + ':' + userConfig.role;
     $httpProvider.defaults.headers.common.Authorization = authValue;
+    $httpProvider.defaults.headers.common['df-user'] = credValue;
   });
 
 
