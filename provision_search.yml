@@ -7,7 +7,7 @@
       - 80
 
   roles:
-    # - nginx
-    # - proxy
+    - nginx
+    - proxy
     - elasticsearch
-    # - firewall
+    - firewall

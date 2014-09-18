@@ -10,6 +10,9 @@
 [api]
 178.62.138.171
 
+[search]
+178.62.242.164
+
 [db]
 178.62.138.168
 
@@ -18,6 +21,7 @@ proxy
 web
 admin
 api
+search
 db
 
 [production_private:children]
