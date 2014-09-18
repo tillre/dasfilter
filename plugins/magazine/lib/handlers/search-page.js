@@ -27,7 +27,8 @@ module.exports = function(app) {
 
   return function pageHandler(request, reply) {
     var classes;
-    var query = request.query.q;
+    // remove any non valid chars from query
+    var query = (request.query.q || '').replace(/[^\s\wäöüß]+/ig, "");
     var page = request.query.p ? parseInt(request.query.p, 10) : 0;
     var nextUrl = '';
     var hasHits = true;
