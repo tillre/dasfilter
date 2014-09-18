@@ -4,7 +4,7 @@ var Helpers = require('./helpers.js');
 module.exports = function(coresHapi) {
 
   function addStamp(doc, request) {
-    var username = request.auth.credentials.username;
+    var username = request.headers['df-user'].split(':')[0];
     var st = {
       date: new Date().toISOString(),
       user: username

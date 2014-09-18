@@ -10,7 +10,9 @@ module.exports = function(cores, definitions) {
         port: 8050,
         options: {
           labels: ['api'],
-          cors: true,
+          cors: {
+            additionalHeaders: ['df-user']
+          },
           payload: {
             maxBytes: 100 * 1024 * 1024
           },
