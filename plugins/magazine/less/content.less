@@ -141,6 +141,16 @@
             padding-top: @gutter * 0.25;
         }
         &.intro-text {
+            p:first-letter {
+                float: left;
+                padding: 0.12em 0 0;
+                margin: 0 0.1em 0 0;
+                font-size: 3.3em;
+                .type1-bold;
+            }
+            p:first-line {
+                text-transform: uppercase;
+            }
             .content-inner {
                 text-align: center;
             }
