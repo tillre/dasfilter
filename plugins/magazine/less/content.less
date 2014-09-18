@@ -143,7 +143,7 @@
         &.intro-text {
             p:first-letter {
                 float: left;
-                padding: 0.12em 0 0;
+                padding-top: 0.2em;
                 margin: 0 0.1em 0 0;
                 font-size: 3.3em;
                 .type1-bold;
@@ -212,6 +212,14 @@
             .content-inner {
                 .column;
             }
+        }
+    }
+}
+// firefox hack to adjust for different font rendering
+@-moz-document url-prefix() {
+    .content-section .content-entity.intro-text {
+        p:first-letter {
+            padding-top: 0.12em;
         }
     }
 }
