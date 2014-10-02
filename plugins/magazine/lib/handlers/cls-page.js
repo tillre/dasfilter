@@ -15,11 +15,17 @@ module.exports = function clsHandler(app) {
     app.models.classifications.getAll().then(function(cs) {
       var classes = cs;
       var cls = classes.bySlug[request.params.classification];
+
       if (!cls) {
-        // check if it is an article slug and redirect to article
+        // no classification matches, try some alternatives
+        // check if the path segment is an article slug or a page slug
         return app.models.articles.bySlug(request.params.classification).then(function(doc) {
           var c = classes.byId[doc.classification.category.id_];
           reply('You are being redirect...').redirect('/' + c.slug + '/' + doc.slug);
+        }, function(err) {
+          return app.models.pages.bySlug(request.params.classification);
+        }).then(function(doc) {
+          reply('You are being redirect...').redirect('/s/' + doc.slug);
         });
       }
 
