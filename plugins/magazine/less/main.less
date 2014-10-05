@@ -8,7 +8,7 @@
 @break-s-landscape: 28em;
 @break-m-portrait: 45em;
 @break-m-landscape: 60em;
-@break-l: 81em;
+@break-l: 82em;
 @break-xl: 91em;
 
 @max-page-width: 72em;
@@ -33,8 +33,11 @@
     @media(min-width: @break-m-landscape) {
         margin-left: @gutter * (2 + @n);
     }
+    @media(min-width: 70em) {
+        margin-left: @gutter * (4.5 + @n);
+    }
     @media(min-width: @break-l) {
-        margin-left: @gutter * (4 + @n);
+        margin-left: @gutter * (5.5 + @n);
     }
     @media(min-width: @break-xl) {
         margin-left: 0;
