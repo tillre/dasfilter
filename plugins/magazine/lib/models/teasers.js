@@ -11,6 +11,8 @@ module.exports = function(resources) {
     // the view emits the article itself plus dependent resources
     // these will be put together again from the resulting rows
 
+    var orgLimit = qs.limit;
+    
     // extend the limit times (doc + number of resource parts)
     if (qs.limit) {
       qs.limit *= 4;
@@ -41,7 +43,9 @@ module.exports = function(resources) {
         t.header.image = as.Image;
       });
 
-      return teasers;
+      // slice to original limit, because there may have been docs with fewer assets
+      // and the boosted limit will then return more actual article docs
+      return teasers.slice(0, orgLimit);
     });
   }
 
