@@ -10,7 +10,7 @@ feed(xmlns="http://www.w3.org/2005/Atom", xml:lang="de")
     subtitle Medium für Gegenwart
 
   if articles.length > 0
-    updated= new Date(articles[0].date).toUTCString()
+    updated= new Date(articles[0].date).toISOString()
 
   icon= urls.asset('images/df_logo_3d.jpg')
   id http://dasfilter.com/rss
@@ -18,17 +18,19 @@ feed(xmlns="http://www.w3.org/2005/Atom", xml:lang="de")
   
   each article in articles
     entry
-      published= new Date(article.date).toUTCString()
-      updated= new Date(article.date).toUTCString()
+      published= new Date(article.date).toISOString()
+      updated= new Date(article.date).toISOString()
       link(href=urls.articleFull(article.classification.category, article), rel="alternate")
       id= urls.articleFull(article.classification.category, article)
       title #{article.title} - #{article.subtitle}
       content(type="html")
-       | <![CDATA[
-       +image-content(article.header.image, 'article-header')
-       | !{markdown(article.teaser)}
-       +content(article.sections)
-       | ]]>
+        | <![CDATA[
+        +image-content(article.header.image, 'article-header')
+        if article.header.embed && article.header.embed.embed
+          div!= article.header.embed.embed
+        | !{markdown(article.teaser)}
+        +content(article.sections)
+        | ]]>
       if article.contributors && article.contributors.length
         each contributor in article.contributors
           author
