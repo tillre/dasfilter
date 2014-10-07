@@ -14,14 +14,15 @@ mixin content-text(data, isTeaser)
 
 
 mixin content-image(data, sectionType)
-  figure(class="content-entity content-image #{data.display}")
-    .content-outer
-      .content-inner
-        +image-content(data.image, 'content-' + sectionType + '-' + data.display)
-        if data.caption
-          .caption-outer
-            .caption-inner
-              div!= markdown(data.caption)
+  if data.image._id
+    figure(class="content-entity content-image #{data.display}")
+      .content-outer
+        .content-inner
+          +image-content(data.image, 'content-' + sectionType + '-' + data.display)
+          if data.caption
+            .caption-outer
+              .caption-inner
+                div!= markdown(data.caption)
 
 
 mixin content-embed(data)
