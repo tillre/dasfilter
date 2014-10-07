@@ -26,6 +26,7 @@ feed(xmlns="http://www.w3.org/2005/Atom", xml:lang="de")
       content(type="html")
        | <![CDATA[
        +image-content(article.header.image, 'article-header')
+       | !{markdown(article.teaser)}
        +content(article.sections)
        | ]]>
       if article.contributors && article.contributors.length
