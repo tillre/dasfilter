@@ -1,31 +1,33 @@
+include partials/content
+
 doctype xml
-rss(version='2.0', xmlns:media="http://search.yahoo.com/mrss/")
-  channel
-    if classification
-      title Das Filter | #{classification.title}
-      description= classification.title
-    else
-      title Das Filter
-      description Medium für Gegenwart
-    copyright Das Filter Medien UG (haftungsbeschränkt)
-    link= urls.full()
+feed(xmlns="http://www.w3.org/2005/Atom", xml:lang="de")
+  if classification
+    title Das Filter | #{classification.title}
+    subtitle= classification.title
+  else
+    title Das Filter
+    subtitle Medium für Gegenwart
 
-    image
-      title Das Filter
-      url= urls.asset('images/df_logo_3d.jpg')
-      link= urls.full()
+  if articles.length > 0
+    updated= new Date(articles[0].date).toUTCString()
 
-    if articles.length > 0
-      pubDate= new Date(articles[0].date).toUTCString()
-
-      each article in articles
-        item
-          title= article.title
-          description
-           | <![CDATA[
-           | !{markdown(article.teaser)}
-           | ]]>
-          link= urls.articleFull(article.classification.category, article)
-          pubDate= new Date(article.date).toUTCString()
-          media:content(type="image/jpeg", url="#{urls.image(article.header.image, 'x')}")
-          category(domain=urls.classificationFull(article.classification.category))= article.classification.category.title
+  icon= urls.asset('images/df_logo_3d.jpg')
+  id http://dasfilter.com/rss
+  link(type="text/html", href="http://dasfilter.com", rel="alternate")
+  
+  each article in articles
+    entry
+      published= new Date(article.date).toUTCString()
+      updated= new Date(article.date).toUTCString()
+      link(href=urls.articleFull(article.classification.category, article), rel="alternate")
+      id= urls.articleFull(article.classification.category, article)
+      title #{article.title} - #{article.subtitle}
+      content(type="html")
+       | <![CDATA[
+       +content(article.sections)
+       | ]]>
+      if article.contributors && article.contributors.length
+        each contributor in article.contributors
+          author
+            name #{contributor.firstname} #{contributor.lastname}
