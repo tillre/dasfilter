@@ -1,10 +1,14 @@
 - hosts: db
   remote_user: deploy
+  vars:
+    replicate_cmd: >
+      curl -X POST http://localhost:5984/_replicate
+      -H 'Content-Type: application/json'
+      -d '{"source":"{{ db_url }}","target":"df","create_target":true,"continuous":true}'
   tasks:
     # create db
     - shell: curl -X PUT http://localhost:5984/df
     # replicate from master
-    - shell: >
-        curl -X POST http://localhost:5984/_replicate
-        -H 'Content-Type: application/json'
-        -d '{"source":"{{ db_url }}","target":"df","create_target":true,"continuous":true}'
+    - shell: "{{ replicate_cmd }}"
+    # cron replication in case it drops
+    - cron: name="replicate" minute="*/5" job="{{ replicate_cmd }}"
