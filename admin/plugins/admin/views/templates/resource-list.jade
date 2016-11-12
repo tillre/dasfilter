@@ -1,0 +1,16 @@
+.row
+  .col-md-12
+    h3 {{title}}
+
+.row
+  .col-md-12
+    a.btn.btn-success(ng-show="!newDisabled", href="\#{{path}}/new")
+      span(class="glyphicon glyphicon-plus")
+      span &nbsp;Create
+
+.row
+  .col-md-12
+    br
+    div(cr-search-box, ng-if="showSearch" type="type", paginator="list.paginator")
+  .col-md-12
+    div(cr-model-list, columns="list.columns", paginator="list.paginator")

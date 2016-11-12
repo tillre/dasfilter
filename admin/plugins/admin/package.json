@@ -1,0 +1,11 @@
+{
+  "name": "df-admin",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "hapi": "2.x.x"
+  },
+  "dependencies": {
+    "jade": "~1.x.x",
+    "request": "~2.36.0"
+  }
+}

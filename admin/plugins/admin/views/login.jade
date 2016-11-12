@@ -1,0 +1,33 @@
+doctype html
+html(lang="en", ng-app="dfa")
+  head
+    title Login | DF
+
+    link(rel="shortcut icon", href="#{paths.assets}/favicon.ico")
+
+    link(rel="stylesheet", href="#{paths.assets}/css/main.css")
+    link(rel="stylesheet", href="#{paths.assets}/css/vendor.css")
+
+  body
+    div(class="container")
+      form(class="form-horizontal", action=paths.login, method="post")
+
+        div(class="form-group")
+          div(class="col-md-6 col-md-offset-2")
+            h1 DAS FILTER
+
+        div(class="form-group")
+          label(class="col-md-2 control-label") Username
+          div(class="col-md-4")
+            input(class="form-control", type="text", name="username", autofocus="autofocus")
+
+        div(class="form-group")
+          label(class="col-md-2 control-label") Password
+          div(class="col-md-4")
+            input(class="form-control", type="password", name="password")
+
+        div(class="form-group")
+          div(class="col-md-4 col-md-offset-2")
+            if (message)
+              div(class="alert alert-danger") #{message}
+            button(type="submit", class="btn btn-primary") Submit
