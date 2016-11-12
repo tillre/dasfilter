@@ -1,0 +1,31 @@
+- hosts: api
+  remote_user: deploy
+  vars:
+    app_repo: git@bitbucket.org:skoni/df-api-server.git
+    app_dir: "{{ deploy_home }}/app"
+    app_packages:
+      - graphicsmagick
+
+    firewall_open_ports:
+      - 8050
+
+    env_vars:
+      NODE_ENV: "{{ node_env }}"
+
+      DF_DB_URL: "{{ db_url }}"
+      # DF_DB_URL: "http://{{ app_key }}:{{ app_secret }}@{{ groups['db'][0] }}/df"
+      DF_STATIC_URL: "{{ proxy_static_url }}"
+
+      DF_APP_KEY: "{{ app_key }}"
+      DF_APP_SECRET: "{{ app_secret }}"
+      
+      DF_S3_KEY: "{{ s3_key }}"
+      DF_S3_SECRET: "{{ s3_secret }}"
+      DF_S3_REGION: "{{ s3_region }}"
+      DF_S3_BUCKET: "{{ s3_bucket }}"
+      
+  roles:
+    - env
+    # - nodejs
+    # - app_provision
+    # - firewall

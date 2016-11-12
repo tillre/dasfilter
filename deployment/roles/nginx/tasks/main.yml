@@ -1,0 +1,33 @@
+
+# install
+
+- name: Add nginx package repo
+  sudo: yes
+  apt_repository: repo='ppa:nginx/stable' state=present
+
+- name: Install nginx
+  sudo: yes
+  apt: pkg=nginx state=latest update_cache=yes
+
+- name: Unlink default site
+  sudo: yes
+  file: path=/etc/nginx/sites-enabled/default state=absent
+
+# configure
+
+- name: write nginx.conf
+  sudo: yes
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  notify: Restart nginx
+
+
+# ssl
+
+- name: Ensure SSL folder exists
+  sudo: yes
+  file: path=/etc/nginx/ssl state=directory
+
+- name: create self-signed SSL cert
+  sudo: yes
+  command: openssl req -new -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=IT/CN={{ ansible_fqdn }}" -days 3650 -keyout /etc/nginx/ssl/server.key -out /etc/nginx/ssl/server.crt -extensions v3_ca creates=/etc/nginx/ssl/server.crt
+

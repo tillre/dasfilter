@@ -1,0 +1,8 @@
+node_env: 'production'
+
+proxy_web_url: http://dasfilter.com
+proxy_admin_url: http://admin.dasfilter.com
+proxy_static_url: http://static.dasfilter.com
+
+domain: dasfilter.com
+domain_redirects: .das-filter.com .das-filter.de .das-filter.net .das-filter.org .dasfilter.de .dasfilter.net .dasfilter.org

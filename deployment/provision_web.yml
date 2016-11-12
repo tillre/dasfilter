@@ -1,0 +1,25 @@
+- hosts: web
+  remote_user: deploy
+  vars:
+    couchdb_version: 1.6.0
+
+    app_repo: git@bitbucket.org:skoni/df-web-server.git
+    app_dir: "{{ deploy_home }}/app"
+
+    firewall_open_ports:
+      - 8080
+
+    env_vars:
+      NODE_ENV: "{{ node_env }}"
+
+      DF_DB_URL: "http://{{ app_key }}:{{ app_secret }}@{{ groups['db'][0] }}/df"
+      DF_SEARCH_URL: "http://{{ app_key }}:{{ app_secret }}@{{ groups['search'][0] }}/df/_search"
+
+      DF_WEB_URL: "{{ proxy_web_url }}"
+      DF_STATIC_URL: "{{ proxy_static_url }}"
+      
+  roles:
+    - env
+    - nodejs
+    - app_provision
+    - firewall

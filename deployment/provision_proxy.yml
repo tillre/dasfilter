@@ -1,0 +1,10 @@
+- hosts: proxy
+  user: deploy
+
+  vars:
+    firewall_open_ports:
+      - 80
+
+  roles:
+    - nginx
+    - firewall

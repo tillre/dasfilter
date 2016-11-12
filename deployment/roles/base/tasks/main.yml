@@ -1,0 +1,115 @@
+# update packages
+
+- name: Run apt get upgrade
+  apt: upgrade=safe update_cache=yes
+
+# install basic packages
+
+- name: Install necessities and nice-to-haves
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - sudo
+    - vim
+    - htop
+    - iftop
+    - iotop
+    - git-core
+    - python-pycurl
+    - tree
+    - build-essential
+
+# postfix
+
+- name: Install postfix
+  apt: pkg=postfix state=installed
+
+- name: Setup postfix to only send email
+  command: postconf -e mydestination= relayhost= inet_interfaces=loopback-only
+  notify: Restart postfix
+
+# logwatch
+
+- name: Install logwatch
+  apt: pkg=logwatch state=installed
+
+- name: Make logwatch mail daily
+  lineinfile: dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto {{ admin_email }} --detail high" state=present create=yes
+
+# set timezone
+
+- name: Set timezone
+  copy: content='Europe/Berlin' dest=/etc/timezone
+
+- name: Configure timezone
+  shell: dpkg-reconfigure -f noninteractive tzdata
+
+# ntp time sync
+
+- name: Install ntp
+  apt: pkg=ntp state=installed
+
+- name: Configure ntp
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify: Restart ntp
+
+- name: Ensure ntp is running and enabled
+  service: name=ntp state=running enabled=yes
+
+# os
+
+- name: set max number of open files
+  lineinfile: dest=/etc/sysctl.conf line="fs.file-max=300000" state=present
+
+# firewall
+
+- name: Install ufw
+  action: apt pkg=ufw state=installed
+
+- name: Allow ssh with ufw
+  shell: ufw allow ssh
+
+- name: Enable ufw
+  shell: ufw --force enable
+
+- name: Install fail2ban
+  action: apt pkg=fail2ban state=installed
+
+# automatically do security updates
+
+- name: Install unattended-upgrades
+  action: apt pkg=unattended-upgrades state=present
+
+- name: Adjust APT update intervals
+  action: copy src=etc_apt_conf_d_10periodic dest=/etc/apt/apt.conf.d/10periodic
+
+# deploy user
+
+- name: Create deploy user
+  user: name={{ deploy_user }} state=present shell=/bin/bash groups=sudo password={{ deploy_pass }} generate_ssh_key=yes
+
+- name: Add authorized_keys for deploy user
+  authorized_key: user={{ deploy_user }} key="{{ item }}"
+  with_file:
+    - public_keys/till
+    - public_keys/killian
+  notify: Restart ssh
+
+- name: Increase nofile limit
+  lineinfile: dest=/etc/security/limits.conf line={{ item }} state=present
+  with_items:
+    - '"{{ deploy_user }}      soft    nofile   30000"'
+    - '"{{ deploy_user }}      hard    nofile   30000"'
+
+# ssh
+
+- name: Disallow root SSH access
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+  notify: Restart ssh
+
+- name: Allow ssh access only for deploy user
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^AllowUsers" line="AllowUsers {{ deploy_user }}" state=present
+  notify: Restart ssh
+
+- name: Disallow password authentication
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+  notify: Restart ssh

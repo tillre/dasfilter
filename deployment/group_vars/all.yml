@@ -1,0 +1,6 @@
+admin_email: till@skoni.de
+
+deploy_user: deploy
+deploy_pass: "$5$rounds=80000$ESs96g7uM8hrSZiq$aXp4QqlmTxA2BNdWH6MWGoo9wSRiuQePf5N7dVUZ/i."
+deploy_home: /home/{{ deploy_user }}
+

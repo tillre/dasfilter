@@ -1,0 +1,11 @@
+- name: Vars
+  debug: var=vars
+
+- name: Environment
+  debug: vars=environment
+
+- name: Group names
+  debug: var=group_names
+
+- name: Groups
+  debug: var=groups

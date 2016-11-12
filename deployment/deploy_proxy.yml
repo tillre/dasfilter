@@ -1,0 +1,10 @@
+- hosts: proxy
+  user: deploy
+  vars:
+    proxy_sites:
+      - web-site
+      - admin-site
+      - static-site
+
+  roles:
+    - proxy
