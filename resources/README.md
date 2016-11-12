@@ -1,0 +1,1 @@
+Resource schemas and couchdb designs
