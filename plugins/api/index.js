@@ -3,7 +3,6 @@ var Path = require('path');
 var Q = require('kew');
 var _ = require('lodash');
 var Knox = require('knox');
-var Resources = require('df-resources');
 var File = require('./lib/file.js');
 var Account = require('./lib/account.js');
 var SyncWireframes = require('./lib/sync-wireframes.js');

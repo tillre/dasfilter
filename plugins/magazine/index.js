@@ -4,14 +4,17 @@ var Marked = require('marked');
 Marked.setOptions({
   breaks: true
 });
-var Resources = require('df-resources');
-var Api = require('df-api-client');
+var Api = require('../../api-client');
 var Models = require('./lib/models/models.js');
 var Handlers = require('./lib/handlers/handlers.js');
 var CreateUrlHelper = require('./lib/url-helper.js');
 
 
-function init(plugin, options, api, definitions, resources, next) {
+exports.register = function(plugin, options, next) {
+
+  plugin.log(['magazine'], 'register');
+
+  var api = Api(options.apiUrl, 'admin', options.apiKey);
 
   plugin.views({
     engines: {
@@ -34,9 +37,9 @@ function init(plugin, options, api, definitions, resources, next) {
     debug: options.debug,
     urls: CreateUrlHelper(urls),
     api: api,
-    definitions: definitions,
-    resources: resources,
-    models: Models(resources),
+    definitions: options.definitions,
+    resources: options.cores.resources,
+    models: Models(options.cores.resources),
     searchUrl: options.searchUrl,
 
     replyView: function(request, reply, viewName, context, options) {
@@ -219,22 +222,6 @@ function init(plugin, options, api, definitions, resources, next) {
     console.log(e.stack);
     next(e);
   }
-}
-
-exports.register = function(plugin, options, next) {
-
-  plugin.log(['magazine'], 'register');
-
-  var api = Api(options.apiUrl, 'admin', options.apiKey);
-
-  Resources(options.dbUrl).then(function(res) {
-    init(plugin, options, api, res.definitions, res.cores.resources, next);
-
-  }).fail(function(err) {
-    console.log(err);
-    console.log(err.stack);
-    next(err);
-  });
 };
 
 exports.register.attributes = {
