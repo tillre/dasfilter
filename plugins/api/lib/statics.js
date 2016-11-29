@@ -34,17 +34,23 @@ function getImageUrl(date, slug, ext, size) {
 
 
 
-module.exports = function(knox) {
+module.exports = function(s3Client, s3Bucket) {
 
   function storeFileInCloud(tmpFile, key) {
     var defer = Q.defer();
 
-    knox.putFile(tmpFile, 'images/' + key, function(err, res) {
+    file = Fs.createReadStream(tmpFile)
+    s3Client.putObject({
+      Bucket: s3Bucket,
+      Key: 'images/' + key,
+      ContentType: Mime.lookup(key),
+      Body: file
+    }, function(err, data) {
       if (err) {
         return defer.reject(err);
       }
-      defer.resolve(key);
-    });
+      defer.resolve(key)
+    })
     return defer.promise;
   }
 
@@ -52,17 +58,25 @@ module.exports = function(knox) {
   function renameFileInCloud(oldKey, newKey) {
     var defer = Q.defer();
 
-    knox.copyFile('images/' + oldKey, 'images/' + newKey, function(err) {
+    s3Client.copyObject({
+      Bucket: s3Bucket,
+      CopySource: s3Bucket + '/images/' + oldKey,
+      Key: 'images/' + newKey,
+      ContentType: Mime.lookup(oldKey)
+    }, function (err) {
       if (err) {
         return defer.reject(err);
       }
-      knox.deleteFile('images/' + oldKey, function(err) {
+      s3Client.deleteObject({
+        Bucket: s3Bucket,
+        Key: 'images/' + oldKey
+      }, function(err) {
         if (err) {
           return defer.reject(err);
         }
-        defer.resolve(newKey);
+        defer.resolve(newKey)
       })
-    });
+    })
     return defer.promise;
   }
 

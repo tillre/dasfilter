@@ -20,6 +20,15 @@ module.exports = function(resources) {
       }).then(function(docs) {
         return docs[0];
       });
+    },
+
+    search: function(term, limit, offset) {
+      var params = {
+        limit: limit || 10,
+        offset: offset || 0,
+        q: term
+      }
+      return resources.Article.search('list', params)
     }
   };
 };

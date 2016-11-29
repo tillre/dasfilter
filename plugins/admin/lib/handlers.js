@@ -9,7 +9,7 @@ module.exports = function(app, viewContext) {
       if (request.auth.isAuthenticated) {
         return reply('You are being redirected...').redirect(app.paths.admin);
       }
-      return reply.view('login', viewContext);
+      return reply.view('login', viewContext(request));
     },
 
 
@@ -17,11 +17,12 @@ module.exports = function(app, viewContext) {
       if (!request.payload.username || !request.payload.password) {
         return reply.view(
           'login',
-          _.merge({ message: 'Missing username or password' }, viewContext)
+          _.merge({ message: 'Missing username or password' }, viewContext(request))
         );
       }
       else {
         app.validateAccount(
+          request,
           request.payload.username,
           request.payload.password
 
@@ -30,14 +31,14 @@ module.exports = function(app, viewContext) {
             username: user.username,
             role: user.role
           };
-          request.auth.session.set(credentials);
+          // request.auth.session.set(credentials);
+          request.cookieAuth.set(credentials);
           reply('You are being redirected...').redirect(app.paths.admin);
 
         }).fail(function(err) {
-          console.log('err', err);
           reply.view(
             'login',
-            _.merge({ message: 'Invalid username or password' }, viewContext)
+            _.merge({ message: 'Invalid username or password' }, viewContext(request))
           );
         });
       }
@@ -45,19 +46,19 @@ module.exports = function(app, viewContext) {
 
 
     logout: function(request, reply) {
-      request.auth.session.clear();
-      return reply('You are being redirected...').redirect(app.paths.admin + '/login');
+      request.cookieAuth.clear();
+      return reply('You are being redirected...').redirect(app.paths.login);
     },
 
 
     index: function(request, reply) {
-      var context = _.merge({ credentials: request.auth.credentials }, viewContext);
+      var context = _.merge({ credentials: request.auth.credentials }, viewContext(request));
       reply.view('index', context);
     },
 
 
     template: function(request, reply) {
-      var context = _.merge({ credentials: request.auth.credentials }, viewContext);
+      var context = _.merge({ credentials: request.auth.credentials }, viewContext(request));
       reply.view('templates/' + request.params.name, context);
     }
   };

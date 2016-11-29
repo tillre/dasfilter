@@ -173,23 +173,6 @@ module.exports = function(api, statics) {
           });
         }
       });
-      // return Helpers.checkUniqueness(
-      //   resources.Image,
-      //   'by_url',
-      //   doc,
-      //   'file.url'
-
-      // ).then(function() {
-      //   console.log('oldDoc', oldDoc);
-      //   return statics.renameImage(
-      //     oldDoc,
-      //     doc,
-      //     sizes
-      //   );
-
-      // }).then(function() {
-      //   return updateImageMaybe();
-      // });
     });
   });
 };

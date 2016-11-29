@@ -1,5 +1,0 @@
-
-- name: Open ports
-  sudo: yes
-  shell: ufw allow {{ item }}
-  with_items: firewall_open_ports

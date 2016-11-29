@@ -5,24 +5,6 @@ var Layout = require('../layout.js');
 
 
 module.exports = function(app) {
-
-  function search(query, size, from) {
-    var defer = Q.defer();
-    size = size || 10;
-    from = from || 0;
-
-    Request.get({
-      url: app.searchUrl,
-      qs: { q: query, size: size, from: from }
-    }, function(err, response, body) {
-      if (err) {
-        return defer.reject(err);
-      }
-      defer.resolve(JSON.parse(body));
-    });
-    return defer.promise;
-  }
-
   var NUM_RESULTS = 21;
 
   return function pageHandler(request, reply) {
@@ -35,13 +17,12 @@ module.exports = function(app) {
 
     return app.models.classifications.getAll().then(function(cs) {
       classes = cs;
-      return search(query, NUM_RESULTS + 1, page * NUM_RESULTS);
+      return app.models.articles.search(query, NUM_RESULTS + 1, page * NUM_RESULTS);
 
     }).then(function(result) {
-      // gets ids of docs
-      var ids = result.hits.hits.map(function(hit) {
-        return hit._id;
-      });
+      var ids = result.rows.map(function(row) {
+        return row.id
+      })
 
       if (ids.length === NUM_RESULTS + 1) {
         // remove the one which was added for pagination

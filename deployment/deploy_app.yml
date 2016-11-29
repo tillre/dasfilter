@@ -1,8 +1,0 @@
-- hosts:
-    - api
-    - admin
-    - web
-  remote_user: deploy
-  gather_facts: no
-  tasks:
-    - shell: ./deploy.sh executable=/bin/bash

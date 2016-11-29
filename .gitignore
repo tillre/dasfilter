@@ -1,3 +1,5 @@
 node_modules
 bower_components
 /static
+/build_scripts
+start-prod.sh

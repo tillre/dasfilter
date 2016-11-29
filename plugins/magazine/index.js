@@ -12,24 +12,18 @@ var CreateUrlHelper = require('./lib/url-helper.js');
 
 exports.register = function(plugin, options, next) {
 
-  plugin.log(['magazine'], 'register');
-
   var api = Api(options.apiUrl, 'admin', options.apiKey);
 
   plugin.views({
-    engines: {
-      'jade': { module: require('jade') }
-    },
+    engines: { jade: require('jade') },
     path: __dirname + '/views',
     isCached: !options.debug
   });
 
-  var selection = plugin.select('web');
   var urls = {
-    // these are served from different hosts/ports
-    images: options.urls.static + '/images',
-    assets: options.urls.web + '/static/assets',
-    magazine: options.urls.web
+    images: options.staticUrl + '/images',
+    assets: '/static/assets',
+    magazine: ''
   };
   plugin.log(['magazine'], 'paths: ' + JSON.stringify(urls));
 
@@ -40,10 +34,9 @@ exports.register = function(plugin, options, next) {
     definitions: options.definitions,
     resources: options.cores.resources,
     models: Models(options.cores.resources),
-    searchUrl: options.searchUrl,
 
     replyView: function(request, reply, viewName, context, options) {
-      return reply.view(viewName, _.merge(context, {
+      reply.view(viewName, _.merge(context, {
         debug: app.debug,
         markdown: Marked,
         formatDate: function(str) {
@@ -60,8 +53,7 @@ exports.register = function(plugin, options, next) {
 
   var handlers = Handlers(app);
 
-  selection.route([
-
+  plugin.route([
     // start page
     {
       method: 'GET',
@@ -183,7 +175,7 @@ exports.register = function(plugin, options, next) {
   //
   // error pages
   //
-  selection.ext('onPreResponse', function(request, reply) {
+  plugin.ext('onPreResponse', function(request, reply) {
 
     if (request.response.isBoom) {
       // redirect to error page
@@ -210,8 +202,7 @@ exports.register = function(plugin, options, next) {
         return reply('You are being redirected').redirect(path);
       }
     }
-
-    return reply();
+    return reply.continue();
   });
 
   try {

@@ -1,8 +1,0 @@
-node_env: 'staging'
-
-proxy_web_url: http://staging.dasfilter.com
-proxy_admin_url: http://admin.staging.dasfilter.com
-proxy_static_url: http://static.staging.dasfilter.com
-
-domain: staging.dasfilter.com
-domain_redirects: ""

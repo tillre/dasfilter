@@ -1,3 +1,0 @@
-- name: Restart couchdb
-  sudo: yes
-  service: name=couchdb state=restarted

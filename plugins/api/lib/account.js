@@ -1,3 +1,4 @@
+var Assert = require('assert')
 var Q = require('kew');
 var J = require('jski')();
 var Crypt = require('./crypt.js');
@@ -7,24 +8,25 @@ module.exports = function(userRes) {
   //
   // create admin account
   //
-  function createAdmin() {
+  function createAdmin(username, password) {
+    Assert(password && password.length > 10)
 
     var admin = J.createValue(userRes.schema);
-    admin.username = 'admin';
+    admin.username = username;
     admin.role = 'admin';
 
-    return Crypt.hashPassword('admin').then(function(hash) {
+    return Crypt.hashPassword(password).then(function(hash) {
       admin.password = hash;
       return admin;
     });
   }
 
 
-  function maybeCreateAdmin() {
-    return userRes.view('usernames', { keys: ['admin'] }).then(function(result) {
+  function maybeCreateAdmin(username, password) {
+    return userRes.view('usernames', { keys: [username] }).then(function(result) {
       if (result.rows.length === 0) {
         // add default admin user
-        return createAdmin().then(function(admin) {
+        return createAdmin(username, password).then(function(admin) {
           return userRes.save(admin).then(function(doc) {
             return doc;
           });

@@ -22,13 +22,10 @@ function checkError(err, req, res, body) {
 
 exports.register = function(plugin, options, next) {
 
-  plugin.log(['admin'], 'register');
-
-
-  function validateAccount(username, password) {
+  function validateAccount(request, username, password) {
     var defer = Q.defer();
     var req = Request({
-      url: options.urls.api + '/accounts/validate',
+      url: options.apiUrl + '/accounts/validate',
       method: 'POST',
       auth: { user: options.appKey, pass: options.appSecret },
       json: { username: username, password: password }
@@ -43,60 +40,64 @@ exports.register = function(plugin, options, next) {
     return defer.promise;
   }
 
+  var prefix = plugin.realm.modifiers.route.prefix;
 
   var app = {
-    plugin: plugin,
-    selection: plugin.select('admin'),
     validateAccount: validateAccount,
     debug: options.debug,
     paths: {
-      admin: options.urls.admin,
-      images: options.urls.static + '/images',
-      assets: options.urls.admin + '/static/assets',
-      web: options.urls.web,
-      templates: '/templates'
+      admin: prefix,
+      login: prefix + '/login'
     }
   };
-
-  plugin.log(['admin'], 'paths: ' + Util.inspect(app.paths));
 
   // context for views
-  var viewContext = {
-    paths: app.paths,
-    // data passed on to the client
-    clientData: {
-      paths: app.paths,
-      apiUrl: options.urls.api,
-      appKey: options.appKey,
-      appSecret: options.appSecret
-    }
-  };
+  function viewContext(request) {
+    var server = 'http://' + request.info.host;
+    return {
+      paths: {
+        admin: prefix,
+        assets: prefix + '/static/assets',
+        login: prefix + '/login',
+        logout: prefix + '/logout',
+        web: options.webUrl
+      },
+      // data passed on to the client
+      clientData: {
+        paths: {
+          templates: prefix + '/templates',
+          images: options.staticUrl + '/images',
+          web: options.webUrl
+        },
+        apiUrl: server + options.apiUrl,
+        appKey: options.appKey,
+        appSecret: options.appSecret
+      }
+    };
+  }
 
   // cookie auth
-  plugin.auth.strategy('admin-session', 'cookie', {
+  plugin.auth.strategy('admin-session', 'cookie', false, {
     password: options.cookiePassword,
     cookie: 'sid-df-admin',
-    redirectTo: options.urls.admin + '/login',
+    redirectTo: '/admin/login',
     isSecure: false
   });
 
-  // configure views
   plugin.views({
+    engines: { jade: require('jade') },
     path: __dirname + '/views',
-    engines: {
-      'jade': { module: require('jade') }
-    },
-    isCached: !app.debug
+    isCached: !options.debug
   });
 
   // routes
   var handlers = require('./lib/handlers.js')(app, viewContext);
-  app.selection.route([
+  plugin.route([
 
     // templates
     {
       method: 'GET',
-      path: app.paths.templates + '/{name}',
+      path: '/templates/{name}',
       config: {
         auth: 'admin-session',
         handler: handlers.template

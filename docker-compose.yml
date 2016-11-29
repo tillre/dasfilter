@@ -1,0 +1,30 @@
+version: '2'
+services:
+  couchdb:
+    image: couchdb:1.6
+    ports:
+      - "5984:5984"
+    environment:
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: secret
+
+  s3:
+    image: lphoward/fake-s3
+    ports:
+      - "4569:4569"
+
+  app:
+    build:
+      context: .
+    volumes:
+      - ./plugins:/opt/app/plugins
+      - ./index.js:/opt/app/index.js
+      - ./manifest.js:/opt/app/manifest.js
+      - ./gulpfile.js:/opt/app/gulpfile.js
+      - ./entrypoint.sh:/opt/app/entrypoint.sh
+      - ./start-dev.sh:/opt/app/start-dev.sh
+    ports:
+      - '8080:8080'
+      - '8070:8070'
+      - '8060:8060'
+    command: start_dev

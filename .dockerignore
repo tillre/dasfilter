@@ -1,0 +1,6 @@
+.git
+.gitignore
+Dockerfile
+node_modules
+bower_modules
+build_scripts
