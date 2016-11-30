@@ -22,10 +22,17 @@ function checkError(err, req, res, body) {
 
 exports.register = function(plugin, options, next) {
 
+  function getServerUrl(request) {
+    return (request.headers['x-forwarded-proto'] || request.connection.info.protocol)
+      + '://'
+      + request.info.host;
+  }
+
   function validateAccount(request, username, password) {
+    console.log(request.connection.info)
     var defer = Q.defer();
     var req = Request({
-      url: options.apiUrl + '/accounts/validate',
+      url: getServerUrl(request) + options.apiUrl + '/accounts/validate',
       method: 'POST',
       auth: { user: options.appKey, pass: options.appSecret },
       json: { username: username, password: password }
@@ -53,7 +60,6 @@ exports.register = function(plugin, options, next) {
 
   // context for views
   function viewContext(request) {
-    var server = 'http://' + request.info.host;
     return {
       paths: {
         admin: prefix,
@@ -69,7 +75,7 @@ exports.register = function(plugin, options, next) {
           images: options.staticUrl + '/images',
           web: options.webUrl
         },
-        apiUrl: server + options.apiUrl,
+        apiUrl: getServerUrl(request) + options.apiUrl,
         appKey: options.appKey,
         appSecret: options.appSecret
       }
