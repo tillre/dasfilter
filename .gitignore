@@ -3,3 +3,4 @@ bower_components
 /static
 /build_scripts
 start-prod.sh
+data

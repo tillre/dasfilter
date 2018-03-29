@@ -1,6 +1,9 @@
 .git
 .gitignore
 Dockerfile
+docker-compose.yml
 node_modules
+static
 bower_modules
 build_scripts
+data
