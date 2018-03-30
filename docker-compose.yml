@@ -37,4 +37,4 @@ services:
       - ./start-dev.sh:/opt/app/start-dev.sh
     ports:
       - '8080:8080'
-    command: start_prod
+    command: start
