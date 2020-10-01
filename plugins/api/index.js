@@ -28,8 +28,6 @@ exports.register = function(plugin, options, next) {
     }
   });
 
-  // var prefix = plugin.realm.modifiers.route.prefix;
-
   // create api
   coresHapi.createApi({
     auth: 'api',
@@ -67,20 +65,23 @@ exports.register = function(plugin, options, next) {
   var account = Account(options.cores.resources.User);
 
   // validate account route
-  plugin.route({
-    method: 'POST',
-    path: '/accounts/validate',
-    config: {
-      auth: 'api',
-      handler: function(request, reply) {
-        account.validate(request.payload.username, request.payload.password).then(function(user) {
-          reply({username: user.username, role: user.role});
-        }, function(err) {
-          reply(Boom.unauthorized('Unauthorized'))
-        });
+  plugin.route([
+    {
+      method: 'POST',
+      path: '/accounts/validate',
+      config: {
+        auth: 'api',
+        handler: function(request, reply) {
+          account.validate(request.payload.username, request.payload.password).then(function(user) {
+            reply({username: user.username, role: user.role});
+          }, function(err) {
+            // reply({'ok': 'fine'})
+            reply(Boom.unauthorized('Unauthorized'))
+          });
+        }
       }
     }
-  });
+  ])
 
   // create default admin if no user exists
   return account.maybeCreateAdmin(options.adminUsername, options.adminPassword).then(function() {

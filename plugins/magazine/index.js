@@ -4,15 +4,12 @@ var Marked = require('marked');
 Marked.setOptions({
   breaks: true
 });
-var Api = require('../../api-client');
 var Models = require('./lib/models/models.js');
 var Handlers = require('./lib/handlers/handlers.js');
 var CreateUrlHelper = require('./lib/url-helper.js');
 
 
 exports.register = function(plugin, options, next) {
-
-  var api = Api(options.apiUrl, 'admin', options.apiKey);
 
   plugin.views({
     engines: { jade: require('jade') },
@@ -30,7 +27,6 @@ exports.register = function(plugin, options, next) {
   var app = {
     debug: options.debug,
     urls: CreateUrlHelper(urls),
-    api: api,
     definitions: options.definitions,
     resources: options.cores.resources,
     models: Models(options.cores.resources),
@@ -176,9 +172,8 @@ exports.register = function(plugin, options, next) {
   // error pages
   //
   plugin.ext('onPreResponse', function(request, reply) {
-
-    if (request.response.isBoom) {
-      // redirect to error page
+    if (request.response.isBoom && !request.path.startsWith(options.apiUrl)) {
+      // redirect to error page when not an api call
       var errorCode = request.response.code;
       var errorSlug = '';
 

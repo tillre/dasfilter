@@ -129,6 +129,8 @@ module.exports = function(cores, definitions) {
           options: {
             debug: env.NODE_ENV !== 'production',
 
+            apiUrl: '/api',
+            
             cores: cores,
             definitions: definitions,
             staticUrl: env.DF_STATIC_URL,
