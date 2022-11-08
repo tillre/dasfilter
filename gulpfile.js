@@ -95,6 +95,7 @@ var magazinePaths = {
   scripts: ['./bower_components/jquery/dist/jquery.js',
             './plugins/magazine/scripts/*.js'],
   images: './plugins/magazine/images/*.*',
+  fonts: './plugins/magazine/fonts/*.ttf',
   output: './static/magazine'
 };
 
@@ -162,11 +163,16 @@ gulp.task('magazine-images', function() {
     .pipe(gulp.dest(magazinePaths.output + '/images'));
 });
 
+gulp.task('magazine-fonts', function() {
+  return gulp.src(magazinePaths.fonts)
+    .pipe(gulp.dest(magazinePaths.output + '/fonts'));
+});
 
 gulp.task('magazine-build', [
   'magazine-styles',
   'magazine-scripts',
-  'magazine-images'
+  'magazine-images',
+  'magazine-fonts'
 ], function() {});
 
 
