@@ -33,7 +33,6 @@ mixin article-byline(contributors, date)
 //- main mixin
 
 mixin article(article)
-  +share-code
 
   article.article-wrapper
     - var hasAltImage = article.header.altImage && article.header.altImage.id_;
@@ -47,7 +46,6 @@ mixin article(article)
             span.header-1.balance-text= article.title
             span.header-2= article.subtitle
           +article-byline(article.contributors, article.date)
-          +share-links('top')
 
 
       if hasEmbed
@@ -80,7 +78,6 @@ mixin article(article)
     .article-footer-wrapper
       .article-footer
         .items-wrapper
-          +share-links('bottom')
           if article.classification.tags.length > 0
             .items
               span.title

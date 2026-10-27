@@ -15,13 +15,6 @@ mixin header(classifications)
       .inner-bar
         a.logo(href=urls.start(), title="Startseite")
 
-        .social-links
-          ul
-            li
-              a.facebook(href="https://facebook.com/dasfilter", title="Das Filter auf Facebook")
-            li
-              a.google-plus(href="https://plus.google.com/106616903211116456553", rel="publisher", target="_blank", title="Das Filter auf Google+")
-
         .search
           form(id="search", action="/suchen", method="get")
             input(name="q", type="text", value=searchValue, placeholder="Suchen")
