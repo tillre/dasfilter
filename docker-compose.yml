@@ -1,40 +1,98 @@
 version: '3.1'
 services:
   nginx:
-    image: nginx:1.13
+    # the host runs kernel 4.4 + docker 19.03; its stock seccomp profile answers unknown
+    # syscalls with EPERM, which breaks modern glibc/JVM/Node. This profile is the same
+    # allowlist but answers with ENOSYS (see config/seccomp-enosys.json)
+    security_opt: ["seccomp:/root/dasfilter/config/seccomp-enosys.json"]
+    image: nginx:1.28
+    restart: unless-stopped
     volumes:
-      - './config/nginx.conf:/etc/nginx/nginx.conf'
+      - './config/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - './config/nginx-locations.conf:/etc/nginx/dasfilter-locations.conf:ro'
+      - './config/conf.d:/etc/nginx/conf.d:ro'
+      - './data/nginx-cache:/var/cache/nginx/dasfilter'
+      - './data/certbot/www:/var/www/certbot:ro'
+      - './data/certbot/conf:/etc/letsencrypt:ro'
     ports:
       - '80:80'
+      - '443:443'
+    depends_on:
+      - app
+    logging:
+      options:
+        max-size: "50m"
+        max-file: "2"
 
   couchdb:
-    image: "ntr-couch"
-    ports:
-      - "5984:5984"
+    # the host runs kernel 4.4 + docker 19.03; its stock seccomp profile answers unknown
+    # syscalls with EPERM, which breaks modern glibc/JVM/Node. This profile is the same
+    # allowlist but answers with ENOSYS (see config/seccomp-enosys.json)
+    security_opt: ["seccomp:/root/dasfilter/config/seccomp-enosys.json"]
+    image: apache/couchdb:3.5.2
+    restart: unless-stopped
     environment:
-      NODENAME: dasfilter
       COUCHDB_USER: admin
-      COUCHDB_PASSWORD: secret
+      NODENAME: 127.0.0.1
+    env_file:
+      - ./config/couchdb.env
     volumes:
-      - './data/couchdb/:/couchdb/data/'
-      - './data/clouseau/:/clouseau/target/clouseau1/'
+      - './data/couchdb3/:/opt/couchdb/data/'
+      - './config/couchdb.ini:/tmp/dasfilter.ini:ro'
+      - './config/erlang.cookie:/run/secrets/erlang.cookie:ro'
+    command:
+      - sh
+      - -c
+      - |
+        export COUCHDB_ERLANG_COOKIE=$$(cat /run/secrets/erlang.cookie)
+        cp /tmp/dasfilter.ini /opt/couchdb/etc/local.d/dasfilter.ini
+        exec /docker-entrypoint.sh /opt/couchdb/bin/couchdb
+    ports:
+      - '127.0.0.1:5984:5984'
+    logging:
+      options:
+        max-size: "50m"
+        max-file: "2"
 
-  # Use as aws s3 replacement in local development
-  # s3:
-  #   image: lphoward/fake-s3
-  #   ports:
-  #     - "4569:4569"
+  clouseau:
+    # the host runs kernel 4.4 + docker 19.03; its stock seccomp profile answers unknown
+    # syscalls with EPERM, which breaks modern glibc/JVM/Node. This profile is the same
+    # allowlist but answers with ENOSYS (see config/seccomp-enosys.json)
+    security_opt: ["seccomp:/root/dasfilter/config/seccomp-enosys.json"]
+    image: ghcr.io/cloudant-labs/clouseau:3.5.0
+    restart: unless-stopped
+    # share the couchdb network namespace so Erlang distribution works over 127.0.0.1
+    network_mode: "service:couchdb"
+    environment:
+      JAVA_XMX: 768M
+      JAVA_XMS: 256M
+    volumes:
+      - './data/clouseau3/:/opt/couchdb-search/data/'
+      - './config/clouseau.conf:/opt/couchdb-search/etc/clouseau.conf:ro'
+      - './config/erlang.cookie:/run/secrets/erlang.cookie:ro'
+    depends_on:
+      - couchdb
+    logging:
+      options:
+        max-size: "50m"
+        max-file: "2"
 
   app:
+    # the host runs kernel 4.4 + docker 19.03; its stock seccomp profile answers unknown
+    # syscalls with EPERM, which breaks modern glibc/JVM/Node. This profile is the same
+    # allowlist but answers with ENOSYS (see config/seccomp-enosys.json)
+    security_opt: ["seccomp:/root/dasfilter/config/seccomp-enosys.json"]
     build:
       context: .
-    volumes:
-      - ./plugins:/opt/app/plugins
-      - ./index.js:/opt/app/index.js
-      - ./manifest.js:/opt/app/manifest.js
-      - ./gulpfile.js:/opt/app/gulpfile.js
-      - ./entrypoint.sh:/opt/app/entrypoint.sh
-      - ./start-dev.sh:/opt/app/start-dev.sh
+    image: dasfilter_app:node24
+    restart: unless-stopped
+    env_file:
+      - ./config/app.env
     ports:
-      - '8080:8080'
-    command: start_prod
+      - '127.0.0.1:8080:8080'
+    depends_on:
+      - couchdb
+    logging:
+      options:
+        max-size: "50m"
+        max-file: "2"

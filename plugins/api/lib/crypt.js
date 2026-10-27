@@ -1,4 +1,4 @@
-var Bcrypt = require('bcrypt');
+var Bcrypt = require('bcryptjs');
 var Q = require('kew');
 
 

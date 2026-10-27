@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "jski": "~0.5.x",
-    "bcrypt": "~0.7.x",
+    "bcryptjs": "^2.4.3",
     "gm": "~1.x.x",
     "mkdirp": "~0.3.x"
   }

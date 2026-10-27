@@ -4,3 +4,7 @@ bower_components
 /build_scripts
 start-prod.sh
 data
+config/app.env
+config/couchdb.env
+config/erlang.cookie
+docker-compose.old.yml

@@ -1,19 +1,23 @@
-FROM node:4
+# Das Filter app image
+# Runtime only: the compiled static assets (static/) are committed/prebuilt,
+# so the image no longer needs bower + gulp 3 (which do not run on modern Node).
+FROM node:24-bookworm-slim
 
-RUN apt-get update -y && apt-get -y --force-yes install \
-    vim \
-    curl \
-    graphicsmagick
+ENV NODE_ENV=production
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends graphicsmagick curl ca-certificates tini \
+ && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/app
 
-COPY package.json /opt/app/package.json
-RUN npm install --loglevel silent
+COPY package.json ./
+RUN npm install --omit=dev --no-audit --no-fund --loglevel=warn
 
-COPY bower.json /opt/app/bower.json
-RUN node_modules/.bin/bower install --silent --allow-root
+COPY patches ./patches
+RUN node patches/apply.js
 
-COPY . /opt/app
-RUN npm run build
+COPY . .
 
-ENTRYPOINT ["/opt/app/entrypoint.sh"]
+EXPOSE 8080
+ENTRYPOINT ["tini", "--"]
+CMD ["node", "index.js"]
